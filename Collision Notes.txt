@@ -1,0 +1,27 @@
+if (player_coordinates_x > tile_x &&
+                           player_coordinates_x < tile_x + cliffgrass_Front.image.width &&
+                           player_coordinates_y + 25 > tile_y &&
+                           player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { 
+                           player_coordinates_x = tile_x + 30;
+                       } //Right side Collision against Object
+if (player_coordinates_x + 20 > tile_x &&
+ player_coordinates_x < tile_x + cliffgrass_Front.image.width &&
+ player_coordinates_y + 20 > tile_y &&
+ player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { 
+player_coordinates_x = tile_x - 20; }
+
+ // Left side Collision against Object
+
+if (player_coordinates_x + 10 > tile_x &&
+                           player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width &&
+                           player_coordinates_y > tile_y &&
+                           player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) {
+                            
+                            player_coordinates_y = tile_y + 20;
+                        } // Bottom Collision against Object
+if (player_coordinates_x + 10 > tile_x &&
+                         player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width &&
+                         player_coordinates_y + 30 > tile_y &&
+                         player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {
+                         player_coordinates_y = tile_y - 30;
+	} // Top Collision against Object
