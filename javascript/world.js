@@ -1,51 +1,12 @@
 
 "use strict";
-/*//Defines player constructor
-var Player = function(strength) {
-    this.strength = strength;
-};
-//Adds methods to Player.prototype
-Player.prototype.walk = function() {
-    console.log("Player is walking");
-};
-Player.prototype.sayHello = function() {
-    console.log("Hello my strength is " + this.strength);
-}
-//Defines Student Constructor
-function student(strength, subject) {
-    Player.call(this, strength);
-    this.subject = subject;
-}
-//Create a Student.prototype object that inherits from Person.prototype.
-student.prototype = Object.create(Player.prototype);
-
-// Set the "constructor" property to refer to Student
-student.prototype.constructor = student;
-
-//replacing the say hello method
-student.prototype.sayHello = function() {
-    console.log("Hello, I'm " + this.strength + ". I'm studying "
-              + this.subject + ".");
-}
-// Add a "sayGoodBye" method
-student.prototype.sayGoodBye = function(){
-  console.log("Goodbye!");
-};
-
-var student1 = new student("Janet", "Applied Physics");
-student1.sayHello();   // "Hello, I'm Janet. I'm studying Applied Physics."
-student1.walk();       // "I am walking!"
-student1.sayGoodBye(); // "Goodbye!"
-
-var player_character = new Player(5);
-player_character.sayHello();*/
 if (typeof(Reaver === "undefined")) {
     var Reaver = {};
 } else {
     console.log("Object Reaver is of invalid type!")
 }
 (function() {
-    //All Sprite Objects are loaded first
+    //All Sprite Terrain Objects are loaded first
     
     
     
@@ -57,6 +18,10 @@ if (typeof(Reaver === "undefined")) {
     /*Booleans values are used to check for attacking and movement
     /* */
     Reaver.Player = function() {
+        //Loading of player object
+        this.playerSprite = new Sprite("sprites/character_spritesheet.png");
+        
+        //Player Stats
         this.strength = 5;
         this.stamina = 10;
         this.agility = 6;
@@ -64,12 +29,13 @@ if (typeof(Reaver === "undefined")) {
         this.intelligence = 4;
         this.Health = 100;
         this.defense = 5;
-        this.hitChance = 80;
-        this.critChance = 5;
+        //percentage values chances 
+        this.hitChance = .80;
+        this.critChance = .05;
         
         //Player x_y coordinates for positioning
-        this.playerCoordinates_x = null;
-        this.playerCoordinates_y = null;
+        this.player_startX = null;
+        this.player_startY = null;
         this.playerAttack_x = null;
         this.playerAttack_y = null;
         
@@ -80,17 +46,85 @@ if (typeof(Reaver === "undefined")) {
         this.player_moveLeft = false;
         this.attackShow = true;
         this.attackDisabled = false;
+        
+        //Player Collision with world or enemey object
+        //numeric values will be changed later, for now hard values will be in for width and height
+        this.player_Objectcollision = function(player_x, player_y, object_x, object_y) {
+            if (player_x + 10 > object_x &&
+                player_x + 10 < object_x + 32 &&
+                player_y + 30 > object_y &&
+                player_y + 30 < object_y + 32) {
+                player_y = object_y - 30; //Top collision
+            }
+            
+            if (player_x + 10 > object_x &&
+                player_x + 10 < object_x + 32 &&
+                player_y > object_y &&
+                player_y + 10 < object_y + 32) { 
+                player_y = object_y + 20; //Bottom Collision
+            }
+            if (player_x > object_x &&
+                player_x < object_x + 32 &&
+                player_y + 15 > object_y &&
+                player_y + 15 < object_y + 32) { 
+                player_x = object_x + 30;//Right Side Collsion
+            }
+            if (player_x + 20 > object_x &&
+                player_x < object_x &&
+                player_y + 30 > object_y &&
+                player_y + 30 < object_y + 32) {
+                player_x = object_x - 20; //Left Side collision
+            }
+        }
     };
     //Slime Constructor Object
-    /*
-    /*
-    /*
+    /*Creates a slime enemy object, the object will have general stats(HP,MP,Defense,)
+    /*Object has x,y axis coordinates and battle system states
+    /*Slime Object will has boolean values that handle if its moving, direction, and animation
     /* */
-    var Player = new Reaver.Player;
+    Reaver.Slime = function(slime) {
+        //Loading of sprite object
+        if(slime === "slimeload") {
+            this.slimeSprite = new Sprite("sprites/slime_spritesheet.png");
+            this.slimeSprite.image.width = 32;
+            this.slimeSprite.image.height = 32;
+            console.log("Normal Slime Loaded");
+        }
+        //If the slime is a elite enemy
+        this.slimeSuper = function(makeSuper) {
+            if(makeSuper === "super") {
+                this.slimeSprite = new Sprite("sprites/slimeSuper_spritesheet.png")    
+                console.log("Super Created");
+            }
+        }
+        //Positioning of slime for axis values
+        this.slime_startY = null;
+        this.slime_startX = null;
+        
+        //if the slime is currently alive
+        this.slime_Alive = true;
+        
+        //slime movement directions for pathing
+        this.slime_Left = false;
+        this.slime_Right = false;
+        this.slime_Up = false;
+        this.slime_Down = false;
+        
+        //Used for battle system, if the object is aggroed then display battle screen
+        //is_slimeMove is if the slime is currently moving
+        this.slime_Engaged = false;
+        this.is_slimeMove = false;
+    }
+    var Player = new Reaver.Player();
     
-    console.log(Player.playerHit = true);
+    var slime = new Reaver.Slime("slimeload");
+    
     
 })();
+
+
+    
+    
     var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
     //Grass Terrain Sprties
         var cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), 
