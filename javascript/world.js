@@ -140,8 +140,8 @@ if (typeof(Reaver === "undefined")) {
         var BLOCK_W = 32;
         var BLOCK_H = 32;
         var delayAmount = -2;
-        var player_coordinates_x = 150;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        var player_coordinates_y = 130; //352 starter //94 end
+        var player_coordinates_x = 10;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        var player_coordinates_y = 352; //352 starter //94 end
         var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
         var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
         playerAttackhit_Sprite.image.width = 32; playerAttackhit_Sprite.image.height = 32;
