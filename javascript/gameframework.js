@@ -5,13 +5,17 @@ var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, 
 
 
 //Mouse eventlisteners and mouse detection with in canvas
+
 function handleMouseClick(evt) {
     //triggers when player clicks attack
     if (evt.pageX >= 550 && evt.pageX <= 700 || evt.pageX >= 766 && evt.pageX <= 830 &&
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
         attackSequence++;
-        if(attackSequence == 1 && slime1_Engaged || attackSequence == 1 && slime2_Engaged || attackSequence == 1 && slime3_Engaged || attackSequence == 1 && slime4_Engaged ||
+        console.log(slime1_Alive);
+        console.log(slime1_Engaged);
+        console.log(attackSequence);
+        if( attackSequence == 1 && slime2_Engaged || attackSequence == 1 && slime3_Engaged || attackSequence == 1 && slime4_Engaged ||
           attackSequence == 1 && slimeEntrance1_Engaged || attackSequence == 1 && slimeEntrance2_Engaged) { //Each enemy has their own seperate condition
             is_playerMove = true;
             if (is_playerMove) {
@@ -34,6 +38,7 @@ function handleMouseClick(evt) {
                 }, 1800);
             }
         }
+        
         if(attackSequence == 1 && slimeEntrance2_Alive == true && slimeEntrance2_Engaged == true) {
             is_playerMove = true;
             if (is_playerMove) {
