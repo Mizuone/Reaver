@@ -8,10 +8,6 @@ if (typeof(Reaver === "undefined")) {
 (function() {
     //All Sprite Terrain Objects are loaded first
     
-    
-    
-    
-    
     //Player constructor Object
     /*This is used to create a player object, the object will have stats and a healthpool
     /*The Object will have x_y coordinates for attack animations, and general positioning
@@ -82,47 +78,88 @@ if (typeof(Reaver === "undefined")) {
     /*Object has x,y axis coordinates and battle system states
     /*Slime Object will has boolean values that handle if its moving, direction, and animation
     /* */
-    Reaver.Slime = function(slime) {
+    Reaver.Enemy = function(enemy) {
         //Loading of sprite object
-        if(slime === "slimeload") {
+        if(enemy === "slimeload") {
             this.slimeSprite = new Sprite("sprites/slime_spritesheet.png");
             this.slimeSprite.image.width = 32;
             this.slimeSprite.image.height = 32;
             console.log("Normal Slime Loaded");
         }
+        this.enemy_Melee = 5;
+        this.enemy_HP = 25;
         //If the slime is a elite enemy
         this.slimeSuper = function(makeSuper) {
-            if(makeSuper === "super") {
+            if(enemy === "super") {
                 this.slimeSprite = new Sprite("sprites/slimeSuper_spritesheet.png")    
                 console.log("Super Created");
             }
         }
         //Positioning of slime for axis values
-        this.slime_startY = null;
-        this.slime_startX = null;
+        this.enemy_startY = null;
+        this.enemy_startX = null;
         
         //if the slime is currently alive
-        this.slime_Alive = true;
+        this.enemy_Alive = true;
         
         //slime movement directions for pathing
-        this.slime_Left = false;
-        this.slime_Right = false;
-        this.slime_Up = false;
-        this.slime_Down = false;
+        this.enemy_Left = false;
+        this.enemy_Right = false;
+        this.enemy_Up = false;
+        this.enemy_Down = false;
         
         //Used for battle system, if the object is aggroed then display battle screen
         //is_slimeMove is if the slime is currently moving
-        this.slime_Engaged = false;
-        this.is_slimeMove = false;
+        this.enemy_Engaged = false;
+        this.is_enemyMove = false;
     }
+    /*Battle System Frame
+    *
+    */
+    Reaver.Battler = function() {
+        this.attackAnimation = function(Alive, Engaged, playerHealt, is_playerMov, playerMele, attackDisable, attackSho, enemy_hp, is_enemyMov, enemy_right, enemy_mele) {
+            console.log("inside Attack");
+                    if(attackSequence == 1  && this.Alive && this.Engaged) {
+                        console.log("Fired");
+                        this.is_playerMov = true;
+                        if (this.is_playerMov) {
+                            this.enemy_hp -= this.playerMele;
+                            setTimeout(function() {
+                                this.attackSho = false;
+                                this.is_playerMov = false;
+                                this.is_slimeMov = true;
+                                this.attackDisable = true;
+                                this.enemy_right = true;
+                                if (this.is_enemyMov && this.Alive) {
+                                    this.playerHealt -= this.enemy_mele;
+                                    setTimeout(function() {
+                                        this.attackDisable = false;
+                                        this.attackSho = true;
+                                        attackSequence = 0;
+                                    }, 1500 );
+                                }
+                            }, 2500);
+                        }
+                    }
+        /*this.handlemouseClick = function(e) {
+            if (this.evt.pageX >= 550 && this.evt.pageX <= 700 || this.evt.pageX >= 766 && this.evt.pageX <= 830 &&
+                this.evt.pageY >= 590 && this.evt.pageY <= 607 && battleScreen) {
+                attackSequence++;
+                this.attackAnimation(this.Alive, this.Engaged, this.playerHealt, this.is_playerMov, this.playerMele, this.attackDisable, this.attackSho, this.enemy_hp, this.is_enemyMov, this.enemy_right, this.enemy_mele);
+                console.log("Fire");
+                        }
+                    }*/
+                }
+        
+    }
+    var battleEvent = new Reaver.Battler();
     var Player = new Reaver.Player();
     
-    var slime = new Reaver.Slime("slimeload");
-    
-    
 })();
-
-
+    var battleEvent = new Reaver.Battler();
+  battleEvent.attackAnimation(slime1_Alive, slime1_Engaged, playerHealth, is_playerMove, playerMelee, attackDisabled, attackShow, slime1_HP, is_slimeMove, slime1_right, slime1_Melee);
+    
+    console.log(battleEvent);
     
     
     var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
@@ -140,8 +177,8 @@ if (typeof(Reaver === "undefined")) {
         var BLOCK_W = 32;
         var BLOCK_H = 32;
         var delayAmount = -2;
-        var player_coordinates_x = 10;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        var player_coordinates_y = 352; //352 starter //94 end
+        var player_coordinates_x = 150;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        var player_coordinates_y = 190; //352 starter //94 end
         var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
         var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
         playerAttackhit_Sprite.image.width = 32; playerAttackhit_Sprite.image.height = 32;
@@ -203,7 +240,36 @@ if (typeof(Reaver === "undefined")) {
                     var tile_y = y * BLOCK_H;
 
                     var tileType = mapforest[mapForestIndex];
+                    (function() {
+                        if (tileType >= 2) {
+                            if (player_coordinates_x + 10 > tile_x &&
+                                player_coordinates_x + 10 < tile_x + 32 &&
+                                player_coordinates_y + 30 > tile_y &&
+                                player_coordinates_y + 30 < tile_y + 32) {
+                                player_coordinates_y = tile_y - 30; //Top collision
+                            }
 
+                            if (player_coordinates_x + 10 > tile_x &&
+                                player_coordinates_x + 10 < tile_x + 32 &&
+                                player_coordinates_y > tile_y &&
+                                player_coordinates_y + 10 < tile_y + 32) { 
+                                player_coordinates_y = tile_y + 20; //Bottom Collision
+                            }
+                            if (player_coordinates_x - 15 > tile_x &&
+                                player_coordinates_x < tile_x + 32 &&
+                                player_coordinates_y + 15 > tile_y &&
+                                player_coordinates_y + 15 < tile_y + 32) { 
+                                player_coordinates_x = tile_x + 30;//Right Side Collsion
+                            }
+                            if (player_coordinates_x + 20 > tile_x &&
+                                player_coordinates_x < tile_x &&
+                                player_coordinates_y + 25 > tile_y &&
+                                player_coordinates_y + 25 < tile_y + 32) {
+                                player_coordinates_x = tile_x - 20; //Left Side collision
+                            }
+                        }
+                    })();
+                    
                     if (tileType == 0) {
                         grass.draw(tile_x, tile_y);
                     }
@@ -212,53 +278,34 @@ if (typeof(Reaver === "undefined")) {
                     }
                     if (tileType == 2) { //back grass cliff tile
                         cliffgrass_Back1.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Back1.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Back1.image.height) { player_coordinates_y = tile_y - 30;}
+                         
                     }
                     if (tileType == 3) { //Front grass cliff tile
                         cliffgrass_Front.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20; }
                     }
                     if (tileType == 4) {
                         cliffgrass_Left.draw(tile_x, tile_y);
-                         if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20; }
                     }
                     if (tileType == 5) {
                         cliffgrass_Right.draw(tile_x, tile_y);
-                         if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                     }
                    if (tileType == 6) {
                        cliff_Front.draw(tile_x, tile_y);
-                       if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20; }
-                       if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20;}
-                       if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                    }
                    if (tileType == 7) {
                        cliffgrass_Topright.draw(tile_x, tile_y);
-                       if (player_coordinates_x + 15 > tile_x && player_coordinates_x + 15 < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_y = tile_y - 30;}
-                       if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                    }
                   if (tileType == 8) {
                     cliffgrass_All.draw(tile_x, tile_y);
-                      if (player_coordinates_x + 15 > tile_x && player_coordinates_x + 15 < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_y = tile_y - 30;}
-                       if (player_coordinates_x > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
-                      if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20; }
-                      if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_x = tile_x - 20;}
                   }
                   if (tileType == 9) {
                       cliffgrass_Bottomright.draw(tile_x, tile_y);
-                      if (player_coordinates_x > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 25 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) {player_coordinates_x = tile_x + 30;}
-                      if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20;}
                   }
                  if (tileType == 10) {
                      cliffgrass_BottomLeft.draw(tile_x, tile_y);
-                     if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20;
-                        }
-                     if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_x = tile_x - 20;}
                  }
                  if (tileType == 11) {
                      cliffgrass_TopLeft.draw(tile_x, tile_y);
-                     if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20;} 
-                     if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_y = tile_y - 30;}
                   }
                 }
             }
@@ -664,6 +711,6 @@ if (typeof(Reaver === "undefined")) {
                 caveEntrance(); player_coordinates_x = 40; player_coordinates_y = 96; return;
             }
         };
-QUnit.test( "hello test", function( assert ) {
+/*QUnit.test( "hello test", function( assert ) {
   assert.ok( 1 == "1", "Passed!" );
-});
+});*/
