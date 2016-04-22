@@ -114,27 +114,29 @@ if (typeof(Reaver === "undefined")) {
         this.is_enemyMove = false;
     }
     /*Battle System Frame
-    *
+    *Constructor Object for Mouse click events, and methods for handling battle movements
+    *Attack Animation function is used to control the click for attacking an enemy, it also triggers player and enemy movement.
     */
     Reaver.Battler = function() {
         this.attackAnimation = function(Alive, Engaged, playerHealt, is_playerMov, playerMele, attackDisable, attackSho, enemy_hp, is_enemyMov, enemy_right, enemy_mele) {
             console.log("inside Attack");
-                    if(attackSequence == 1  && this.Alive && this.Engaged) {
+            is_playerMove = is_playerMov;
+                    if(attackSequence == 1 && Alive && Engaged) {
                         console.log("Fired");
-                        this.is_playerMov = true;
-                        if (this.is_playerMov) {
-                            this.enemy_hp -= this.playerMele;
+                        is_playerMov = true;
+                        if (is_playerMov) {
+                            enemy_hp -= playerMele;
                             setTimeout(function() {
-                                this.attackSho = false;
-                                this.is_playerMov = false;
-                                this.is_slimeMov = true;
-                                this.attackDisable = true;
-                                this.enemy_right = true;
-                                if (this.is_enemyMov && this.Alive) {
-                                    this.playerHealt -= this.enemy_mele;
+                                attackSho = false;
+                                is_playerMov = false;
+                                is_enemyMov = true;
+                                attackDisable = true;
+                                enemy_right = true;
+                                if (is_enemyMov && Alive) {
+                                    playerHealt -= enemy_mele;
                                     setTimeout(function() {
-                                        this.attackDisable = false;
-                                        this.attackSho = true;
+                                        attackDisable = false;
+                                        attackSho = true;
                                         attackSequence = 0;
                                     }, 1500 );
                                 }
@@ -152,13 +154,45 @@ if (typeof(Reaver === "undefined")) {
                 }
         
     }
-    var battleEvent = new Reaver.Battler();
     var Player = new Reaver.Player();
     
 })();
-    var battleEvent = new Reaver.Battler();
-  battleEvent.attackAnimation(slime1_Alive, slime1_Engaged, playerHealth, is_playerMove, playerMelee, attackDisabled, attackShow, slime1_HP, is_slimeMove, slime1_right, slime1_Melee);
-    
+  var battleEvent = new Reaver.Battler();
+    //Global Namespace function
+    function attackAnimation(Alive, Engaged, playerHealt, is_playerMov, playerMele, attackDisable, attackSho, enemy_hp, is_enemyMov, enemy_right, enemy_mele) {
+            console.log("inside Attack");
+                    if(attackSequence == 1 && Alive && Engaged) {
+                        console.log("Fired");
+                        is_playerMov = true;
+                        console.log(is_playerMov);
+                        if (is_playerMov) {
+                            enemy_hp -= playerMele;
+                            setTimeout(function() {
+                                attackSho = false;
+                                is_playerMov = false;
+                                is_enemyMov = true;
+                                attackDisable = true;
+                                enemy_right = true;
+                                if (is_enemyMov && Alive) {
+                                    playerHealt -= enemy_mele;
+                                    setTimeout(function() {
+                                        attackDisable = false;
+                                        attackSho = true;
+                                        attackSequence = 0;
+                                    }, 1500 );
+                                }
+                            }, 2500);
+                        }
+                    }
+        /*this.handlemouseClick = function(e) {
+            if (this.evt.pageX >= 550 && this.evt.pageX <= 700 || this.evt.pageX >= 766 && this.evt.pageX <= 830 &&
+                this.evt.pageY >= 590 && this.evt.pageY <= 607 && battleScreen) {
+                attackSequence++;
+                this.attackAnimation(this.Alive, this.Engaged, this.playerHealt, this.is_playerMov, this.playerMele, this.attackDisable, this.attackSho, this.enemy_hp, this.is_enemyMov, this.enemy_right, this.enemy_mele);
+                console.log("Fire");
+                        }
+                    }*/
+                }
     console.log(battleEvent);
     
     
@@ -211,6 +245,8 @@ if (typeof(Reaver === "undefined")) {
     if (shadewalker2_Alive) { var shadewalker2_Melee = 10, shadewalker2_HP = 60;}
     if (shadekeeper1_Alive) { var shadekeeper1_Melee = 20, shadekeeper1_HP = 90;}
     
+
+
   var mapforest = [ 0,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,
                     5,6,6,6,6,6,6,6,6,6,6,6,4,0,0,0,0,3,3,3,
                     5,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,5,6,6,6,
