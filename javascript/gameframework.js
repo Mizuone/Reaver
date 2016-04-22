@@ -15,6 +15,10 @@ function handleMouseClick(evt) {
         console.log(slime1_Alive);
         console.log(slime1_Engaged);
         console.log(attackSequence);
+        console.log(battleScreen);
+        
+        attackAnimation(slime1_Alive, slime1_Engaged, playerHealth, is_playerMove, playerMelee, attackDisabled, attackShow, slime1_HP, is_slimeMove, slime1_right, slime1_Melee);
+        console.log(is_playerMove);
         if( attackSequence == 1 && slime2_Engaged || attackSequence == 1 && slime3_Engaged || attackSequence == 1 && slime4_Engaged ||
           attackSequence == 1 && slimeEntrance1_Engaged || attackSequence == 1 && slimeEntrance2_Engaged) { //Each enemy has their own seperate condition
             is_playerMove = true;
