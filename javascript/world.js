@@ -158,8 +158,16 @@ if (typeof(Reaver === "undefined")) {
     
 })();
   var battleEvent = new Reaver.Battler();
-
-    function playerMoveChange(changeMove) {     //function used to change the value of is_playerMove boolean. 1 = true anything else = false
+/*Battle System Attack Click Event Structure
+/*PlayerMoveChange will change status of if player is moving
+/*enemyMoveChange will change status of if enemy is moving
+/*enemyRightChange will change the direction of enemy inside of the battle map
+/*enemyDamage will accept a numeric value and minus that value from playerMelee
+/*enemyHit will accept a numeric value and minus it from PlayerHealth
+/*checkAttack is the main function that calls upon the above functions for processing
+/*To use the function: variable_direction, variable_enemyHP = checkAttack(enemy_Alive, enemy_Engaged, enemy_HP, enemy_Direction, enemy_Attack);
+/*/
+    function playerMoveChange(changeMove) { 
         is_playerMove = changeMove;
         if (changeMove == 1) {
             changeMove = true;
@@ -168,7 +176,7 @@ if (typeof(Reaver === "undefined")) {
         }
         return changeMove;
     };
-    function enemyMoveChange(enemyMovement) {   //function 
+    function enemyMoveChange(enemyMovement) {
         if (enemyMovement == 1) {
             return true;
         }else {
@@ -183,13 +191,11 @@ if (typeof(Reaver === "undefined")) {
         }
     };
     function enemyDamage(enemy_hp) {
-        //if multiple different types of mobs pass in value to match hp
        return enemy_hp -= playerMelee;
     };
     function enemyHit(enemy_Attack) {
         return playerHealth -= enemy_Attack;
     }
-    //Create enemymove function for boolean control
     function checkAttack(Alive, Engaged, enemyHP, enemyDirection, enemyAttack) {
         var enemyHealth = enemyHP;
         var enemyPlace = enemyDirection;
