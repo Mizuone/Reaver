@@ -8,18 +8,17 @@ var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, 
 
 function handleMouseClick(evt) {
     //triggers when player clicks attack
-    if (evt.pageX >= 550 && evt.pageX <= 700 || evt.pageX >= 766 && evt.pageX <= 830 &&
+    if (evt.pageX >= 550 && evt.pageX <= 700 && battleScreen || evt.pageX >= 766 && evt.pageX <= 830 &&
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
         attackSequence++;
-        console.log(slime1_Alive);
-        console.log(slime1_Engaged);
-        console.log(attackSequence);
-        console.log(battleScreen);
-        
-        attackAnimation(slime1_Alive, slime1_Engaged, playerHealth, is_playerMove, playerMelee, attackDisabled, attackShow, slime1_HP, is_slimeMove, slime1_right, slime1_Melee);
-        console.log(is_playerMove);
-        if( attackSequence == 1 && slime2_Engaged || attackSequence == 1 && slime3_Engaged || attackSequence == 1 && slime4_Engaged ||
+        slime1_right, slime1_HP = checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
+        slime1_right, slime2_HP = checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_Right, slime2_Melee); //Slime 2 Attack Event
+        slime1_right, slime3_HP = checkAttack(slime3_Alive, slime3_Engaged, slime3_HP, slime1_Right, slime3_Melee); //Slime 3 Attack Event
+        if (slime2_Engaged) {
+            console.log("You're fighting slime2!");
+        }
+        if(attackSequence == 1 && slime4_Engaged ||
           attackSequence == 1 && slimeEntrance1_Engaged || attackSequence == 1 && slimeEntrance2_Engaged) { //Each enemy has their own seperate condition
             is_playerMove = true;
             if (is_playerMove) {
