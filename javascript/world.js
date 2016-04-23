@@ -158,42 +158,68 @@ if (typeof(Reaver === "undefined")) {
     
 })();
   var battleEvent = new Reaver.Battler();
-    //Global Namespace function
-    function attackAnimation(Alive, Engaged, playerHealt, is_playerMov, playerMele, attackDisable, attackSho, enemy_hp, is_enemyMov, enemy_right, enemy_mele) {
-            console.log("inside Attack");
-                    if(attackSequence == 1 && Alive && Engaged) {
-                        console.log("Fired");
-                        is_playerMov = true;
-                        console.log(is_playerMov);
-                        if (is_playerMov) {
-                            enemy_hp -= playerMele;
+
+    function playerMoveChange(changeMove) {     //function used to change the value of is_playerMove boolean. 1 = true anything else = false
+        is_playerMove = changeMove;
+        if (changeMove == 1) {
+            changeMove = true;
+        }else {
+            changeMove = false;
+        }
+        return changeMove;
+    };
+    function enemyMoveChange(enemyMovement) {   //function 
+        if (enemyMovement == 1) {
+            return true;
+        }else {
+            return false;
+        }
+    };
+    function enemyRightChange(enemyDirection) {
+        if (enemyDirection == 1) {
+            return true;
+        }else {
+            return false;
+        }
+    };
+    function enemyDamage(enemy_hp) {
+        //if multiple different types of mobs pass in value to match hp
+       return enemy_hp -= playerMelee;
+    };
+    function enemyHit(enemy_Attack) {
+        return playerHealth -= enemy_Attack;
+    }
+    //Create enemymove function for boolean control
+    function checkAttack(Alive, Engaged, enemyHP, enemyDirection, enemyAttack) {
+        var enemyHealth = enemyHP;
+        var enemyPlace = enemyDirection;
+        var enemyDoAttack = enemyAttack;
+        if (attackSequence === 1 && Alive && Engaged) {
+            playerMoveChange(1);
+            if (is_playerMove) {
+                enemyHealth = enemyDamage(enemyHP);
+                setTimeout(function() {
+                    attackShow = false;
+                    is_playerMove = false;
+                    is_slimeMove = enemyMoveChange(1);
+                    attackDisabled = true;
+                    enemyPlace = true;
+                        if (is_slimeMove && Alive) {
+                            enemyDoAttack = enemyHit(enemyAttack);
                             setTimeout(function() {
-                                attackSho = false;
-                                is_playerMov = false;
-                                is_enemyMov = true;
-                                attackDisable = true;
-                                enemy_right = true;
-                                if (is_enemyMov && Alive) {
-                                    playerHealt -= enemy_mele;
-                                    setTimeout(function() {
-                                        attackDisable = false;
-                                        attackSho = true;
-                                        attackSequence = 0;
-                                    }, 1500 );
-                                }
-                            }, 2500);
-                        }
+                            attackDisabled = false;
+                            attackShow = true;
+                            attackSequence = 0;
+                        }, 1500 );
                     }
-        /*this.handlemouseClick = function(e) {
-            if (this.evt.pageX >= 550 && this.evt.pageX <= 700 || this.evt.pageX >= 766 && this.evt.pageX <= 830 &&
-                this.evt.pageY >= 590 && this.evt.pageY <= 607 && battleScreen) {
-                attackSequence++;
-                this.attackAnimation(this.Alive, this.Engaged, this.playerHealt, this.is_playerMov, this.playerMele, this.attackDisable, this.attackSho, this.enemy_hp, this.is_enemyMov, this.enemy_right, this.enemy_mele);
-                console.log("Fire");
-                        }
-                    }*/
-                }
-    console.log(battleEvent);
+                }, 2500);
+            }
+        }
+        if (enemyHealth === undefined || enemyHealth <= 0) {
+            enemyHealth = 0;
+        }
+        return enemyDoAttack, enemyPlace, Alive, Engaged, enemyHealth;
+    };
     
     
     var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
@@ -211,7 +237,7 @@ if (typeof(Reaver === "undefined")) {
         var BLOCK_W = 32;
         var BLOCK_H = 32;
         var delayAmount = -2;
-        var player_coordinates_x = 150;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        var player_coordinates_x = 500;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
         var player_coordinates_y = 190; //352 starter //94 end
         var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
         var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
