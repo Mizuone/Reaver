@@ -45,12 +45,13 @@ if (typeof(Reaver === "undefined")) {
         
         //Player Collision with world or enemey object
         //numeric values will be changed later, for now hard values will be in for width and height
-        this.player_Objectcollision = function(player_x, player_y, object_x, object_y) {
+        this.player_ObjectcollisionY = function(player_x, player_y, object_x, object_y) {
             if (player_x + 10 > object_x &&
                 player_x + 10 < object_x + 32 &&
                 player_y + 30 > object_y &&
                 player_y + 30 < object_y + 32) {
                 player_y = object_y - 30; //Top collision
+                return player_y;
             }
             
             if (player_x + 10 > object_x &&
@@ -58,19 +59,26 @@ if (typeof(Reaver === "undefined")) {
                 player_y > object_y &&
                 player_y + 10 < object_y + 32) { 
                 player_y = object_y + 20; //Bottom Collision
+                return player_y;
             }
-            if (player_x > object_x &&
+            return player_y;
+        }
+        this.player_ObjectcollisionX = function(player_x, player_y, object_x, object_y) {
+            if (player_x - 15 > object_x &&
                 player_x < object_x + 32 &&
                 player_y + 15 > object_y &&
                 player_y + 15 < object_y + 32) { 
                 player_x = object_x + 30;//Right Side Collsion
+                return player_x;
             }
             if (player_x + 20 > object_x &&
                 player_x < object_x &&
-                player_y + 30 > object_y &&
-                player_y + 30 < object_y + 32) {
+                player_y + 25 > object_y &&
+                player_y + 25 < object_y + 32) {
                 player_x = object_x - 20; //Left Side collision
+                return player_x;
             }
+            return player_x;
         }
     };
     //Slime Constructor Object
@@ -154,10 +162,11 @@ if (typeof(Reaver === "undefined")) {
                 }
         
     }
-    var Player = new Reaver.Player();
+    
     
 })();
-  var battleEvent = new Reaver.Battler();
+    var Player = new Reaver.Player();
+    var battleEvent = new Reaver.Battler();
 /*Battle System Attack Click Event Structure
 /*PlayerMoveChange will change status of if player is moving
 /*enemyMoveChange will change status of if enemy is moving
@@ -204,30 +213,140 @@ if (typeof(Reaver === "undefined")) {
             playerMoveChange(1);
             if (is_playerMove) {
                 enemyHealth = enemyDamage(enemyHP);
+                stabilize();
                 setTimeout(function() {
                     attackShow = false;
                     is_playerMove = false;
                     is_slimeMove = enemyMoveChange(1);
                     attackDisabled = true;
                     enemyPlace = true;
+                    stabilize();
                         if (is_slimeMove && Alive) {
                             enemyDoAttack = enemyHit(enemyAttack);
                             setTimeout(function() {
                             attackDisabled = false;
                             attackShow = true;
                             attackSequence = 0;
+                            enemyPlace = false;
                         }, 1500 );
                     }
                 }, 2500);
             }
         }
-        if (enemyHealth === undefined || enemyHealth <= 0) {
-            enemyHealth = 0;
+        //Resets all values to a normal cycle when slime hp is undefined or < 0
+        function stabilize() {
+            if (enemyHealth === undefined || enemyHealth <= 0) {
+                enemyHealth = 0;
+                is_slimeMove = false;
+            setTimeout(function() {
+                    playerMoveChange(1);
+            if (is_playerMove) {
+                    attackShow = false;
+                    is_playerMove = false;
+                    is_slimeMove = enemyMoveChange(1);
+                    attackDisabled = true;
+                    enemyPlace = true;
+                        if (is_slimeMove && Alive) {
+                            setTimeout(function() {
+                            attackDisabled = false;
+                            attackShow = true;
+                            attackSequence = 0;
+                            enemyPlace = false;
+                        }, 100 );
+                    }
+                }
+            }, 200)
+            
+            }
         }
         return enemyDoAttack, enemyPlace, Alive, Engaged, enemyHealth;
     };
+function enemyBattleMovement(Engaged, drawType) {
+    var enemyAnimation = drawType;
+    var enemyEngagement = Engaged;
+    var resetEnemyPositionX = 250;
+    var resetEnemyPositionY = 250;
     
-    
+    if (enemyAnimation === "slime") {slimeSprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    if (enemyAnimation === "slimesuper") {slimeSuper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    if (enemyAnimation === "shadewalker") {shadeWalker_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    if (enemyAnimation === "shadekeeper") {shadeKeeper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    if (enemyEngagement) {
+                if (is_slimeMove) {
+                    enemyAnimation;
+                    if (slime1_x < 350 && slime1_right == true) {
+                        slime1_x += 2;
+                        if (slime1_x >= 325) {
+                            slime1_right = false;
+                            slime1_left = true;
+                        }
+                    }
+                    if (slime1_x <= 330 && slime1_left == true) {
+                        slime1_x -= 1.5;
+                        if (slime1_x <= 250) {
+                            slime1_left = false;
+                            slime1_right = true;
+                            is_slimeMove = false;
+                        }
+                    }
+                } else {
+                    slime1_x = resetEnemyPositionX;
+                    slime1_y = resetEnemyPositionY;
+                    enemyAnimation;
+                    if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
+                        player_Attackhit = true;
+                        if(player_Attackhit) {
+                            playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
+                            setTimeout(function(){
+                                player_Attackhit = false;
+                            }, 200);
+                        }
+                    }
+                }
+        }
+    return enemyEngagement;
+};
+
+        function cancelAnimation(id) {
+            var requestID = requestAnimationFrame(id);
+            return cancelAnimationFrame(requestID);
+        }
+        function resetPlayerPositionX(playerx, playery) {
+            return playerx, playery;
+        }
+        function resetPlayerPositionY(playery) {
+            return playery;
+        }
+        function grantXP(xp) {
+            return xp += xp;
+        }
+        function grantGold(gold) {
+            return gold += gold;
+        }
+        function resetSlime(pos) {
+            return pos;
+        }
+
+        function registerDeath(enemyhp, enemyAlive, enemyEngage, callbackFun) {
+            var enemyisAlive = enemyAlive;
+            var enemyisEngaged = enemyEngage;
+                    setTimeout(function() { 
+                        enemyisAlive = false;
+                        enemyEngage = false;
+                        is_slimeMove = false;
+                        battleScreen = false;
+                        attackDisabled = false;
+                        attackSequence = 0;
+                        callbackFun;
+                        playerMonitor();
+                        console.log("Fired");
+                    }, 250); 
+            return false;      
+        }
+
+
+
+
     var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
     //Grass Terrain Sprties
         var cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), 
@@ -243,8 +362,8 @@ if (typeof(Reaver === "undefined")) {
         var BLOCK_W = 32;
         var BLOCK_H = 32;
         var delayAmount = -2;
-        var player_coordinates_x = 500;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        var player_coordinates_y = 190; //352 starter //94 end
+        var player_coordinates_x = 10;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        var player_coordinates_y = 352; //352 starter //94 end
         var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
         var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
         playerAttackhit_Sprite.image.width = 32; playerAttackhit_Sprite.image.height = 32;
@@ -310,31 +429,8 @@ if (typeof(Reaver === "undefined")) {
                     var tileType = mapforest[mapForestIndex];
                     (function() {
                         if (tileType >= 2) {
-                            if (player_coordinates_x + 10 > tile_x &&
-                                player_coordinates_x + 10 < tile_x + 32 &&
-                                player_coordinates_y + 30 > tile_y &&
-                                player_coordinates_y + 30 < tile_y + 32) {
-                                player_coordinates_y = tile_y - 30; //Top collision
-                            }
-
-                            if (player_coordinates_x + 10 > tile_x &&
-                                player_coordinates_x + 10 < tile_x + 32 &&
-                                player_coordinates_y > tile_y &&
-                                player_coordinates_y + 10 < tile_y + 32) { 
-                                player_coordinates_y = tile_y + 20; //Bottom Collision
-                            }
-                            if (player_coordinates_x - 15 > tile_x &&
-                                player_coordinates_x < tile_x + 32 &&
-                                player_coordinates_y + 15 > tile_y &&
-                                player_coordinates_y + 15 < tile_y + 32) { 
-                                player_coordinates_x = tile_x + 30;//Right Side Collsion
-                            }
-                            if (player_coordinates_x + 20 > tile_x &&
-                                player_coordinates_x < tile_x &&
-                                player_coordinates_y + 25 > tile_y &&
-                                player_coordinates_y + 25 < tile_y + 32) {
-                                player_coordinates_x = tile_x - 20; //Left Side collision
-                            }
+                            player_coordinates_x = Player.player_ObjectcollisionX(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
+                            player_coordinates_y = Player.player_ObjectcollisionY(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
                         }
                     })();
                     
@@ -346,7 +442,7 @@ if (typeof(Reaver === "undefined")) {
                     }
                     if (tileType == 2) { //back grass cliff tile
                         cliffgrass_Back1.draw(tile_x, tile_y);
-                         
+                        //player_coordinates_x, player_coordinates_y = Player.player_ObjectcollisionX(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
                     }
                     if (tileType == 3) { //Front grass cliff tile
                         cliffgrass_Front.draw(tile_x, tile_y);
@@ -356,6 +452,7 @@ if (typeof(Reaver === "undefined")) {
                     }
                     if (tileType == 5) {
                         cliffgrass_Right.draw(tile_x, tile_y);
+                        
                     }
                    if (tileType == 6) {
                        cliff_Front.draw(tile_x, tile_y);
@@ -468,8 +565,6 @@ if (typeof(Reaver === "undefined")) {
                 
                 //Triggers when attack is clicked
                 if (is_playerMove) {
-                     
-                    
                     player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); //Redraws based off player x, and player y /
                     
                     if (player_coordinates_x < 355 && player_moveLeft == true) { 
@@ -493,149 +588,29 @@ if (typeof(Reaver === "undefined")) {
                    player_coordinates_x = 350;
                    player_coordinates_y = 250;
                 }
-            if (slime1_Engaged || slime2_Engaged || slime3_Engaged || slime4_Engaged || slimeEntrance1_Engaged) {
-                if (is_slimeMove) {
-                     slimeSprite.draw(slime1_x, slime1_y, [6,7,8]);
-                    if (slime1_x < 350 && slime1_right == true) {
-                        slime1_x += 2;
-                        if (slime1_x >= 325) {
-                            slime1_right = false;
-                            slime1_left = true;
-                        }
-                    }
-                    if (slime1_x <= 330 && slime1_left == true) {
-                        slime1_x -= 1.5;
-                        if (slime1_x <= 250) {
-                            slime1_left = false;
-                            slime1_right = true;
-                            is_slimeMove = false;
-                        }
-                    }
-                } else {
-                    
-                    slimeSprite.draw(250, 250, [6,7,8]);
-                    slime1_x = 250;
-                    slime1_y = 250;
-                    if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
-                        player_Attackhit = true;
-                        if(player_Attackhit) {
-                            playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
-                            setTimeout(function(){
-                                player_Attackhit = false;
-                            }, 200);
-                        }
-                    }
-                }
+            if(slime1_Engaged) {enemyBattleMovement(slime1_Engaged, "slime");}
+            if(slime2_Engaged) {enemyBattleMovement(slime2_Engaged, "slime");}
+            if(slime3_Engaged) {enemyBattleMovement(slime3_Engaged, "slime");}
+            if(slime4_Engaged) {enemyBattleMovement(slime4_Engaged, "slime");}
+            if(slimeEntrance1_Engaged) {enemyBattleMovement(slimeEntrance1_Engaged, "slime");}
+            if(slimeEntrance2_Engaged) {enemyBattleMovement(slimeEntrance2_Engaged, "slimesuper");}
+            if(shadewalker1_Engaged) {enemyBattleMovement(shadewalker1_Engaged, "shadewalker");}
+            if(shadewalker2_Engaged) {enemyBattleMovement(shadewalker2_Engaged, "shadewalker");}
+            if(shadekeeper1_Engaged) {enemyBattleMovement(shadekeeper1_Engaged, "shadekeeper");}
+
+            if(slime1_HP <= 0 && slime1_Alive && player_coordinates_x === 350) {
+                slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(150, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimationFrame(requestID); slime1_Engaged, slime1_Alive = registerDeath(slime1_HP, slime1_Alive, slime1_Engaged, drawForest());return;
             }
-                
-            if (slimeEntrance2_Engaged) {
-                if (is_slimeMove) {
-                         slimeSuper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);
-                        if (slime1_x < 350 && slime1_right == true) {
-                            slime1_x += 2;
-                            if (slime1_x >= 325) {
-                                slime1_right = false;
-                                slime1_left = true;
-                            }
-                        }
-                        if (slime1_x <= 330 && slime1_left == true) {
-                            slime1_x -= 1.5;
-                            if (slime1_x <= 250) {
-                                slime1_left = false;
-                                slime1_right = true;
-                                is_slimeMove = false;
-                            }
-                        }
-                    }
-                    else {
-                        slimeSuper_Sprite.draw(250, 250, [6,7,8]);
-                        slime1_x = 250;
-                        slime1_y = 250;
-                        if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
-                            player_Attackhit = true;
-                            if(player_Attackhit) {
-                                playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
-                                setTimeout(function(){
-                                    player_Attackhit = false;
-                                }, 200);
-                            }
-                        }
-                    }
+            /*if(slime2_HP <= 0 && slime2_Alive && player_coordinates_x === 350) {
+                slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(450, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimation(drawBattle); slime2_Engaged, slime2_Alive = registerDeath(slime2_HP, slime2_Alive, slime2_Engaged, drawForest());return;
+            }*/
+            /*if(slime3_HP <= 0 && slime3_Alive && player_coordinates_x === 350) {
+                slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(150, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimation(drawBattle); slime1_Engaged, slime1_Alive = registerDeath(slime1_HP, slime1_Alive, slime1_Engaged, drawForest());return;
             }
-                if (shadewalker1_Engaged || shadewalker2_Engaged) {
-                    if (is_slimeMove) {
-                             shadeWalker_Sprite.draw(slime1_x, slime1_y, [6,7,8]);
-                            if (slime1_x < 350 && slime1_right == true) {
-                                slime1_x += 2;
-                                if (slime1_x >= 325) {
-                                    slime1_right = false;
-                                    slime1_left = true;
-                                }
-                            }
-                            if (slime1_x <= 330 && slime1_left == true) {
-                                slime1_x -= 1.5;
-                                if (slime1_x <= 250) {
-                                    slime1_left = false;
-                                    slime1_right = true;
-                                    is_slimeMove = false;
-                                }
-                            }
-                        }
-                        else {
-                            shadeWalker_Sprite.draw(250, 250, [6,7,8]);
-                            slime1_x = 250;
-                            slime1_y = 250;
-                            if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
-                                player_Attackhit = true;
-                                if(player_Attackhit) {
-                                    playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
-                                    setTimeout(function(){
-                                        player_Attackhit = false;
-                                    }, 200);
-                                }
-                            }
-                        }
-                }
-            if (shadekeeper1_Engaged || shadekeeper1_Engaged) {
-                    if (is_slimeMove) {
-                             shadeKeeper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);
-                            if (slime1_x < 350 && slime1_right == true) {
-                                slime1_x += 2;
-                                if (slime1_x >= 325) {
-                                    slime1_right = false;
-                                    slime1_left = true;
-                                }
-                            }
-                            if (slime1_x <= 330 && slime1_left == true) {
-                                slime1_x -= 1.5;
-                                if (slime1_x <= 250) {
-                                    slime1_left = false;
-                                    slime1_right = true;
-                                    is_slimeMove = false;
-                                }
-                            }
-                        }
-                        else {
-                            shadeKeeper_Sprite.draw(250, 250, [6,7,8]);
-                            slime1_x = 250;
-                            slime1_y = 250;
-                            if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
-                                player_Attackhit = true;
-                                if(player_Attackhit) {
-                                    playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
-                                    setTimeout(function(){
-                                        player_Attackhit = false;
-                                    }, 200);
-                                }
-                            }
-                        }
-                }
-            if (slime1_HP <= 0 && slime1_Alive && player_coordinates_x == 350) {
-                slime1_HP = 0; player_coordinates_x = 150; player_coordinates_y = 150; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slime1_Alive = false; is_slimeMove = false; slime1_Engaged = false; battleScreen = false; attackDisabled = false; attackSequence = 0; drawForest(); playerMonitor(); return;}, 1000); 
-            }
-            if (slime2_HP <= 0 && slime2_Alive && player_coordinates_x == 350) {
-                slime2_HP = 0; slime1_x = 150; slime1_y = 150; player_coordinates_x = 450; player_coordinates_y = 150; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slime2_Alive = false; is_slimeMove = false; slime2_Engaged = false;  battleScreen = false; attackSequence = 0; attackDisabled = false; drawForest(); playerMonitor(); return;}, 1000); 
-            }
+            if(slime4_HP <= 0 && slime4_Alive && player_coordinates_x === 350) {
+                slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(150, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimation(drawBattle); slime1_Engaged, slime1_Alive = registerDeath(slime1_HP, slime1_Alive, slime1_Engaged, drawForest());return;
+            }*/
+                                                 
             if (slime3_HP <= 0 && slime3_Alive && player_coordinates_x == 350) {
                 slime3_HP = 0; slime1_x = 150; slime1_y = 150; player_coordinates_x = 285; player_coordinates_y = 290; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slime3_Alive = false; is_slimeMove = false; slime3_Engaged = false;  battleScreen = false; attackSequence = 0; attackDisabled = false; drawForest(); playerMonitor(); return;}, 1000);
             } 
