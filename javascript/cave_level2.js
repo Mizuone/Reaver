@@ -27,18 +27,14 @@ var mapCave_level2 = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
                     var tile_y = y * BLOCK_H;
 
                     var tileType = mapCave_level2[mapCave2Index];
-                    
+                    (function() {
+                        if (tileType == 0 || tileType == 2) {
+                            player_coordinates_x = Player.player_ObjectcollisionX(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
+                            player_coordinates_y = Player.player_ObjectcollisionY(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
+                        }
+                    })();
                     if (tileType == 0) { //Cave Wall 0
                         cave_Terrain.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x  && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20; }
-                        if (player_coordinates_x > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
-                        if (player_coordinates_x + 10 > tile_x &&
-                           player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width &&
-                           player_coordinates_y > tile_y &&
-                           player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) {
-                            
-                            player_coordinates_y = tile_y + 25;
-                        }
                     }
                     if (tileType == 1) { //Cave Terrian 1
                         cave_Wall.draw(tile_x, tile_y);
@@ -46,14 +42,6 @@ var mapCave_level2 = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
                     }
                     if (tileType == 2) { //Cave Ceiling 2
                         cave_ceiling.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20; }
-                        if (player_coordinates_x > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
-                        if (player_coordinates_x + 10 > tile_x &&
-                         player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width &&
-                         player_coordinates_y + 30 > tile_y &&
-                         player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {
-                         player_coordinates_y = tile_y - 30;
-	                   }
                     }
                     if (tileType == 3) { //Black Block 3
                         blackBlock.draw(tile_x, tile_y);
@@ -99,8 +87,8 @@ function cave_level2() {
                     }
                 }
             }
-    console.log(player_coordinates_x + "X");
-    console.log(player_coordinates_y + "Y");
+    //console.log(player_coordinates_x + "X");
+    //console.log(player_coordinates_y + "Y");
      //260 X
      //200 Y
     if (player_coordinates_x >= 440 && player_coordinates_x <= 470 &&
