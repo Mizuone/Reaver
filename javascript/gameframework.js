@@ -1,6 +1,6 @@
 
 var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, playerHealth = 100, playerMaxHealth = 100, playerLevel = 1, nextLevel =                                                                                                                                                                           [50,150,275,350,500,650,875,950,1050,1300,1500,
-1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 8; 
+1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold = 0, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 8 + 100; 
 
 
 
@@ -11,121 +11,17 @@ function handleMouseClick(evt) {
     if (evt.pageX >= 550 && evt.pageX <= 700 && battleScreen || evt.pageX >= 766 && evt.pageX <= 830 &&
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
+         console.log(attackSequence);
         attackSequence++;
         slime1_right, slime1_HP = checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
-        slime1_right, slime2_HP = checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_Right, slime2_Melee); //Slime 2 Attack Event
-        slime1_right, slime3_HP = checkAttack(slime3_Alive, slime3_Engaged, slime3_HP, slime1_Right, slime3_Melee); //Slime 3 Attack Event
-        if (slime2_Engaged) {
-            console.log("You're fighting slime2!");
-        }
-        if(attackSequence == 1 && slime4_Engaged ||
-          attackSequence == 1 && slimeEntrance1_Engaged || attackSequence == 1 && slimeEntrance2_Engaged) { //Each enemy has their own seperate condition
-            is_playerMove = true;
-            if (is_playerMove) {
-                setTimeout(function() {
-                if (slime1_Engaged){slime1_HP -= playerMelee;} if (slime2_Engaged){slime2_HP -= playerMelee;} if (slime3_Engaged){slime3_HP -= playerMelee;} if (slime4_Engaged){slime4_HP -= playerMelee;}if (slimeEntrance1_Engaged){slimeEntrance1_HP -= playerMelee;} //Triggers damage event against enemy
-                }, 800);
-                setTimeout(function() {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = true;
-                    attackDisabled = true;
-                    slime1_right = true;
-                    if (is_slimeMove && slime1_Engaged || slime2_Engaged || slime3_Engaged || slime4_Engaged ) {
-                        if (slime1_Engaged){playerHealth -= slime1_Melee;} if (slime2_Engaged){playerHealth -= slime2_Melee;} if (slime3_Engaged){playerHealth -= slime3_Melee;} if (slime4_Engaged){playerHealth -= slime4_Melee;}if (slimeEntrance1_Engaged){playerHealth -= slimeEntrance1_Melee;} //Triggers damage event against player
-                        setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                        }, 1300 );}
-                }, 1800);
-            }
-        }
-        
-        if(attackSequence == 1 && slimeEntrance2_Alive == true && slimeEntrance2_Engaged == true) {
-            is_playerMove = true;
-            if (is_playerMove) {
-                slimeEntrance2_HP -= playerMelee;
-                setTimeout(function() {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = true;
-                    attackDisabled = true;
-                    slime1_right = true;
-                    if (is_slimeMove && slimeEntrance2_Alive) {
-                        playerHealth -= slimeEntrance2_Melee;
-                        setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                        }, 1500 );
-                    }
-                }, 2500);
-            }
-        }
-        if(attackSequence == 1 && shadewalker1_Alive == true && shadewalker1_Engaged == true) {
-            is_playerMove = true;
-            if (is_playerMove) {
-                shadewalker1_HP -= playerMelee;
-                setTimeout(function() {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = true;
-                    attackDisabled = true;
-                    shadewalker1_right = true;
-                    if (is_slimeMove && shadewalker1_Alive) {
-                        playerHealth -= shadewalker1_Melee;
-                        setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                        }, 1500 );
-                    }
-                }, 2500);
-            }
-        }
-        if(attackSequence == 1 && shadewalker2_Alive == true && shadewalker2_Engaged == true) {
-            is_playerMove = true;
-            if (is_playerMove) {
-                shadewalker2_HP -= playerMelee;
-                setTimeout(function() {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = true;
-                    attackDisabled = true;
-                    shadewalker2_right = true;
-                    if (is_slimeMove && shadewalker2_Alive) {
-                        playerHealth -= shadewalker2_Melee;
-                        setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                        }, 1500 );
-                    }
-                }, 2500);
-            }
-        }
-        if(attackSequence == 1 && shadekeeper1_Alive == true && shadekeeper1_Engaged == true) {
-            is_playerMove = true;
-            if (is_playerMove) {
-                shadekeeper1_HP -= playerMelee;
-                setTimeout(function() {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = true;
-                    attackDisabled = true;
-                    shadekeeper1_right = true;
-                    if (is_slimeMove && shadekeeper1_Alive) {
-                        playerHealth -= shadekeeper1_Melee;
-                        setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                        }, 1500 );
-                    }
-                }, 2500);
-            }
-        }
+        slime1_right, slime2_HP = checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_right, slime2_Melee); //Slime 2 Attack Event
+        slime1_right, slime3_HP = checkAttack(slime3_Alive, slime3_Engaged, slime3_HP, slime1_right, slime3_Melee); //Slime 3 Attack Event
+        slime1_right, slime4_HP = checkAttack(slime4_Alive, slime4_Engaged, slime4_HP, slime1_right, slime4_Melee); //Slime 4 Attack Event
+        slime1_right, slimeEntrance1_HP = checkAttack(slimeEntrance1_Alive, slimeEntrance1_Engaged, slimeEntrance1_HP, slime1_right, slimeEntrance1_Melee); //Cave Entrance normal Slime
+        slime1_right, slimeEntrance2_HP = checkAttack(slimeEntrance2_Alive, slimeEntrance2_Engaged, slimeEntrance2_HP, slime1_right, slimeEntrance2_Melee); //Super Slime
+        shadewalker1_Right, shadewalker1_HP = checkAttack(shadewalker1_Alive, shadewalker1_Engaged, shadewalker1_HP, shadewalker1_Right, shadewalker1_Melee); //shadewalker 1
+        shadewalker1_Right, shadewalker2_HP = checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
+        shadekeeper1_Right, shadekeeper1_HP = checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
     }
     
 };
@@ -145,8 +41,6 @@ function playerMonitor() {
 };
 
 function drawBattleUI() {
-    
-   
     function drawBattleBackground() {
         Context.context.beginPath(); Context.context.fillStyle = "black"; Context.context.fillRect(0,0,Context.width, Context.height); Context.context.fill();Context.context.closePath();        
     };
@@ -261,6 +155,9 @@ function drawUI() {
                 Context.context.font = "bold 1em Arial";
                 Context.context.fillStyle = "black";
                 Context.context.fillText("Level: " + playerLevel, 225, 250); //Title Current
+                Context.context.font = "bold 1em Arial";
+                Context.context.fillStyle = "black";
+                Context.context.fillText("Gold: " + currentGold, 225, 290); //XP Current
                 Context.context.fill();
                 Context.context.closePath();
             }
