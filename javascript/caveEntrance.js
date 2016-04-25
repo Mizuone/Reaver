@@ -28,7 +28,12 @@ var mapEntrance =[  0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,
                     var tile_y = y * BLOCK_H;
 
                     var tileType = mapEntrance[mapEntranceIndex];
-                    
+                    (function() {
+                        if (tileType >= 2 && tileType != 5) {
+                            player_coordinates_x = Player.player_ObjectcollisionX(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
+                            player_coordinates_y = Player.player_ObjectcollisionY(player_coordinates_x, player_coordinates_y, tile_x, tile_y);
+                        }
+                    })();
                     if (tileType == 0){
                         grass.draw(tile_x, tile_y);
                     }
@@ -37,43 +42,30 @@ var mapEntrance =[  0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,
                     }
                     if (tileType == 2) { // Cliff 2
                         cliff_Front.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20; }
-                       if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20;}
-                       if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                     }
                     if (tileType == 3) { // Top Left 3
                         cliffgrass_TopLeft.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20;} 
-                     if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_y = tile_y - 30;}
                     }
                     if (tileType == 4) { // Top Right 4
                         cliffgrass_Topright.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 15 > tile_x && player_coordinates_x + 15 < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Front.image.height) {player_coordinates_y = tile_y - 30;}
-                       if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 15 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                     }
                     if(tileType == 5) { //Entrance Cave 5
                         cliffEntrance_Open.draw(tile_x, tile_y);
                     }
                     if (tileType == 6) { // North Facing 6
                         cliffgrass_Back1.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Back1.image.width && player_coordinates_y + 30 > tile_y && player_coordinates_y + 30 < tile_y + cliffgrass_Back1.image.height) { player_coordinates_y = tile_y - 30;}
                     }
                     if (tileType == 7) { //Right sided 7
                         cliffgrass_Right.draw(tile_x, tile_y);
-                        if (player_coordinates_x  > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x + 30;}
                     }
                     if (tileType == 8) { //Left sided 8
                         cliffgrass_Left.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 20 > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 20 > tile_y && player_coordinates_y + 20 < tile_y + cliffgrass_Front.image.height) { player_coordinates_x = tile_x - 20; }
                     }
                     if (tileType == 9) { //Front facing 9
                         cliffgrass_Front.draw(tile_x, tile_y);
-                        if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20; }
                     }
                     if (tileType == 10) {
                         cliffgrass_Bottomright.draw(tile_x, tile_y);
-                        if (player_coordinates_x > tile_x && player_coordinates_x < tile_x + cliffgrass_Front.image.width && player_coordinates_y + 25 > tile_y && player_coordinates_y + 15 < tile_y + cliffgrass_Front.image.height) {player_coordinates_x = tile_x + 30;}
-                      if (player_coordinates_x + 10 > tile_x && player_coordinates_x + 10 < tile_x + cliffgrass_Front.image.width && player_coordinates_y > tile_y && player_coordinates_y + 10 < tile_y + cliffgrass_Front.image.height) { player_coordinates_y = tile_y + 20;}
                     }
                  }
             }
@@ -137,8 +129,8 @@ function caveEntrance() {
                 cancelAnimationFrame(requestID);
                 is_playerMove = false; attackShow = true; attackDisabled = false; slimeEntrance2_Engaged = true; attackSequence = 0; battleScreen = true; drawBattle(); is_slimeMove = false;                       return;
             }
-    console.log(player_coordinates_x + "X");
-    console.log(player_coordinates_y + "Y");
+    //console.log(player_coordinates_x + "X");
+    //console.log(player_coordinates_y + "Y");
     if (player_coordinates_x >= 0 && player_coordinates_x <= 15 &&
         player_coordinates_y >= 84 && player_coordinates_y <= 100) {
                 cancelAnimationFrame(requestID);
