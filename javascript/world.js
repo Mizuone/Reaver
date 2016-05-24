@@ -304,14 +304,14 @@ function enemyBattleMovement(Engaged, drawType) {
                     }
                 }
         }
+    
     return enemyEngagement;
 };
 
-        function cancelAnimation(id) {
-            var requestID = requestAnimationFrame(id);
-            return cancelAnimationFrame(requestID);
+        function cancelAnimation() {
+            cancelAnimationFrame(requestID);
         }
-        function resetPlayerPositionX(playerx, playery) {
+       /* function resetPlayerPositionX(playerx, playery) {
             return playerx, playery;
         }
         function resetPlayerPositionY(playery) {
@@ -342,7 +342,7 @@ function enemyBattleMovement(Engaged, drawType) {
                         console.log("Fired");
                     }, 250); 
             return false;      
-        }
+        }*/
 
 
 
@@ -362,8 +362,8 @@ function enemyBattleMovement(Engaged, drawType) {
         var BLOCK_W = 32;
         var BLOCK_H = 32;
         var delayAmount = -2;
-        var player_coordinates_x = 10;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        var player_coordinates_y = 352; //352 starter //94 end
+        var player_coordinates_x = 300;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        var player_coordinates_y = 150; //352 starter //94 end
         var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
         var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
         playerAttackhit_Sprite.image.width = 32; playerAttackhit_Sprite.image.height = 32;
@@ -550,9 +550,39 @@ function enemyBattleMovement(Engaged, drawType) {
         $(window).load(function(){
             playerMonitor();
             drawForest();
-            
         });
-       
+
+        function resetPlayerPositionX(playerx) {
+            return playerx;
+        };
+        function resetPlayerPositionY(playery) {
+            return playery;
+        };
+        //Resets enemyObject in drawBattle map
+        function resetSlime(pos) {
+            return pos;
+        };
+        function rewardPlayer(enemyType) {
+            if (enemyType === "slime") { currentXP += 25; currentGold += 25;}
+        };
+
+        function registerDeath(enemyAlive, callbackFun, enemyType, resetPlayerX, resetPlayerY) {
+            var enemyisAlive = enemyAlive;
+            rewardPlayer(enemyType);
+                enemyisAlive = false;
+                is_slimeMove = false;
+                battleScreen = false;
+                attackDisabled = false;
+                attackSequence = 0;
+                slime1_x, slime1_y = resetSlime(150);
+                player_coordinates_x = resetPlayerPositionX(resetPlayerX);
+                player_coordinates_y = resetPlayerPositionY(resetPlayerY);
+                playerMonitor();
+                callbackFun;
+                console.log("Fired");
+                return enemyisAlive;
+        };
+        
     function drawBattle() {
         requestID = requestAnimationFrame(drawBattle);
         if (battleScreen) {
@@ -589,7 +619,7 @@ function enemyBattleMovement(Engaged, drawType) {
                    player_coordinates_y = 250;
                 }
             if(slime1_Engaged) {enemyBattleMovement(slime1_Engaged, "slime");}
-            if(slime2_Engaged) {enemyBattleMovement(slime2_Engaged, "slime");}
+            if(slime1_Engaged) {enemyBattleMovement(slime2_Engaged, "slime");}
             if(slime3_Engaged) {enemyBattleMovement(slime3_Engaged, "slime");}
             if(slime4_Engaged) {enemyBattleMovement(slime4_Engaged, "slime");}
             if(slimeEntrance1_Engaged) {enemyBattleMovement(slimeEntrance1_Engaged, "slime");}
@@ -598,9 +628,10 @@ function enemyBattleMovement(Engaged, drawType) {
             if(shadewalker2_Engaged) {enemyBattleMovement(shadewalker2_Engaged, "shadewalker");}
             if(shadekeeper1_Engaged) {enemyBattleMovement(shadekeeper1_Engaged, "shadekeeper");}
 
-            if(slime1_HP <= 0 && slime1_Alive && player_coordinates_x === 350) {
-                slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(150, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimationFrame(requestID); slime1_Engaged, slime1_Alive = registerDeath(slime1_HP, slime1_Alive, slime1_Engaged, drawForest());return;
-            }
+            if(slime1_HP <= 0 && slime1_Alive && player_coordinates_x === 350) {cancelAnimation(); slime1_Engaged, slime1_Alive = registerDeath(slime1_Alive, drawForest(), "slime", 300, 150);}
+            if(slime2_HP <= 0 && slime2_Alive && player_coordinates_x === 350) {cancelAnimation(); slime2_Engaged, slime2_Alive = registerDeath(slime2_Alive, drawForest(), "slime", 300, 150);}
+            if(slime3_HP <= 0 && slime3_Alive && player_coordinates_x === 350) {cancelAnimation(); slime3_Engaged, slime3_Alive = registerDeath(slime3_Alive, drawForest(), "slime", 300, 150);}
+            if(slime4_HP <= 0 && slime4_Alive && player_coordinates_x === 350) {cancelAnimation(); slime4_Engaged, slime4_Alive = registerDeath(slime4_Alive, drawForest(), "slime", 300, 150);}
             /*if(slime2_HP <= 0 && slime2_Alive && player_coordinates_x === 350) {
                 slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(450, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimation(drawBattle); slime2_Engaged, slime2_Alive = registerDeath(slime2_HP, slime2_Alive, slime2_Engaged, drawForest());return;
             }*/
@@ -611,12 +642,12 @@ function enemyBattleMovement(Engaged, drawType) {
                 slime1_x, slime1_y = resetSlime(150); player_coordinates_x, player_coordinates_y = resetPlayerPositionX(150, 150); currentXP = grantXP(25); currentGold = grantGold(25); cancelAnimation(drawBattle); slime1_Engaged, slime1_Alive = registerDeath(slime1_HP, slime1_Alive, slime1_Engaged, drawForest());return;
             }*/
                                                  
-            if (slime3_HP <= 0 && slime3_Alive && player_coordinates_x == 350) {
+            /*if (slime3_HP <= 0 && slime3_Alive && player_coordinates_x == 350) {
                 slime3_HP = 0; slime1_x = 150; slime1_y = 150; player_coordinates_x = 285; player_coordinates_y = 290; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slime3_Alive = false; is_slimeMove = false; slime3_Engaged = false;  battleScreen = false; attackSequence = 0; attackDisabled = false; drawForest(); playerMonitor(); return;}, 1000);
-            } 
+            
             if (slime4_HP <= 0 && slime4_Alive && player_coordinates_x == 350) {
                 slime4_HP = 0; slime1_x = 150; slime1_y = 150; player_coordinates_x = 275; player_coordinates_y = 210; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slime4_Alive = false; is_slimeMove = false; slime4_Engaged = false;  battleScreen = false; attackSequence = 0; attackDisabled = false; drawForest(); playerMonitor(); return;}, 1000);
-                }
+                }*/
             if (slimeEntrance1_HP <= 0 && slimeEntrance1_Alive) {
                 slimeEntrance1_HP = 0; slime1_x = 150; slime1_y = 150; player_coordinates_x = 275; player_coordinates_y = 210; currentXP += 25; currentGold += 25; cancelAnimationFrame(requestID); setTimeout(function() {slimeEntrance1_Alive = false; is_slimeMove = false; slimeEntrance1_Engaged = false;  battleScreen = false; attackSequence = 0; attackDisabled = false; caveEntrance(); playerMonitor(); return;}, 1000); 
             }
@@ -638,6 +669,8 @@ function enemyBattleMovement(Engaged, drawType) {
 
 
     function drawForest() {
+        //console.log(player_coordinates_x + "X");
+        //console.log(player_coordinates_y + "Y");
             collisionDection();
             is_slimeMove = false;
             requestID = requestAnimationFrame(drawForest);
