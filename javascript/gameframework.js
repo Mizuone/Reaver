@@ -1,6 +1,6 @@
 
 var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, playerHealth = 100, playerMaxHealth = 100, playerLevel = 1, nextLevel =                                                                                                                                                                           [50,150,275,350,500,650,875,950,1050,1300,1500,
-1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold = 0, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 8 + 100; 
+1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold = 0, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 8 + 10; 
 
 
 
