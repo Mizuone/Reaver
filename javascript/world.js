@@ -209,18 +209,23 @@ if (typeof(Reaver === "undefined")) {
         var enemyHealth = enemyHP;
         var enemyPlace = enemyDirection;
         var enemyDoAttack = enemyAttack;
+        var enemyDeath = false;
         if (attackSequence === 1 && Alive && Engaged) {
             playerMoveChange(1);
             if (is_playerMove) {
                 enemyHealth = enemyDamage(enemyHP);
                 stabilize();
+                if (enemyDeath) {
+                    return enemyDoAttack, enemyPlace, Alive, Engaged, enemyHealth;
+                }
                 setTimeout(function() {
                     attackShow = false;
                     is_playerMove = false;
                     is_slimeMove = enemyMoveChange(1);
                     attackDisabled = true;
                     enemyPlace = true;
-                    stabilize();
+                    //Resets all values to default when player attack and slime attack is fired
+                    //stabilize();
                         if (is_slimeMove && Alive) {
                             enemyDoAttack = enemyHit(enemyAttack);
                             setTimeout(function() {
@@ -237,52 +242,57 @@ if (typeof(Reaver === "undefined")) {
         function stabilize() {
             if (enemyHealth === undefined || enemyHealth <= 0) {
                 enemyHealth = 0;
+                enemyDeath = true;
                 is_slimeMove = false;
-            setTimeout(function() {
+                setTimeout(function() {
                     playerMoveChange(1);
-            if (is_playerMove) {
-                    attackShow = false;
-                    is_playerMove = false;
-                    is_slimeMove = enemyMoveChange(1);
-                    attackDisabled = true;
-                    enemyPlace = true;
-                        if (is_slimeMove && Alive) {
-                            setTimeout(function() {
-                            attackDisabled = false;
-                            attackShow = true;
-                            attackSequence = 0;
-                            enemyPlace = false;
-                        }, 100 );
+                if (is_playerMove) {
+                        attackShow = false;
+                        is_playerMove = false;
+                        is_slimeMove = enemyMoveChange(1);
+                        attackDisabled = true;
+                        enemyPlace = true;
+                            if (is_slimeMove && Alive) {
+                                setTimeout(function() {
+                                attackDisabled = false;
+                                attackShow = true;
+                                attackSequence = 0;
+                                enemyPlace = false;
+                            }, 50 );
+                        }
                     }
-                }
-            }, 200)
-            
+                }, 50)
             }
         }
         return enemyDoAttack, enemyPlace, Alive, Engaged, enemyHealth;
     };
 function enemyBattleMovement(Engaged, drawType) {
+    drawBattleMap();
+    console.log("The fuck is going on here?");
     var enemyAnimation = drawType;
     var enemyEngagement = Engaged;
     var resetEnemyPositionX = 250;
     var resetEnemyPositionY = 250;
-    
-    if (enemyAnimation === "slime") {slimeSprite.draw(slime1_x, slime1_y, [6,7,8]);}
-    if (enemyAnimation === "slimesuper") {slimeSuper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
-    if (enemyAnimation === "shadewalker") {shadeWalker_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
-    if (enemyAnimation === "shadekeeper") {shadeKeeper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    var enemyMovementSpeed = 2;
+    function checkDrawType() {
+        if (enemyAnimation === "slime") {slimeSprite.draw(slime1_x, slime1_y, [6,7,8]);}
+        if (enemyAnimation === "slimesuper") {slimeSuper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+        if (enemyAnimation === "shadewalker") {shadeWalker_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+        if (enemyAnimation === "shadekeeper") {shadeKeeper_Sprite.draw(slime1_x, slime1_y, [6,7,8]);}
+    }
     if (enemyEngagement) {
                 if (is_slimeMove) {
-                    enemyAnimation;
+                    checkDrawType();
                     if (slime1_x < 350 && slime1_right == true) {
-                        slime1_x += 2;
+                        slime1_x += enemyMovementSpeed;
+                        
                         if (slime1_x >= 325) {
                             slime1_right = false;
                             slime1_left = true;
                         }
                     }
                     if (slime1_x <= 330 && slime1_left == true) {
-                        slime1_x -= 1.5;
+                        slime1_x -= enemyMovementSpeed;
                         if (slime1_x <= 250) {
                             slime1_left = false;
                             slime1_right = true;
@@ -292,22 +302,51 @@ function enemyBattleMovement(Engaged, drawType) {
                 } else {
                     slime1_x = resetEnemyPositionX;
                     slime1_y = resetEnemyPositionY;
-                    enemyAnimation;
-                    if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
-                        player_Attackhit = true;
-                        if(player_Attackhit) {
-                            playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
-                            setTimeout(function(){
-                                player_Attackhit = false;
-                            }, 200);
-                        }
-                    }
+                    checkDrawType();
                 }
         }
+    playerBattleMovement();
     
     return enemyEngagement;
 };
-
+function playerBattleMovement() {
+            if (is_playerMove) {
+                    player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); //Redraws based off player x, and player y /
+                    
+                    if (player_coordinates_x < 355 && player_moveLeft == true) { 
+                        player_coordinates_x -= 2;
+                        
+                            if(player_coordinates_x >= 260 && player_coordinates_x <= 270) {
+                                    player_Attackhit = true;
+                                if(player_Attackhit) {
+                                    playerAttackhit_Sprite.draw(250, 250, [0,1,2]);
+                                    setTimeout(function(){
+                                        player_Attackhit = false;
+                                    }, 200);
+                                }
+                            }
+                        
+                        if (player_coordinates_x <= 260) {
+                            player_moveLeft = false;
+                            player_moveRight = true;
+                        }
+                    }
+                    if (player_coordinates_x > 250 && player_moveRight == true) {
+                        player_coordinates_x += 1.5;
+                        if (player_coordinates_x == 350) {
+                            player_moveRight = false;
+                            player_moveLeft = true;
+                            is_playerMove = false;
+                            
+                        } 
+                    }
+                } else {
+                   player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); 
+                   player_coordinates_x = 350;
+                   player_coordinates_y = 250;
+                    
+                }  
+};
         function cancelAnimation() {
             cancelAnimationFrame(requestID);
         }
@@ -579,7 +618,6 @@ function enemyBattleMovement(Engaged, drawType) {
                 player_coordinates_y = resetPlayerPositionY(resetPlayerY);
                 playerMonitor();
                 callbackFun;
-                console.log("Fired");
                 return enemyisAlive;
         };
         
@@ -594,32 +632,9 @@ function enemyBattleMovement(Engaged, drawType) {
                 playerDirection = 0;
                 
                 //Triggers when attack is clicked
-                if (is_playerMove) {
-                    player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); //Redraws based off player x, and player y /
-                    
-                    if (player_coordinates_x < 355 && player_moveLeft == true) { 
-                        player_coordinates_x -= 2;
-                        if (player_coordinates_x <= 260) {
-                            player_moveLeft = false;
-                            player_moveRight = true;
-                        }
-                    }
-                    if (player_coordinates_x > 250 && player_moveRight == true) {
-                        player_coordinates_x += 1.5;
-                        if (player_coordinates_x == 350) {
-                            player_moveRight = false;
-                            player_moveLeft = true;
-                            is_playerMove = false;
-                            
-                        } 
-                    }
-                } else {
-                   player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); 
-                   player_coordinates_x = 350;
-                   player_coordinates_y = 250;
-                }
+                
             if(slime1_Engaged) {enemyBattleMovement(slime1_Engaged, "slime");}
-            if(slime1_Engaged) {enemyBattleMovement(slime2_Engaged, "slime");}
+            if(slime2_Engaged) {enemyBattleMovement(slime2_Engaged, "slime");}
             if(slime3_Engaged) {enemyBattleMovement(slime3_Engaged, "slime");}
             if(slime4_Engaged) {enemyBattleMovement(slime4_Engaged, "slime");}
             if(slimeEntrance1_Engaged) {enemyBattleMovement(slimeEntrance1_Engaged, "slime");}
@@ -674,7 +689,7 @@ function enemyBattleMovement(Engaged, drawType) {
             collisionDection();
             is_slimeMove = false;
             requestID = requestAnimationFrame(drawForest);
-            player_coordinates_y += 0.00000000001;
+            
             resetAnimationCounter();
             drawMap();
             playerMovement();
