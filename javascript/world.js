@@ -268,7 +268,6 @@ if (typeof(Reaver === "undefined")) {
     };
 function enemyBattleMovement(Engaged, drawType) {
     drawBattleMap();
-    console.log("The fuck is going on here?");
     var enemyAnimation = drawType;
     var enemyEngagement = Engaged;
     var resetEnemyPositionX = 250;
