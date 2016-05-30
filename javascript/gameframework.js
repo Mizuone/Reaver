@@ -11,7 +11,6 @@ function handleMouseClick(evt) {
     if (evt.pageX >= 550 && evt.pageX <= 700 && battleScreen || evt.pageX >= 766 && evt.pageX <= 830 &&
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
-         console.log(attackSequence);
         attackSequence++;
         slime1_right, slime1_HP = checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
         slime1_right, slime2_HP = checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_right, slime2_Melee); //Slime 2 Attack Event
@@ -154,10 +153,12 @@ function drawUI() {
                 Context.context.fillText("Current", 210, 225); //Title Current
                 Context.context.font = "bold 1em Arial";
                 Context.context.fillStyle = "black";
-                Context.context.fillText("Level: " + playerLevel, 225, 250); //Title Current
+                Context.context.fillText("Level: " + playerLevel, 225, 250); //Level Current
                 Context.context.font = "bold 1em Arial";
                 Context.context.fillStyle = "black";
-                Context.context.fillText("Gold: " + currentGold, 225, 290); //XP Current
+                Context.context.fillText("Gold: " + currentGold, 225, 290); //Gold Current
+                Context.context.fillStyle = "black";
+                Context.context.fillText("XP: " + currentXP, 225, 320); //Gold Current
                 Context.context.fill();
                 Context.context.closePath();
             }
