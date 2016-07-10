@@ -23,11 +23,6 @@ var Sprite = function(fn) {
         console.log("Unable to load sprite. Filename '" + fn + "' is undefined or null.");
     }
     // Normal draw
-    this.drawOldVersion = function(x, y) {
-       // if (z==undefined)
-            //console.log("z is undefined");
-        Context.context.drawImage(this.image, x, y, BLOCK_W, BLOCK_H);
-    };
     
     this.draw = function(x, y, various) {
         // Draw player Sprite 
@@ -55,22 +50,4 @@ var Sprite = function(fn) {
             animationCounterIndex++;
         }
     }   
-    this.draw2 = function(x, y, w, h) {
-        if (this.is_pattern) {
-            //Context.context.fillStyle = Context.context.createPattern(this.image, 'repeat');;
-            //Context.context.fillRect(x, y, w, h);
-            for (var i = 0; i < this.pattern_x_times; i++) {
-                Context.context.drawImage(this.image, x + w*i, y, w, h);
-            }
-        } else {
-            Context.context.drawImage(this.image, x, y, w, h);
-        }
-    };
-    this.rot = function(x, y, angle) {
-        Context.context.save();
-        Context.context.translate(x,y);
-        Context.context.rotate(angle * this.TO_RADIANS);
-        Context.context.drawImage(this.image, -(this.image.width/2), -(this.image.height/2));
-        Context.context.restore();
-    }
 };
