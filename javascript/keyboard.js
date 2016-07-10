@@ -118,6 +118,6 @@ function playerMovement() {
                 }
                 //
             } else {
-                player_sprite.draw(player_coordinates_x, player_coordinates_y, 0);
+                player_sprite.draw(player_coordinates_x, player_coordinates_y, [0,0,0]);
             }
 };
