@@ -354,7 +354,7 @@ function playerBattleMovement() {
         }
     var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
     //Grass Terrain Sprties
-        var cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), 
+        var cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), cliffgrass_TopRightBottom = new Sprite("sprites/cliffgrass_uprightbottom.png"), cliffgrass_TopBottom = new Sprite("sprites/Cliffgrass_topbottom.png"),
             //Cave Terrain Sprites
         cliffEntrance_Open = new Sprite("sprites/CaveEntrance_Open.png"), cave_Terrain = new Sprite("sprites/cave_Terrain.png"), cave_Wall = new Sprite("sprites/cave_wall.png"), cave_ceiling = new Sprite("sprites/cave_ceiling.png"), blackBlock = new Sprite("sprites/black_block.png"), cave_Opening = new Sprite("sprites/cave_OpeningDoor.png");
 
@@ -406,8 +406,8 @@ function playerBattleMovement() {
   var mapforest = [ 0,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,
                     5,6,6,6,6,6,6,6,6,6,6,6,4,0,0,0,0,3,3,3,
                     5,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,5,6,6,6,
-                    5,1,11,2,2,2,2,2,2,2,7,1,4,0,3,3,9,1,1,1,
-                    5,1,4,0,0,3,3,3,3,3,9,1,4,5,6,6,6,1,11,2,
+                    5,1,11,2,2,13,13,13,13,13,12,1,4,0,3,3,9,1,1,1,
+                    5,1,4,0,5,6,6,6,6,6,6,1,4,5,6,6,6,1,11,2,
                     5,1,4,0,5,1,1,1,1,1,1,1,4,5,1,1,1,1,4,0,
                     5,1,4,0,5,1,8,1,8,1,1,11,0,0,2,2,7,1,4,0,
                     5,1,4,0,5,1,1,1,1,1,1,4,0,0,0,0,5,1,4,0,
@@ -456,33 +456,38 @@ function playerBattleMovement() {
                         cliffgrass_Left.draw(tile_x, tile_y);
                     }
                     if (tileType == 5) {
-                        cliffgrass_Right.draw(tile_x, tile_y);
-                        
+                        cliffgrass_Right.draw(tile_x, tile_y);    
                     }
-                   if (tileType == 6) {
-                       cliff_Front.draw(tile_x, tile_y);
-                   }
-                   if (tileType == 7) {
-                       cliffgrass_Topright.draw(tile_x, tile_y);
-                   }
-                  if (tileType == 8) {
-                    cliffgrass_All.draw(tile_x, tile_y);
-                  }
-                  if (tileType == 9) {
-                      cliffgrass_Bottomright.draw(tile_x, tile_y);
-                  }
-                 if (tileType == 10) {
-                     cliffgrass_BottomLeft.draw(tile_x, tile_y);
-                 }
-                 if (tileType == 11) {
-                     cliffgrass_TopLeft.draw(tile_x, tile_y);
-                  }
+                    if (tileType == 6) {
+                        cliff_Front.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 7) {
+                        cliffgrass_Topright.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 8) {
+                        cliffgrass_All.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 9) {
+                        cliffgrass_Bottomright.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 10) {
+                        cliffgrass_BottomLeft.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 11) {
+                        cliffgrass_TopLeft.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 12) {
+                        cliffgrass_TopRightBottom.draw(tile_x, tile_y);
+                    }
+                    if (tileType == 13) {
+                        cliffgrass_TopBottom.draw(tile_x, tile_y);
+                    }
                 }
             }
             bush.draw(230,300);
             bush.draw(400,250);
             bush.draw(425,10);
-            bush.draw(150,100);
+            bush.draw(120,100);
             bush.draw(125,350);
         };
 
@@ -643,32 +648,57 @@ function playerBattleMovement() {
             return engaged;
         }
     }
-    //Creates Enemy Patrol
-    //Distance one deals with the first condition
-    //Distance two deals with the second condition
-    function enemyPatrol(enemyAlive, enemy_x, enemy_y, enemyLeft, enemyRight, drawType, distance_one, distance_two) {
+    function enemyPatrol(enemyAlive, enemy_x, enemy_y, enemyFirstDirection, enemySecondDirection, drawType, distance_one, distance_two, direction) {
+        function enemyDrawType(arrValue) {
+            if (drawType === "slime") {slimeSprite.draw(enemy_x, enemy_y, arrValue);}
+            if (drawType === "slimesuper") {slimeSuper_Sprite.draw(enemy_x, enemy_y, arrValue);}
+            if (drawType === "shadewalker") {shadeWalker_Sprite.draw(enemy_x, enemy_y, arrValue);}
+            if (drawType === "shadekeeper") {shadeKeeper_Sprite.draw(enemy_x, enemy_y, arrValue);}
+            
+            return arrValue;
+        }
+        //Changes Direction of Enemy Animation
         function checkDrawTypeRight() {
-            if (drawType === "slime") {slimeSprite.draw(enemy_x, enemy_y, [6,7,8]);}
-            if (drawType === "slimesuper") {slimeSuper_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
-            if (drawType === "shadewalker") {shadeWalker_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
-            if (drawType === "shadekeeper") {shadeKeeper_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
+            enemyDrawType([6, 7, 8]);
         }
         function checkDrawTypeLeft() {
-            if (drawType === "slime") {slimeSprite.draw(enemy_x, enemy_y, [3,4,5]);}
-            if (drawType === "slimesuper") {slimeSuper_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
-            if (drawType === "shadewalker") {shadeWalker_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
-            if (drawType === "shadekeeper") {shadeKeeper_Sprite.draw(enemy_x, enemy_y, [6,7,8]);}
+            enemyDrawType([3, 4, 5]);
         }
-        if (enemyAlive) {
-            if (enemy_x < distance_one && enemyRight) {
-                enemy_x += 1;
-                checkDrawTypeRight();              
-            } 
-            if (enemy_x > distance_two && enemyLeft) {
-                enemy_x -= 1; 
-                checkDrawTypeLeft();
+        function checkDrawTypeUp() {
+            enemyDrawType([0, 1, 2]);
+        }
+        function checkDrawTypeDown() {
+            enemyDrawType([9, 10, 11]);
+        }
+        
+        function enemyChangeDirection() {
+            if (direction && enemyAlive) {
+                if (enemy_y < distance_one && enemySecondDirection) {
+                    enemy_y += 1;
+                    checkDrawTypeDown();              
+                } 
+                if (enemy_y > distance_two && enemyFirstDirection) {
+                    enemy_y -= 1; 
+                    checkDrawTypeUp();
+                }
+                return enemy_y;
+            } else if (!direction && enemyAlive) {
+                if (enemy_x < distance_one && enemySecondDirection) {
+                    enemy_x += 1;
+                    checkDrawTypeRight();              
+                } 
+                if (enemy_x > distance_two && enemyFirstDirection) {
+                    enemy_x -= 1;
+                    checkDrawTypeLeft();
+                }
+                
             }
         }
+        if (direction) {
+            enemyChangeDirection();
+            return enemy_y;
+        }
+        enemyChangeDirection();
         return enemy_x;
     }
     function drawForest() {
@@ -692,89 +722,26 @@ function playerBattleMovement() {
         
             //Animated Enemies
             if (slime1_Alive) {
-                slime1_x = enemyPatrol(slime1_Alive, slime1_x, slime1_y, slime1_left, slime1_right, "slime", 360, 150);
+                slime1_x = enemyPatrol(slime1_Alive, slime1_x, slime1_y, slime1_left, slime1_right, "slime", 360, 150, false);
                 if (slime1_x >= 350 && slime1_right) { slime1_right = false; slime1_left = true; }
                 if (slime1_x === 160 && slime1_left) { slime1_left = false; slime1_right = true; }
             }
             if (slime2_Alive) {
-                slime2_x = enemyPatrol(slime2_Alive, slime2_x, slime2_y, slime2_Left, slime2_Right, "slime", 560, 430);
+                slime2_x = enemyPatrol(slime2_Alive, slime2_x, slime2_y, slime2_Left, slime2_Right, "slime", 560, 430, false);
                 if (slime2_x >= 545 && slime2_Right) { slime2_Right = false; slime2_Left = true; }
                 if (slime2_x === 450 && slime2_Left) { slime2_Left = false; slime2_Right = true; }
             }
+            if (slime3_Alive) {
+                slime3_y = enemyPatrol(slime3_Alive, slime3_x, slime3_y, slime3_Up, slime3_Down, "slime", 400, 250, true);
+                if (slime3_y >= 390 && slime3_Down) { slime3_Down = false; slime3_Up = true; }
+                if (slime3_y === 255 && slime3_Up) { slime3_Up = false; slime3_Down = true; }
+            }
              if (slime4_Alive) {
-                slime1_x = enemyPatrol(slime1_Alive, slime1_x, slime1_y, slime1_left, slime1_right, "slime", 360, 150);
-                if (slime1_x >= 350 && slime1_right) { slime1_right = false; slime1_left = true; }
-                if (slime1_x === 160 && slime1_left) { slime1_left = false; slime1_right = true; }
+                slime4_x = enemyPatrol(slime4_Alive, slime4_x, slime4_y, slime4_Left, slime4_Right, "slime", 460, 150, false);
+                if (slime4_x >= 320 && slime4_Right) { slime4_Right = false; slime4_Left = true; }
+                if (slime4_x === 155 && slime4_Left) { slime4_Left = false; slime4_Right = true; }
             }
-            /*if (slime3_Alive) {
-                slime1_x = enemyPatrol(slime1_Alive, slime1_x, slime1_y, slime1_left, slime1_right, "slime", 360, 150);
-                if (slime1_x >= 350 && slime1_right) { slime1_right = false; slime1_left = true; }
-                if (slime1_x === 160 && slime1_left) { slime1_left = false; slime1_right = true; }
-            }
-           */
-            /*if(slime1_Alive) {
-                //Slime collision pathing
-                if (slime1_x < 450 && slime1_right) {
-                    slime1_x += 1;
-                    slimeSprite.draw(slime1_x, slime1_y, [6,7,8]);
-                    if (slime1_x >= 350) { slime1_right = false; slime1_left = true;}
-                } 
-                if (slime1_x > 150 && slime1_left) {
-                    slime1_x -= 1; slimeSprite.draw(slime1_x, slime1_y, [3,4,5]);
-                    if (slime1_x == 160) { slime1_left = false; slime1_right = true; }
-                }
-            } 
-            if(slime2_Alive) {
-                if (slime2_x < 550 && slime2_Right) {
-                    slime2_x += 1; slimeSprite.draw(slime2_x, slime2_y, [6,7,8]);
-                    if (slime2_x >= 545) { slime2_Right = false; slime2_Left = true;}
-                }
-                if (slime2_x <= 550 && slime2_Left) {
-                    slimeSprite.draw(slime2_x, slime2_y, [3,4,5]);
-                    slime2_x -= 1;
-                    if (slime2_x <= 450) {
-                        slime2_Left = false;
-                        slime2_Right = true;
-                    }
-                }  
-            }*/
-            if(slime3_Alive){
-                if (slime3_y < 400 && slime3_Down) {
-                    slime3_y += 1;
-                    slimeSprite.draw(slime3_x, slime3_y, [0,1,2]);
-                    if (slime3_y >= 390) {
-                        slime3_Down = false;
-                        slime3_Up = true;
-                    }
-                }
-                if (slime3_y >= 250 && slime3_Up) {
-                    slime3_y -= 1;
-                    slimeSprite.draw(slime3_x, slime3_y, [9,10,11]);
-                    if (slime3_y <= 255) {
-                        slime3_Up = false;
-                        slime3_Down = true;
-                    }
-                }
-            }
-        
-            if(slime4_Alive) {
-                if (slime4_x >= 250 && slime4_Right) {
-                    slime4_x += 1;
-                    slimeSprite.draw(slime4_x, slime4_y, [6,7,8]);
-                    if(slime4_x >= 325) {
-                        slime4_Right = false;
-                        slime4_Left = true;
-                    }
-                }
-                if (slime4_x <= 330 && slime4_Left) {
-                    slime4_x -= 1;
-                    slimeSprite.draw(slime4_x, slime4_y, [3,4,5]);
-                    if (slime4_x <= 250) {
-                        slime4_Left = false;
-                        slime4_Right = true;
-                    }
-                }
-            }
+            
             if (player_coordinates_x == 610 && player_coordinates_y >= 75) {
                 cancelAnimationFrame(requestID);
                 caveEntrance(); player_coordinates_x = 40; player_coordinates_y = 96; return;
