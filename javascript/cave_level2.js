@@ -51,6 +51,8 @@ var mapCave_level2 = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
         };
 
 function cave_level2() {
+    //console.log(player_coordinates_x + "X");
+    //console.log(player_coordinates_y + "Y");
     requestID = requestAnimationFrame(cave_level2);
     drawCave_level2();
     Context.context.beginPath(); Context.context.fillStyle = "rgba(0,0,0,0.2)"; Context.context.fillRect(0,0,Context.width, Context.height); Context.context.fill();Context.context.closePath();
@@ -58,37 +60,14 @@ function cave_level2() {
     playerMovement();
     is_playerMove = false;
     playerDirection = 0;
-    if (key.escape) {
-        return;
-    }
-    if (player_coordinates_x + 20 > shadekeeper1_x &&
-               player_coordinates_x < shadekeeper1_x + shadeWalker_Sprite.image.width &&
-               player_coordinates_y + 10 > shadekeeper1_y &&
-               player_coordinates_y < shadekeeper1_y + shadeWalker_Sprite.image.height && shadekeeper1_Alive == true) {
-                cancelAnimationFrame(requestID);
-                is_playerMove = false; attackShow = true; attackDisabled = false; is_slimeMove = false; attackSequence = 0; shadekeeper1_Engaged = true; battleScreen = true; drawBattle();return;
-            }
-    if(shadekeeper1_Alive) {
-        
-                if (shadekeeper1_x >= 240 && shadekeeper1_Right) {
-                    shadekeeper1_x += 1;
-                    shadeKeeper_Sprite.draw(shadekeeper1_x,shadekeeper1_y, [6,7,8]);
-                    if(shadekeeper1_x >= 280) {
-                        shadekeeper1_Right = false;
-                        shadekeeper1_Left = true;
-                    }
-                }
-                if (shadekeeper1_x <= 300 && shadekeeper1_Left) {
-                    shadekeeper1_x -= 1;
-                    shadeKeeper_Sprite.draw(shadekeeper1_x, shadekeeper1_y, [3,4,5]);
-                    if (shadekeeper1_x <= 240) {
-                        shadekeeper1_Left = false;
-                        shadekeeper1_Right = true;
-                    }
-                }
-            }
-    //console.log(player_coordinates_x + "X");
-    //console.log(player_coordinates_y + "Y");
+    if (key.escape) {return;} //Access Player Menu
+    shadekeeper1_Engaged = enemyAggro(shadekeeper1_x, shadekeeper1_y, shadekeeper1_Alive, shadekeeper1_Engaged);
+        if (shadekeeper1_Alive) {
+            shadekeeper1_x = enemyPatrol(shadekeeper1_Alive, shadekeeper1_x, shadekeeper1_y, shadekeeper1_Left, shadekeeper1_Right, "shadekeeper", 300, 240, false);
+            if (shadekeeper1_x >= 280 && shadekeeper1_Right) { shadekeeper1_Right = false; shadekeeper1_Left = true; }
+            if (shadekeeper1_x <= 240 && shadekeeper1_Left) { shadekeeper1_Left = false; shadekeeper1_Right = true; }
+        }
+
      //260 X
      //200 Y
     if (player_coordinates_x >= 440 && player_coordinates_x <= 470 &&
