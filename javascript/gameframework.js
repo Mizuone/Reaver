@@ -12,15 +12,15 @@ function handleMouseClick(evt) {
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
         attackSequence++;
-        slime1_right, slime1_HP = checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
-        slime1_right, slime2_HP = checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_right, slime2_Melee); //Slime 2 Attack Event
-        slime1_right, slime3_HP = checkAttack(slime3_Alive, slime3_Engaged, slime3_HP, slime1_right, slime3_Melee); //Slime 3 Attack Event
-        slime1_right, slime4_HP = checkAttack(slime4_Alive, slime4_Engaged, slime4_HP, slime1_right, slime4_Melee); //Slime 4 Attack Event
-        slime1_right, slimeEntrance1_HP = checkAttack(slimeEntrance1_Alive, slimeEntrance1_Engaged, slimeEntrance1_HP, slime1_right, slimeEntrance1_Melee); //Cave Entrance normal Slime
-        slime1_right, slimeEntrance2_HP = checkAttack(slimeEntrance2_Alive, slimeEntrance2_Engaged, slimeEntrance2_HP, slime1_right, slimeEntrance2_Melee); //Super Slime
-        shadewalker1_Right, shadewalker1_HP = checkAttack(shadewalker1_Alive, shadewalker1_Engaged, shadewalker1_HP, shadewalker1_Right, shadewalker1_Melee); //shadewalker 1
-        shadewalker1_Right, shadewalker2_HP = checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
-        shadekeeper1_Right, shadekeeper1_HP = checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
+        slime1_right, slime1_HP = battleEvent.checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
+        slime1_right, slime2_HP = battleEvent.checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_right, slime2_Melee); //Slime 2 Attack Event
+        slime1_right, slime3_HP = battleEvent.checkAttack(slime3_Alive, slime3_Engaged, slime3_HP, slime1_right, slime3_Melee); //Slime 3 Attack Event
+        slime1_right, slime4_HP = battleEvent.checkAttack(slime4_Alive, slime4_Engaged, slime4_HP, slime1_right, slime4_Melee); //Slime 4 Attack Event
+        slime1_right, slimeEntrance1_HP = battleEvent.checkAttack(slimeEntrance1_Alive, slimeEntrance1_Engaged, slimeEntrance1_HP, slime1_right, slimeEntrance1_Melee); //Cave Entrance normal Slime
+        slime1_right, slimeEntrance2_HP = battleEvent.checkAttack(slimeEntrance2_Alive, slimeEntrance2_Engaged, slimeEntrance2_HP, slime1_right, slimeEntrance2_Melee); //Super Slime
+        shadewalker1_Right, shadewalker1_HP = battleEvent.checkAttack(shadewalker1_Alive, shadewalker1_Engaged, shadewalker1_HP, shadewalker1_Right, shadewalker1_Melee); //shadewalker 1
+        shadewalker1_Right, shadewalker2_HP = battleEvent.checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
+        shadekeeper1_Right, shadekeeper1_HP = battleEvent.checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
     }
     
 };
