@@ -77,58 +77,28 @@ var mapEntrance =[  0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,
         };
 
 function caveEntrance() {
+    //console.log(player_coordinates_x + "X");
+    //console.log(player_coordinates_y + "Y");
     requestID = requestAnimationFrame(caveEntrance);
-    if (playerHealth <= 0) { window.location.reload();}
     drawEntrance();
     resetAnimationCounter();
     playerMovement();
     is_playerMove = false;
     playerDirection = 0;
-    if (key.escape) {
-        return;
-    }
+    if (key.escape) {return;} //Access Player Menu
     
-    
-    if(slimeEntrance1_Alive) {
-                //Slime collision pathing
-                if (slimeEntrance1_x < 450 && slimeEntrance1_Right) {
-                    slimeEntrance1_x += 1;
-                    slimeSprite.draw(slimeEntrance1_x, slimeEntrance1_y, [6,7,8]);
-                    if (slimeEntrance1_x >= 350) { slimeEntrance1_Right = false; slimeEntrance1_Left = true;}
-                } 
-                if (slimeEntrance1_x > 150 && slimeEntrance1_Left) {
-                    slimeEntrance1_x -= 1; slimeSprite.draw(slimeEntrance1_x, slimeEntrance1_y, [3,4,5]);
-                    if (slimeEntrance1_x == 160) { slimeEntrance1_Left = false; slimeEntrance1_Right = true; }
-                }
-            } 
-    if(slimeEntrance2_Alive) {
-                //Slime collision pathing
-                if (slimeEntrance2_x < 450 && slimeEntrance2_Right) {
-                    slimeEntrance2_x += 1;
-                    slimeSuper_Sprite.draw(slimeEntrance2_x, slimeEntrance2_y, [6,7,8]);
-                    if (slimeEntrance2_x >= 400) { slimeEntrance2_Right = false; slimeEntrance2_Left = true;}
-                } 
-                if (slimeEntrance2_x > 300 && slimeEntrance2_Left) {
-                    slimeEntrance2_x -= 1; slimeSuper_Sprite.draw(slimeEntrance2_x, slimeEntrance2_y, [3,4,5]);
-                    if (slimeEntrance2_x == 310) { slimeEntrance2_Left = false; slimeEntrance2_Right = true; }
-                }
-            }
-    if (player_coordinates_x + 20 > slimeEntrance1_x &&
-               player_coordinates_x < slimeEntrance1_x + slimeSprite.image.width &&
-               player_coordinates_y + 10 > slimeEntrance1_y &&
-               player_coordinates_y < slimeEntrance1_y + slimeSprite.image.height && slimeEntrance1_Alive) {
-                
-                cancelAnimationFrame(requestID);
-                is_playerMove = false; attackShow = true; attackDisabled = false; slimeEntrance1_Engaged = true; attackSequence = 0; battleScreen = true; drawBattle(); is_slimeMove = false;                       return;
-            }
-    if (player_coordinates_x + 20 > slimeEntrance2_x &&
-               player_coordinates_x < slimeEntrance2_x + slimeSprite.image.width &&
-               player_coordinates_y + 10 > slimeEntrance2_y &&
-               player_coordinates_y < slimeEntrance2_y + slimeSprite.image.height && slimeEntrance2_Alive) {
-                
-                cancelAnimationFrame(requestID);
-                is_playerMove = false; attackShow = true; attackDisabled = false; slimeEntrance2_Engaged = true; attackSequence = 0; battleScreen = true; drawBattle(); is_slimeMove = false;                       return;
-            }
+        if (slimeEntrance1_Alive) {
+            slimeEntrance1_x = enemyPatrol(slimeEntrance1_Alive, slimeEntrance1_x, slimeEntrance1_y, slimeEntrance1_Left, slimeEntrance1_Right, "slime", 450, 150, false);
+            if (slimeEntrance1_x >= 350 && slimeEntrance1_Right) { slimeEntrance1_Right = false; slimeEntrance1_Left = true; }
+            if (slimeEntrance1_x === 160 && slimeEntrance1_Left) { slimeEntrance1_Left = false; slimeEntrance1_Right = true; }
+        }
+        if (slimeEntrance2_Alive) {
+            slimeEntrance2_x = enemyPatrol(slimeEntrance2_Alive, slimeEntrance2_x, slimeEntrance2_y, slimeEntrance2_Left, slimeEntrance2_Right, "slimesuper", 450, 300, false);
+            if (slimeEntrance2_x >= 400 && slimeEntrance2_Right) { slimeEntrance2_Right = false; slimeEntrance2_Left = true; }
+            if (slimeEntrance2_x === 310 && slimeEntrance2_Left) { slimeEntrance2_Left = false; slimeEntrance2_Right = true; }
+        }
+    slimeEntrance1_Engaged = enemyAggro(slimeEntrance1_x, slimeEntrance1_y, slimeEntrance1_Alive, slimeEntrance1_Engaged);
+    slimeEntrance2_Engaged = enemyAggro(slimeEntrance2_x, slimeEntrance2_y, slimeEntrance2_Alive, slimeEntrance2_Engaged);
     //console.log(player_coordinates_x + "X");
     //console.log(player_coordinates_y + "Y");
     if (player_coordinates_x >= 0 && player_coordinates_x <= 15 &&
