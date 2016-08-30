@@ -1,16 +1,19 @@
 
 var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, playerHealth = 100, playerMaxHealth = 100, playerLevel = 1, nextLevel =                                                                                                                                                                           [50,150,275,350,500,650,875,950,1050,1300,1500,
-1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold = 0, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 8 + 10; 
+1675,1900,2125,2300,2525,2775,2925,3150,3500], currentXP = 0, currentGold = 0, hitChance = 80, critChance = 5, playerMelee = playerStrength * playerAttack - 7 + 10; 
 
 
 
 //Mouse eventlisteners and mouse detection with in canvas
 
-function handleMouseClick(evt) {
+function handleMouseClick(evt, evty) {
     //triggers when player clicks attack
     if (evt.pageX >= 550 && evt.pageX <= 700 && battleScreen || evt.pageX >= 766 && evt.pageX <= 830 &&
        evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
         //Click attack Event
+        attackEvents();
+    }
+    function attackEvents() {
         attackSequence++;
         slime1_right, slime1_HP = battleEvent.checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
         slime1_right, slime2_HP = battleEvent.checkAttack(slime2_Alive, slime2_Engaged, slime2_HP, slime1_right, slime2_Melee); //Slime 2 Attack Event
@@ -22,7 +25,25 @@ function handleMouseClick(evt) {
         shadewalker1_Right, shadewalker2_HP = battleEvent.checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
         shadekeeper1_Right, shadekeeper1_HP = battleEvent.checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
     }
-    
+    if (screen.width <= 800 && screen.width  >= 600) {
+        if (evt <= 266 && evt >= 209 &&
+           evty <= 632 && evty >= 616) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 500 && screen.width >= 400) {
+        if (evt <= 150 && evt >= 114 &&
+           evty <= 362 && evty >= 354) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 399) {
+        if (evt <= 126 && evt >= 88 &&
+           evty <= 362 && evty >= 354) {
+            attackEvents();
+        }
+    }
+
 };
 //monitors player currentXP if its greater than or = to the values in Nextlevel, player level will increase
 function playerMonitor() {

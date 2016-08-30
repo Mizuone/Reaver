@@ -28,11 +28,6 @@ body {
    -moz-transform: scale(1.3, 1.3);
    -webkit-transform: scale(1.3,1.3);
 }
-
-h1 {
-
-}
-
 h2 {
     font-family: 'Play', sans-serif, serif;
     text-align: center;
@@ -40,21 +35,6 @@ h2 {
     padding: 0.2em;
     font-weight: bold;
     margin: 0em;
-}
-
-p {
-
-
-}
-
-ul {
-
-
-}
-
-ol {
-
-
 }
 .MoveFormat {
     float: left;
@@ -86,8 +66,9 @@ button {
 	display: block;
 	margin: 0 auto;
     margin-top: 10em;
-    max-width: 100%;
+    max-width: 75%;
     max-height: 611px;
+    box-shadow: 0 0 5px black;
 }
 a {
 transition: all .2s ease-in-out;
@@ -101,6 +82,27 @@ nav a:visited {
 nav a:hover {
   color: #3399FF;
 }
-#wrapper {
-    
+
+@media screen and (max-width: 800px) {
+    body {
+        background-color: antiquewhite;
+    }
+    .MoveFormat {
+        display: none;
+    }
+}
+@media screen and (max-height: 420px) {
+    #myCanvas {
+        margin-top: 2.5em;
+        max-width: 65%;
+        max-height: 290px;
+    }
+}
+@media screen and (max-width: 500px) {
+    #myCanvas {
+        margin-top: 7em;
+        max-width: 75%;
+        max-height: 250px;
+        
+    }
 }

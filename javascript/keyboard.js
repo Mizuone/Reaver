@@ -98,7 +98,7 @@ function playerMovement() {
             
         
             if (is_playerMove) {
-                if (playerDirection & DIR_N) { playerSequence = [9,10,11]; player_sprite.draw(player_coordinates_x, player_coordinates_y, playerSequence);
+                if (playerDirection & DIR_N) { playerSequence = [9,10,11]; player_sprite.draw(player_coordinates_x, player_coordinates_y, playerSequence );
                 }
                 if (playerDirection & DIR_S) { playerSequence = [0,1,2]; player_sprite.draw(player_coordinates_x, player_coordinates_y, playerSequence);
                 }
