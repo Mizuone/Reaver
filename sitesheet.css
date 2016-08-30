@@ -91,18 +91,32 @@ nav a:hover {
         display: none;
     }
 }
-@media screen and (max-height: 420px) {
-    #myCanvas {
-        margin-top: 2.5em;
-        max-width: 65%;
-        max-height: 290px;
-    }
-}
 @media screen and (max-width: 500px) {
     #myCanvas {
         margin-top: 7em;
         max-width: 75%;
         max-height: 250px;
         
+    }
+}
+@media screen and (max-height: 420px) {
+    #myCanvas {
+        margin-top: 3em;
+        max-width: 70%;
+        max-height: 275px;
+    }
+}
+@media screen and (max-height: 375px) {
+    #myCanvas {
+        margin-top: 2.5em;
+        max-width: 60%;
+        max-height: 260px;
+    }
+}
+@media screen and (max-height: 330px) {
+    #myCanvas {
+        margin-top: 2.5em;
+        max-width: 60%;
+        max-height: 230px;
     }
 }
