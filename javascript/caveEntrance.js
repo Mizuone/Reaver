@@ -106,7 +106,7 @@ function caveEntrance() {
                 cancelAnimationFrame(requestID);
                 drawForest(); player_coordinates_x = 590; player_coordinates_y = 94; return;
             }
-    if (player_coordinates_x >= 470 && player_coordinates_x <= 490 &&
+    if (player_coordinates_x >= 470 && player_coordinates_x <= 500 &&
         player_coordinates_y >= 300 && player_coordinates_y <= 305) {
         cancelAnimationFrame(requestID); player_coordinates_x = 310; player_coordinates_y = 410; cave_level1(); return;
     }
