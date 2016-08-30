@@ -25,12 +25,14 @@ function handleMouseClick(evt, evty) {
         shadewalker1_Right, shadewalker2_HP = battleEvent.checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
         shadekeeper1_Right, shadekeeper1_HP = battleEvent.checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
     }
+    //Ipad Event
     if (screen.width <= 800 && screen.width  >= 600) {
         if (evt <= 266 && evt >= 209 &&
            evty <= 632 && evty >= 616) {
             attackEvents();
         }
     }
+    //Portrait Resolution
     if (screen.width <= 500 && screen.width >= 400) {
         if (evt <= 150 && evt >= 114 &&
            evty <= 362 && evty >= 354) {
@@ -40,6 +42,19 @@ function handleMouseClick(evt, evty) {
     if (screen.width <= 399) {
         if (evt <= 126 && evt >= 88 &&
            evty <= 362 && evty >= 354) {
+            attackEvents();
+        }
+    }
+    //Landscape Resolution
+    if (screen.width <= 735 && screen.width >= 700) {
+        if (evt <= 247 && evt >= 190 &&
+           evty <= 330 && evty >= 270) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 699) {
+        if (evt <= 244 && evt >= 199 &&
+           evty <= 298 && evty >= 273) {
             attackEvents();
         }
     }
