@@ -158,7 +158,7 @@ if (typeof(Reaver === "undefined")) {
         Reaver.Battler = function() {
                  this.playerMoveChange = function(changeMove) { 
                     is_playerMove = changeMove;
-                    if (changeMove == 1) {
+                    if (changeMove === 1) {
                         changeMove = true;
                     }else {
                         changeMove = false;
@@ -166,14 +166,14 @@ if (typeof(Reaver === "undefined")) {
                     return changeMove;
                 };
                  this.enemyMoveChange = function(enemyMovement) {
-                    if (enemyMovement == 1) {
+                    if (enemyMovement === 1) {
                         return true;
                     }else {
                         return false;
                     }
                 };
                 this.enemyRightChange = function(enemyDirection) {
-                    if (enemyDirection == 1) {
+                    if (enemyDirection === 1) {
                         return true;
                     }else {
                         return false;
@@ -351,47 +351,77 @@ function playerBattleMovement() {
         function playerDeathReset() {
             if (playerHealth <= 0 || playerHealth === "undefined") {playerHealth = 0; window.location.reload();}
         };
-        function accessPlayerMenu() {
-
-        }
-    var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png")
+    var playerAttackhit_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png"), 
     //Grass Terrain Sprties
-        var cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), cliffgrass_TopRightBottom = new Sprite("sprites/cliffgrass_uprightbottom.png"), cliffgrass_TopBottom = new Sprite("sprites/Cliffgrass_topbottom.png"),
+        cliffgrass_Back1 = new Sprite("sprites/Cliffgrass_Back.png"), 
+        cliffgrass_Front = new Sprite("sprites/Cliffgrass_Front.png"), 
+        cliffgrass_Left = new Sprite("sprites/Cliffgrass_leftside.png"), 
+        cliffgrass_Right = new Sprite("sprites/Cliffgrass_side.png"), 
+        cliffgrass_Topright = new Sprite("sprites/cliffgrass_topright.png"), 
+        cliffgrass_All = new Sprite("sprites/cliffgrass_all.png"), 
+        cliffgrass_Bottomright = new Sprite("sprites/cliffgrass_bottomright.png"), 
+        cliffgrass_BottomLeft = new Sprite("sprites/cliffgrass_bottomleft.png"), 
+        cliffgrass_TopLeft = new Sprite("sprites/cliffgrass_topleft.png"), 
+        cliffgrass_TopRightBottom = new Sprite("sprites/cliffgrass_uprightbottom.png"), 
+        cliffgrass_TopBottom = new Sprite("sprites/Cliffgrass_topbottom.png"),
             //Cave Terrain Sprites
-        cliffEntrance_Open = new Sprite("sprites/CaveEntrance_Open.png"), cave_Terrain = new Sprite("sprites/cave_Terrain.png"), cave_Wall = new Sprite("sprites/cave_wall.png"), cave_ceiling = new Sprite("sprites/cave_ceiling.png"), blackBlock = new Sprite("sprites/black_block.png"), cave_Opening = new Sprite("sprites/cave_OpeningDoor.png");
+        cliffEntrance_Open = new Sprite("sprites/CaveEntrance_Open.png"), 
+        cave_Terrain = new Sprite("sprites/cave_Terrain.png"), 
+        cave_Wall = new Sprite("sprites/cave_wall.png"), 
+        cave_ceiling = new Sprite("sprites/cave_ceiling.png"), 
+        blackBlock = new Sprite("sprites/black_block.png"), 
+        cave_Opening = new Sprite("sprites/cave_OpeningDoor.png"),
 
-    var bush = new Sprite("sprites/bushV1.png");
-    var player_sprite = new Sprite("sprites/character_spritesheet.png");
-var freezeMovement = false;
-        var is_playerMove = false, player_moveRight = false, player_moveLeft = true, attackShow = true,
-            attackDisabled = false;
-        var Context = null;
-        var BLOCK_W = 32;
-        var BLOCK_H = 32;
-        var delayAmount = -2;
-        var player_coordinates_x = 590;  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        var player_coordinates_y = 94; //352 starter //94 end
-        var player_Attackhit = false, playerAttack_x = 0, playerAttack_y = 0;
-        var grass = new Sprite("sprites/grass1.png"), cliff_Front = new Sprite("sprites/cliff_Front.png"), dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
-        playerAttackhit_Sprite.image.width = 32; playerAttackhit_Sprite.image.height = 32;
+        bush = new Sprite("sprites/bushV1.png"),
+        player_sprite = new Sprite("sprites/character_spritesheet.png"),
+        freezeMovement = false,
+        is_playerMove = false, player_moveRight = false, player_moveLeft = true, attackShow = true,
+        attackDisabled = false,
+        Context = null,
+        BLOCK_W = 32,
+        BLOCK_H = 32,
+        delayAmount = -2,
+        player_coordinates_x = 590,  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        player_coordinates_y = 94, //352 starter //94 end
+        player_Attackhit = false, 
+        playerAttack_x = 0, 
+        playerAttack_y = 0,
+        grass = new Sprite("sprites/grass1.png"), 
+        cliff_Front = new Sprite("sprites/cliff_Front.png"), 
+        dirt_Terrain = new Sprite("sprites/Dirt_Terrian.png");
+        
+        //object properties being set
+        playerAttackhit_Sprite.image.width = 32;
+        playerAttackhit_Sprite.image.height = 32;
            
-        
-        
+        player_sprite.image.width = 32; 
+        player_sprite.image.height = 32;   
+        var slimeSprite = new Sprite("sprites/slime_spritesheet.png"), 
+            slimeSuper_Sprite = new Sprite("sprites/slimeSuper_spritesheet.png"), 
+            slime1_x = 150, slime1_y = 150, slime1_Alive = true, slime1_left = false, slime1_right = true, slime1_Engaged = false, 
+            is_slimeMove = false; 
+            slimeSprite.image.width = 32; 
+            slimeSprite.image.height = 32; 
+            slimeSuper_Sprite.image.width = 32; 
+            slimeSuper_Sprite.image.height = 32;
 
-        player_sprite.image.width = 32; player_sprite.image.height = 32;   
-        var slimeSprite = new Sprite("sprites/slime_spritesheet.png"), slimeSuper_Sprite = new Sprite("sprites/slimeSuper_spritesheet.png"), slime1_x = 150, slime1_y = 150, slime1_Alive = true, slime1_left = false, slime1_right = true, slime1_Engaged = false, is_slimeMove = false; slimeSprite.image.width = 32; slimeSprite.image.height = 32; slimeSuper_Sprite.image.width = 32; slimeSuper_Sprite.image.height = 32;
-        var slime2_Alive = true, slime2_x = 450, slime2_y = 150, slime2_Left = false, slime2_Right = true, slime2_Engaged = false;
-        var slime3_Alive = true, slime3_x = 285, slime3_y = 250, slime3_Up = false, slime3_Down = true, slime3_Engaged = false;
-        var slime4_Alive = true, slime4_x = 275, slime4_y = 210, slime4_Left = false, slime4_Right = true, slime4_Engaged = false;
+        var slime2_Alive = true, slime2_x = 450, slime2_y = 150, slime2_Left = false, slime2_Right = true, slime2_Engaged = false,
+            slime3_Alive = true, slime3_x = 285, slime3_y = 250, slime3_Up = false, slime3_Down = true, slime3_Engaged = false,
+            slime4_Alive = true, slime4_x = 275, slime4_y = 210, slime4_Left = false, slime4_Right = true, slime4_Engaged = false;
 
-         var slimeEntrance1_Alive = true, slimeEntrance1_x = 275, slimeEntrance1_y = 210, slimeEntrance1_Left = false, slimeEntrance1_Right = true, slimeEntrance1_Engaged = false, slimeEntrance2_Alive = true, slimeEntrance2_x = 375, slimeEntrance2_y = 100, slimeEntrance2_Left = false, slimeEntrance2_Right = true, slimeEntrance2_Engaged = false;  
-        var shadeWalker_Sprite = new Sprite("sprites/shadewalker_Spritesheet.png"),  shadewalker1_Alive = true, shadewalker1_x = 150, shadewalker1_y = 130, shadewalker1_Left = false, shadewalker1_Right = true, shadewalker1_Engaged = false, shadewalker2_Alive = true, shadewalker2_x = 440, shadewalker2_y = 130, shadewalker2_Left = false, shadewalker2_Right = true, shadewalker2_Engaged = false, shadeKeeper_Sprite = new Sprite("sprites/shadeKeeper_Spritesheet.png"), shadekeeper1_Alive = true, shadekeeper1_x = 250, shadekeeper1_y = 200, shadekeeper1_Left = false, shadekeeper1_Right = true, shadekeeper1_Engaged = false;
+         var slimeEntrance1_Alive = true, slimeEntrance1_x = 275, slimeEntrance1_y = 210, slimeEntrance1_Left = false, slimeEntrance1_Right = true,                        slimeEntrance1_Engaged = false, 
+             slimeEntrance2_Alive = true, slimeEntrance2_x = 375, slimeEntrance2_y = 100, slimeEntrance2_Left = false, slimeEntrance2_Right = true,                        slimeEntrance2_Engaged = false,
+             shadeWalker_Sprite = new Sprite("sprites/shadewalker_Spritesheet.png"), 
+             shadewalker1_Alive = true, shadewalker1_x = 150, shadewalker1_y = 130, shadewalker1_Left = false, shadewalker1_Right = true, shadewalker1_Engaged = false, 
+             shadewalker2_Alive = true, shadewalker2_x = 440, shadewalker2_y = 130, shadewalker2_Left = false, shadewalker2_Right = true, shadewalker2_Engaged = false, shadeKeeper_Sprite = new Sprite("sprites/shadeKeeper_Spritesheet.png"), shadekeeper1_Alive = true, shadekeeper1_x = 250, shadekeeper1_y = 200, shadekeeper1_Left = false, shadekeeper1_Right = true, shadekeeper1_Engaged = false;
         shadeWalker_Sprite.image.width = 32; shadeWalker_Sprite.image.height = 32; shadeKeeper_Sprite.image.width = 32; shadeKeeper_Sprite.image.height = 32;
-        var battleScreen = false;
-        var playerDirection = 0;
-        var requestID;
-        var playerMenu = 0, attackSequence = 0;
-        var playerSequence = 0;
+        var battleScreen = false,
+            playerDirection = 0,
+            requestID,
+            playerMenu = 0, 
+            attackSequence = 0,
+            playerSequence = 0;
+
     if (slime1_Alive) { var slime1_Melee = 5, slime1_HP = 25;}
     if (slime2_Alive) { var slime2_Melee = 5, slime2_HP = 30;}
     if (slime3_Alive) { var slime3_Melee = 5, slime3_HP = 35;}
@@ -403,8 +433,6 @@ var freezeMovement = false;
     if (shadewalker2_Alive) { var shadewalker2_Melee = 10, shadewalker2_HP = 60;}
     if (shadekeeper1_Alive) { var shadekeeper1_Melee = 20, shadekeeper1_HP = 90;}
     
-
-
   var mapforest = [ 0,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,
                     5,6,6,6,6,6,6,6,6,6,6,6,4,0,0,0,0,3,3,3,
                     5,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,5,6,6,6,
@@ -695,9 +723,8 @@ var freezeMovement = false;
             playerMovement();
             is_playerMove = false;
             playerDirection = 0;
-       
             if (key.escape) {return;} //Access Player Menu
-        
+            
         //collision for battle against slime1, width and height are based off total W & H of spritesheet
             slime1_Engaged = enemyAggro(slime1_x, slime1_y, slime1_Alive, slime1_Engaged);
             slime2_Engaged = enemyAggro(slime2_x, slime2_y, slime2_Alive, slime2_Engaged);
@@ -731,6 +758,7 @@ var freezeMovement = false;
                 caveEntrance(); player_coordinates_x = 40; player_coordinates_y = 96; return;
             }
         };
+
 /*QUnit.test( "hello test", function( assert ) {
   assert.ok( 1 == "1", "Passed!" );
 });*/

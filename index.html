@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <title>Reaver</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="sitesheet.css" type="text/css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="javascript/modernizr-custom.js" type="text/javascript"></script>
     <script src="javascript/utility.js" type="text/javascript"></script>
     <script src="javascript/canvas.js" type="text/javascript"></script>
@@ -14,7 +16,7 @@
     <script src="javascript/hammer.js" type="text/javascript"></script>
     <script src="javascript/keyboard.js" type="text/javascript"></script>
     <script src="javascript/mobileport.js" type="text/javascript"></script>
-        <script src="javascript/gameframework.js" type="text/javascript"></script>
+    <script src="javascript/gameframework.js" type="text/javascript"></script>
     <script src="javascript/spritesheet.js" type="text/javascript"></script>
     <script src="javascript/sprite.js" type="text/javascript"></script>
     <script src="javascript/world.js" type="text/javascript"></script>
@@ -25,20 +27,50 @@
 </head>
 <body>
     <div id="wrapper">
-	   <canvas id="myCanvas" width="640" height="480"></canvas>
-        <div class="MoveFormat">
-            <button id="hide" type="button">Hide Description</button>
-            <button id="show" type="button">Show Description</button>
-            <div class="textControl">
-                    <h2>Description</h2>
-                <p>You explore multiple enviornments with a character, and face obstacles
-                    through out the play through.
+        <div class="container">
+           <canvas id="myCanvas" width="640" height="480"></canvas>
+            <div class="MoveFormat">
+                <div class="row">
+                    <div class="textControl">
+                        <div class="col-lg-4 col-sm-4">
+                            <h2>Description</h2>
+                            <p>You explore multiple enviornments with a character, and face obstacles
+                                through out the play through.
+                            </p>
+                        </div>
+                        <div class="col-lg-4 col-sm-4">
+                        <ul class="logosection">
+                                <li><a href="https://mizuone.github.io/"><img src="http://res.cloudinary.com/dqk4hl3zh/image/upload/v1466524579/Logo_cke2ww.png" width="60" height="60"  target="_blank" rel="noopener"></a></li>
+                                <li><a href="https://github.com/Mizuone"><img src="http://res.cloudinary.com/dqk4hl3zh/image/upload/v1466524569/github_ffxmc2.png" width="60" height="60" target="_blank" rel="noopener"></a></li>
+                       </ul>
+                        </div>
+                        <div class="col-lg-4 col-sm-4">
+                            <h2>Controls</h2>
+                            <p>Click Attack when you face an enemy, and WASD - To move up, down, left, or right. Esc to see menu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobiletext">
+                    <div class="row">
+                        <div class="col-xs-12">
+                                <h2>Controls (Rotate to Hide)</h2>
+                                <p><span>Tap</span> the words, to attack and navigate menus, <span>Pan</span> - To move up, down, left, or right. <span>Double Tap</span> to see menu.</p>
+                            </div>
 
-                </p>
-                    <h2>Controls</h2>
-                <p>Click Attack when you face an enemy, and WASD - To move up, down, left, or right.</p>
+
+                    </div>
+                    <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="logosection">
+                                        <li><a href="https://mizuone.github.io/"><img src="http://res.cloudinary.com/dqk4hl3zh/image/upload/v1466524579/Logo_cke2ww.png" width="60" height="60"  target="_blank" rel="noopener"></a></li>
+                                        <li><a href="https://github.com/Mizuone"><img src="http://res.cloudinary.com/dqk4hl3zh/image/upload/v1466524569/github_ffxmc2.png" width="60" height="60" target="_blank" rel="noopener"></a></li>
+                               </ul>
+                            </div>
+                    </div>
+                </div>
             </div>
         </div>
+
 	</div>
 	
 </body>

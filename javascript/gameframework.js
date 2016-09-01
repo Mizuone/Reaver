@@ -8,10 +8,68 @@ var playerStrength = 4, playerAgility = 3, playerDefense = 5, playerAttack = 5, 
 
 function handleMouseClick(evt, evty) {
     //triggers when player clicks attack
-    if (evt.pageX >= 550 && evt.pageX <= 700 && battleScreen || evt.pageX >= 766 && evt.pageX <= 830 &&
-       evt.pageY >= 590 && evt.pageY <= 607 && battleScreen) {
+    //console.log("MouseClick X: " + evt.pageX);
+    //console.log("MouseClick Y: " + evt.pageY);
+    //Desktop Widescreen
+    //2560x1080
+    console.log(screen.width);
+    if (evt.pageX <= 1516 && evt.pageX >= 1469 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
         //Click attack Event
         attackEvents();
+    }
+    //1920x1080
+    if (evt.pageX <= 1200 && evt.pageX >= 1145 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
+        //Click attack Event
+        attackEvents();
+    }
+    //1680x1050
+    if (evt.pageX <= 1078 && evt.pageX >= 1025 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
+        //Click attack Event
+        attackEvents();
+    }
+    //
+    //Laptop
+    if (evt.pageX <= 957 && evt.pageX >= 904 && evt.pageY <= 339 && evt.pageY >= 324 && battleScreen) {
+        //Click attack Event
+        attackEvents();
+    }
+    //1280x950
+    if (evt.pageX <= 879 && evt.pageX >= 825 && evt.pageY <= 339 && evt.pageY >= 324 && battleScreen) {
+        //Click attack Event
+        attackEvents();
+    }
+        //Ipad Event
+    if (screen.width <= 800 && screen.width  >= 600) {
+        if (evt <= 626 && evt >= 563 &&
+           evty <= 347 && evty >= 319) {
+            attackEvents();
+        }
+    }
+    //Portrait Resolution
+    if (screen.width <= 500 && screen.width >= 400) {
+        if (evt <= 345 && evt >= 310 &&
+           evty <= 170 && evty >= 156) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 399) {
+        if (evt <= 269 && evt >= 235 &&
+           evty <= 176 && evty >= 152) {
+            attackEvents();
+        }
+    }
+    //Landscape Resolution
+    if (screen.width <= 735 && screen.width >= 700 && screen.height > 400) {
+        if (evt <= 568 && evt >= 507 &&
+           evty <= 170 && evty >= 141) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 699 && screen.height <= 390) {
+        if (evt <= 460 && evt >= 411 &&
+           evty <= 136 && evty >= 114) {
+            attackEvents();
+        }
     }
     function attackEvents() {
         attackSequence++;
@@ -25,40 +83,6 @@ function handleMouseClick(evt, evty) {
         shadewalker1_Right, shadewalker2_HP = battleEvent.checkAttack(shadewalker2_Alive, shadewalker2_Engaged, shadewalker2_HP, shadewalker1_Right, shadewalker2_Melee); //shadewalker 2
         shadekeeper1_Right, shadekeeper1_HP = battleEvent.checkAttack(shadekeeper1_Alive, shadekeeper1_Engaged, shadekeeper1_HP, shadekeeper1_Right, shadekeeper1_Melee); //shadewalker 2
     }
-    //Ipad Event
-    if (screen.width <= 800 && screen.width  >= 600) {
-        if (evt <= 266 && evt >= 209 &&
-           evty <= 632 && evty >= 616) {
-            attackEvents();
-        }
-    }
-    //Portrait Resolution
-    if (screen.width <= 500 && screen.width >= 400) {
-        if (evt <= 150 && evt >= 114 &&
-           evty <= 362 && evty >= 354) {
-            attackEvents();
-        }
-    }
-    if (screen.width <= 399) {
-        if (evt <= 126 && evt >= 88 &&
-           evty <= 362 && evty >= 354) {
-            attackEvents();
-        }
-    }
-    //Landscape Resolution
-    if (screen.width <= 735 && screen.width >= 700) {
-        if (evt <= 247 && evt >= 190 &&
-           evty <= 330 && evty >= 270) {
-            attackEvents();
-        }
-    }
-    if (screen.width <= 699) {
-        if (evt <= 244 && evt >= 199 &&
-           evty <= 298 && evty >= 273) {
-            attackEvents();
-        }
-    }
-
 };
 //monitors player currentXP if its greater than or = to the values in Nextlevel, player level will increase
 function playerMonitor() {
@@ -77,46 +101,105 @@ function playerMonitor() {
 
 function drawBattleUI() {
     function drawBattleBackground() {
-        Context.context.beginPath(); Context.context.fillStyle = "black"; Context.context.fillRect(0,0,Context.width, Context.height); Context.context.fill();Context.context.closePath();        
+        Context.context.beginPath(); 
+        Context.context.fillStyle = "black"; 
+        Context.context.fillRect(0,0,Context.width, Context.height); 
+        Context.context.fill();
+        Context.context.closePath();        
     };
     
     function drawPlayerinterface() {
         Context.context.beginPath();
-        Context.context.fillStyle = "rgba(77,255,198,0.9)";
+        Context.context.fillStyle = "rgba(77,150,255,0.7)";
         Context.context.fill();
-        Context.context.fillRect(140,360, 350, 110);
+        Context.context.fillRect(475, 125, 125, 300);
+        Context.context.closePath();
+        Context.context.beginPath();
+        Context.context.fillStyle = "rgba(77,150,255,0.7)";
+        Context.context.fill();
+        Context.context.fillRect(190, 100, 260, 75);
         Context.context.closePath();
         //Draws player Health
-        Context.context.beginPath(); Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Player HP: " + playerHealth + "/" + playerMaxHealth, 300, 450); Context.context.fill(); Context.context.closePath();
+        Context.context.font = "bold 1.2em Arial"; 
+        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
+        Context.context.shadowColor= "black";
+        Context.context.shadowBlur= 1;
+        Context.context.lineWidth= 1;
+        Context.context.strokeText("Player HP: ", 350, 140);
+        Context.context.strokeText(playerHealth + "/" + playerMaxHealth, 360, 160);
+        Context.context.shadowBlur= 0;
+        Context.context.fillStyle = "white";
+        if (playerHealth < playerMaxHealth / 3) {
+            Context.context.fillStyle = "Crimson";
+        }
+        Context.context.fillText("Player HP: ", 350, 140);
+        Context.context.fillText(playerHealth + "/" + playerMaxHealth, 360, 160);
+        Context.context.fill();
+        
     };
     var drawAttackinterface = function() {
-        Context.context.beginPath();
-        Context.context.font = "bold 1em Arial";
-        Context.context.fillStyle = "black";
-        Context.context.fillText("Attack", 170, 400);
-        Context.context.fill();
-        Context.context.closePath();
+        Context.context.font = "bold 1.2em Arial";
+        
+        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
+        Context.context.shadowColor= "black";
+        Context.context.shadowBlur= 1;
+        Context.context.lineWidth= 1;
+        Context.context.strokeText("Potions", 507, 350);
+        Context.context.strokeText("Special", 507, 275);
+        Context.context.strokeText("Attack", 507, 200);
+                
+        Context.context.shadowBlur= 0;
+        Context.context.fillStyle = "white";
+        Context.context.fillText("Potions", 507, 350);
+        Context.context.fillText("Special", 507, 275);
+        Context.context.fillText("Attack", 507, 200);
     };
     var drawAttackDisabled = function() {
         Context.context.beginPath();
         Context.context.font = "bold 1em Arial";
-        Context.context.fillStyle = "#99968C";
-        Context.context.fillText("Attack", 170, 400);
+        
+        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
+        
+        Context.context.fillStyle = "#000";
+        Context.context.fillText("Attack", 510, 350);
         Context.context.fill();
         Context.context.closePath();
     };
     var drawEnemyHP = function() {
         
-        //draws slime1 Hp bar
-        if(slime1_Alive && slime1_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime HP: " + slime1_HP + "/" + " 25", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(slime2_Alive && slime2_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime HP: " + slime2_HP + "/" + " 30", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(slime3_Alive && slime3_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime HP: " + slime3_HP + "/" + " 35", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(slime4_Alive && slime4_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime HP: " + slime4_HP + "/" + " 30", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(slimeEntrance1_Alive && slimeEntrance1_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime HP: " + slimeEntrance1_HP + "/" + " 35", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(slimeEntrance2_Alive && slimeEntrance2_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Slime Super HP: " + slimeEntrance2_HP + "/" + " 75", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(shadewalker1_Alive && shadewalker1_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Shade Walker HP: " + shadewalker1_HP + "/" + " 60", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(shadewalker2_Alive && shadewalker2_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Shade Walker HP: " + shadewalker2_HP + "/" + " 60", 300, 400); Context.context.fill();  Context.context.closePath(); }
-        if(shadekeeper1_Alive && shadekeeper1_Engaged) { Context.context.beginPath();  Context.context.font = "bold 1em Arial"; Context.context.fillStyle = "black"; Context.context.fillText("Shade Keeper HP: " + shadekeeper1_HP + "/" + " 90", 300, 400); Context.context.fill();  Context.context.closePath(); }
+            //forest enemies
+            slime1_Alive && slime1_Engaged ? displayEnemyHealth("Slime", slime1_HP, 25) : false;
+            slime2_Alive && slime2_Engaged ? displayEnemyHealth("Slime", slime2_HP, 30) : false;
+            slime3_Alive && slime3_Engaged ? displayEnemyHealth("Slime", slime3_HP, 35) : false;
+            slime4_Alive && slime4_Engaged ? displayEnemyHealth("Slime", slime4_HP, 30) : false;
+            //cave entrance enemies
+            slimeEntrance1_Alive && slimeEntrance1_Engaged ? displayEnemyHealth("Slime", slimeEntrance1_HP, 35) : false;
+            slimeEntrance2_Alive && slimeEntrance2_Engaged ? displayEnemyHealth("Slime Super", slimeEntrance2_HP, 75) : false;
+            
+            //cave enemies
+            shadewalker1_Alive && shadewalker1_Engaged ? displayEnemyHealth("Shade Walker", shadewalker1_HP, 60) : false;
+            shadewalker2_Alive && shadewalker2_Engaged ? displayEnemyHealth("Shade Walker", shadewalker2_HP, 60) : false;
+            shadekeeper1_Alive && shadekeeper1_Engaged ? displayEnemyHealth("Shade Keeper", shadekeeper1_HP, 90) : false;
+        
+            function displayEnemyHealth(enemyName, enemyHP, totalHealth) {
+                Context.context.font = "bold 1.2em Arial";
+                screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
+                Context.context.shadowColor= "black";
+                Context.context.shadowBlur= 1;
+                Context.context.lineWidth= 1;
+                Context.context.strokeText( enemyName + " HP: ", 200, 140);
+                Context.context.strokeText( enemyHP + "/" + totalHealth, 230, 160);
+               /* Context.context.strokeText("Player HP: ", 350, 140);
+                Context.context.strokeText(playerHealth + "/" + playerMaxHealth, 360, 160); */
+                
+                Context.context.shadowBlur= 0;
+                Context.context.fillStyle = "white";
+                if (enemyHP < totalHealth / 3) {
+                    Context.context.fillStyle = "Crimson";
+                }
+                Context.context.fillText( enemyName + " HP: ", 200, 140);
+                Context.context.fillText( enemyHP + "/" + totalHealth, 230, 160);
+            }
         };
     drawBattleBackground();
     drawPlayerinterface();
