@@ -12,8 +12,8 @@ function mobileControls() {
                 $(document).on('touchstart', '#myCanvas', function(e) {
                     var xPos = e.originalEvent.touches[0].pageX,
                         yPos = e.originalEvent.touches[0].pageY;
-                    console.log(xPos);
-                    console.log(yPos);
+                    //console.log(xPos);
+                    //console.log(yPos);
                     
                     handleMouseClick(xPos, yPos);
                 });
@@ -32,7 +32,6 @@ function mobileControls() {
                         playerMenu = 0;
                     }
                 });
-                
                 hammertime.on('panright', function(ev) {
                     if (!battleScreen) {
                         player_coordinates_x += 4; is_playerMove = true; playerDirection |= DIR_E;

@@ -14,6 +14,11 @@ if (typeof(Reaver === "undefined")) {
             addEventListener(document, "touchstart", function(e) {
                     e.preventDefault();
             }, Modernizr.passiveeventlisteners ? {passive: true} : false);
+            Context.canvas.addEventListener("scroll", preventMotion, false);
+            Context.canvas.addEventListener("touchmove", preventMotion, false);
+            Context.canvas.addEventListener("touchend", preventMotion, false);
+            Context.canvas.addEventListener("touchcancel", preventMotion, false);
+            $(Context.canvas).on("touchstart", preventMotion);
             $("#hide").click(function() {
                $(".textControl").hide();
                $("#hide").hide();
@@ -226,6 +231,7 @@ if (typeof(Reaver === "undefined")) {
                             is_slimeMove = false;
                             setTimeout(function() {
                             is_playerMove = true;
+                            $(Context.canvas).on("touchstart", preventMotion);
                             if (is_playerMove) {
                                     attackShow = false;
                                     is_playerMove = false;
@@ -306,7 +312,20 @@ if (typeof(Reaver === "undefined")) {
 /*To use the function: variable_direction, variable_enemyHP = checkAttack(enemy_Alive, enemy_Engaged, enemy_HP, enemy_Direction, enemy_Attack);
 /*/
    
+function preventMotion(event) {
+                window.scrollTo(0, 1);
+                event.preventDefault();
+                event.stopPropagation();
+            }
 
+function checkBattle() {
+    if (battleScreen) {
+        $(Context.canvas).off("touchstart", preventMotion);
+    }
+    if (!battleScreen) {
+        $(Context.canvas).on("touchstart", preventMotion);
+    }
+}
 function playerBattleMovement() {
             if (is_playerMove) {
                     player_sprite.draw(player_coordinates_x, player_coordinates_y, [3,4,5]); //Redraws based off player x, and player y /
@@ -610,6 +629,7 @@ function playerBattleMovement() {
                 resetAnimationCounter();
                 drawBattleUI();
                 drawBattleMap();
+                checkBattle();
                 var playerSequence = 0;
                 playerDirection = 0;
             
@@ -724,7 +744,7 @@ function playerBattleMovement() {
             is_playerMove = false;
             playerDirection = 0;
             if (key.escape) {return;} //Access Player Menu
-            
+            checkBattle();
         //collision for battle against slime1, width and height are based off total W & H of spritesheet
             slime1_Engaged = enemyAggro(slime1_x, slime1_y, slime1_Alive, slime1_Engaged);
             slime2_Engaged = enemyAggro(slime2_x, slime2_y, slime2_Alive, slime2_Engaged);

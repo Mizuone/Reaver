@@ -12,8 +12,8 @@ function handleMouseClick(evt, evty) {
     //console.log("MouseClick Y: " + evt.pageY);
     //Desktop Widescreen
     //2560x1080
-    console.log(screen.width);
-    if (evt.pageX <= 1516 && evt.pageX >= 1469 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
+    //console.log(screen.width);
+    /*if (evt.pageX <= 1516 && evt.pageX >= 1469 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
         //Click attack Event
         attackEvents();
     }
@@ -39,14 +39,37 @@ function handleMouseClick(evt, evty) {
         attackEvents();
     }
         //Ipad Event
-    if (screen.width <= 800 && screen.width  >= 600) {
+    if (screen.width <= 800 && screen.width >= 600) {
         if (evt <= 626 && evt >= 563 &&
            evty <= 347 && evty >= 319) {
             attackEvents();
         }
-    }
+    }*/
     //Portrait Resolution
-    if (screen.width <= 500 && screen.width >= 400) {
+        
+    if (screen.width > 800) {
+        /*console.log(evt.pageX);
+        console.log(evt.pageY);
+        console.log(screen.width / 1.2);
+        console.log(screen.width / 1.6);
+        console.log(screen.height / 1.7);
+        console.log(screen.height / 2.7);*/
+        if (evt.pageX <= screen.width / 1.4 && evt.pageX >= screen.width / 1.7 &&
+           evt.pageY <= screen.height / 2.5 && evt.pageY <= screen.height / 2.85) {
+            attackEvents();
+        }
+    }
+    if (screen.width <= 800) {
+            //console.log(event.touches[0].pageX);
+            //console.log(event.touches[0].pageY);
+        if (event.touches[0].pageX <= screen.width / 1.2 && event.touches[0].pageX >= screen.width / 1.45 &&
+           event.touches[0].pageY <= screen.height / 1.8 && event.touches[0].pageY <= screen.height / 1.9) {
+
+            attackEvents();
+        }
+    }
+
+    /*if (screen.width <= 500 && screen.width >= 400) {
         if (evt <= 345 && evt >= 310 &&
            evty <= 170 && evty >= 156) {
             attackEvents();
@@ -70,7 +93,7 @@ function handleMouseClick(evt, evty) {
            evty <= 136 && evty >= 114) {
             attackEvents();
         }
-    }
+    }*/
     function attackEvents() {
         attackSequence++;
         slime1_right, slime1_HP = battleEvent.checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
