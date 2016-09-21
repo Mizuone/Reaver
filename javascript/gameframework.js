@@ -13,38 +13,6 @@ function handleMouseClick(evt, evty) {
     //Desktop Widescreen
     //2560x1080
     //console.log(screen.width);
-    /*if (evt.pageX <= 1516 && evt.pageX >= 1469 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
-        //Click attack Event
-        attackEvents();
-    }
-    //1920x1080
-    if (evt.pageX <= 1200 && evt.pageX >= 1145 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
-        //Click attack Event
-        attackEvents();
-    }
-    //1680x1050
-    if (evt.pageX <= 1078 && evt.pageX >= 1025 && evt.pageY <= 340 && evt.pageY >= 323 && battleScreen) {
-        //Click attack Event
-        attackEvents();
-    }
-    //
-    //Laptop
-    if (evt.pageX <= 957 && evt.pageX >= 904 && evt.pageY <= 339 && evt.pageY >= 324 && battleScreen) {
-        //Click attack Event
-        attackEvents();
-    }
-    //1280x950
-    if (evt.pageX <= 879 && evt.pageX >= 825 && evt.pageY <= 339 && evt.pageY >= 324 && battleScreen) {
-        //Click attack Event
-        attackEvents();
-    }
-        //Ipad Event
-    if (screen.width <= 800 && screen.width >= 600) {
-        if (evt <= 626 && evt >= 563 &&
-           evty <= 347 && evty >= 319) {
-            attackEvents();
-        }
-    }*/
     //Portrait Resolution
         
     if (screen.width > 800) {
@@ -68,32 +36,6 @@ function handleMouseClick(evt, evty) {
             attackEvents();
         }
     }
-
-    /*if (screen.width <= 500 && screen.width >= 400) {
-        if (evt <= 345 && evt >= 310 &&
-           evty <= 170 && evty >= 156) {
-            attackEvents();
-        }
-    }
-    if (screen.width <= 399) {
-        if (evt <= 269 && evt >= 235 &&
-           evty <= 176 && evty >= 152) {
-            attackEvents();
-        }
-    }
-    //Landscape Resolution
-    if (screen.width <= 735 && screen.width >= 700 && screen.height > 400) {
-        if (evt <= 568 && evt >= 507 &&
-           evty <= 170 && evty >= 141) {
-            attackEvents();
-        }
-    }
-    if (screen.width <= 699 && screen.height <= 390) {
-        if (evt <= 460 && evt >= 411 &&
-           evty <= 136 && evty >= 114) {
-            attackEvents();
-        }
-    }*/
     function attackEvents() {
         attackSequence++;
         slime1_right, slime1_HP = battleEvent.checkAttack(slime1_Alive, slime1_Engaged, slime1_HP, slime1_right, slime1_Melee); //Slime 1 Attack event
@@ -177,17 +119,6 @@ function drawBattleUI() {
         Context.context.fillText("Special", 507, 275);
         Context.context.fillText("Attack", 507, 200);
     };
-    var drawAttackDisabled = function() {
-        Context.context.beginPath();
-        Context.context.font = "bold 1em Arial";
-        
-        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
-        
-        Context.context.fillStyle = "#000";
-        Context.context.fillText("Attack", 510, 350);
-        Context.context.fill();
-        Context.context.closePath();
-    };
     var drawEnemyHP = function() {
         
             //forest enemies
@@ -226,12 +157,9 @@ function drawBattleUI() {
         };
     drawBattleBackground();
     drawPlayerinterface();
-     drawEnemyHP();
+    drawEnemyHP();
     if (attackShow) {
         drawAttackinterface();
-    }
-    if (attackDisabled) {
-        drawAttackDisabled();
     }
 }
 
