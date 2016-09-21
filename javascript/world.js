@@ -76,7 +76,7 @@ if (typeof(Reaver === "undefined")) {
             this.player_moveRight = false;
             this.player_moveLeft = false;
             this.attackShow = true;
-            this.attackDisabled = false;
+            
 
             //Player Collision with world or enemey object
             //numeric values will be changed later, for now hard values will be in for width and height
@@ -207,14 +207,12 @@ if (typeof(Reaver === "undefined")) {
                                 attackShow = false;
                                 is_playerMove = false;
                                 is_slimeMove = true;
-                                attackDisabled = true;
                                 enemyPlace = true;
                                 //Resets all values to default when player attack and slime attack is fired
                                 //stabilize();
                                     if (is_slimeMove && Alive) {
                                         enemyDoAttack = playerHealth -= enemyAttack;
                                         setTimeout(function() {
-                                        attackDisabled = false;
                                         attackShow = true;
                                         attackSequence = 0;
                                         enemyPlace = false;
@@ -236,11 +234,9 @@ if (typeof(Reaver === "undefined")) {
                                     attackShow = false;
                                     is_playerMove = false;
                                     is_slimeMove = true;
-                                    attackDisabled = true;
                                     enemyPlace = true;
                                         if (is_slimeMove && Alive) {
                                             setTimeout(function() {
-                                            attackDisabled = false;
                                             attackShow = true;
                                             attackSequence = 0;
                                             enemyPlace = false;
@@ -395,7 +391,6 @@ function playerBattleMovement() {
         player_sprite = new Sprite("sprites/character_spritesheet.png"),
         freezeMovement = false,
         is_playerMove = false, player_moveRight = false, player_moveLeft = true, attackShow = true,
-        attackDisabled = false,
         Context = null,
         BLOCK_W = 32,
         BLOCK_H = 32,
@@ -608,7 +603,6 @@ function playerBattleMovement() {
                 enemyisAlive = false;
                 is_slimeMove = false;
                 battleScreen = false;
-                attackDisabled = false;
                 attackSequence = 0;
                 slime1_x, slime1_y = resetSlime(150);
                 player_coordinates_x = resetPlayerPositionX(resetPlayerX);
@@ -670,7 +664,6 @@ function playerBattleMovement() {
             cancelAnimation();
             is_playerMove = false; 
             attackShow = true; 
-            attackDisabled = false; 
             is_slimeMove = false; 
             attackSequence = 0; 
             engaged = true;
