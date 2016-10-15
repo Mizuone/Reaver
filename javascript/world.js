@@ -4,13 +4,16 @@ if (typeof(Reaver === "undefined")) {
     var Reaver = {};
 } else {
     console.log("Object Reaver is of invalid type!")
-}
-        $(document).ready(function(){
+}       
+        $(window).load(function(){
             Context = new HTML("myCanvas", 640, 480);
             Context.canvas.addEventListener("mousedown", handleMouseClick);
             initializeKeyboard();
             initializeAnimationCounters();
             screen.width < 800 ? mobileControls() : false;
+            /*
+            *Initialize touch events to canvas object
+            */
             addEventListener(document, "touchstart", function(e) {
                     e.preventDefault();
             }, Modernizr.passiveeventlisteners ? {passive: true} : false);
@@ -19,21 +22,7 @@ if (typeof(Reaver === "undefined")) {
             Context.canvas.addEventListener("touchend", preventMotion, false);
             Context.canvas.addEventListener("touchcancel", preventMotion, false);
             $(Context.canvas).on("touchstart", preventMotion);
-            $("#hide").click(function() {
-               $(".textControl").hide();
-               $("#hide").hide();
-               $("#show").show();
-                
-            });
-            $("#show").click(function() {
-                $(".textControl").show();
-                $("#hide").show();
-                $("#show").hide();
-                
-            })
-        });
-        
-        $(window).load(function(){
+            
             playerMonitor();
             
             drawForest();
@@ -395,8 +384,8 @@ function playerBattleMovement() {
         BLOCK_W = 32,
         BLOCK_H = 32,
         delayAmount = -2,
-        player_coordinates_x = 590,  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
-        player_coordinates_y = 94, //352 starter //94 end
+        player_coordinates_x = 355,  //10 starter //590 end ======= Slimes 150 X Slimes 130 Y
+        player_coordinates_y = 75, //352 starter //94 end
         player_Attackhit = false, 
         playerAttack_x = 0, 
         playerAttack_y = 0,
@@ -615,7 +604,7 @@ function playerBattleMovement() {
     function drawBattle() {
         requestID = requestAnimationFrame(drawBattle);
         if (battleScreen) {
-            playerDeathReset(); //checks if player health if below 0 if so reset game
+            playerDeathReset(); //checks if player health is below 0 if so reset game
                 addEventListener(document, "touchstart", function(e) {
                     e.preventDefault();
                 }, Modernizr.passiveeventlisteners ? {passive: true} : false);

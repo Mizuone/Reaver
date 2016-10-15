@@ -83,6 +83,7 @@ function caveEntrance() {
     drawEntrance();
     resetAnimationCounter();
     playerMovement();
+    checkBattle();
     is_playerMove = false;
     playerDirection = 0;
     if (key.escape) {return;} //Access Player Menu

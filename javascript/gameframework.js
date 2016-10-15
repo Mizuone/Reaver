@@ -15,19 +15,15 @@ function handleMouseClick(evt, evty) {
     //console.log(screen.width);
     //Portrait Resolution
         
-    if (screen.width > 800) {
+    if (screen.width > 1000) {
         /*console.log(evt.pageX);
-        console.log(evt.pageY);
-        console.log(screen.width / 1.2);
-        console.log(screen.width / 1.6);
-        console.log(screen.height / 1.7);
-        console.log(screen.height / 2.7);*/
+        console.log(evt.pageY);*/
         if (evt.pageX <= screen.width / 1.4 && evt.pageX >= screen.width / 1.7 &&
            evt.pageY <= screen.height / 2.5 && evt.pageY <= screen.height / 2.85) {
             attackEvents();
         }
     }
-    if (screen.width <= 800) {
+    if (screen.width <= 1000) {
             //console.log(event.touches[0].pageX);
             //console.log(event.touches[0].pageY);
         if (event.touches[0].pageX <= screen.width / 1.2 && event.touches[0].pageX >= screen.width / 1.45 &&

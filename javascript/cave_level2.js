@@ -58,6 +58,7 @@ function cave_level2() {
     Context.context.beginPath(); Context.context.fillStyle = "rgba(0,0,0,0.2)"; Context.context.fillRect(0,0,Context.width, Context.height); Context.context.fill();Context.context.closePath();
     resetAnimationCounter();
     playerMovement();
+    checkBattle();
     is_playerMove = false;
     playerDirection = 0;
     if (key.escape) {return;} //Access Player Menu
@@ -70,6 +71,12 @@ function cave_level2() {
 
      //260 X
      //200 Y
+    if (!shadekeeper1_Alive) {
+        alert("Congratulations you beat my first ever canvas adventure!");
+        var con = confirm("Do you want to play again?");
+        con ? location.reload() : location.href = "https://mizuone.github.io/#projectsection";
+        
+    }
     if (player_coordinates_x >= 440 && player_coordinates_x <= 470 &&
        player_coordinates_y >= 440 && player_coordinates_y <= 460) {
          cancelAnimationFrame(requestID); player_coordinates_x = 460; player_coordinates_y = 80; cave_level1(); return;

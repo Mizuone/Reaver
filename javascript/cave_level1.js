@@ -62,6 +62,7 @@ function cave_level1() {
     Context.context.beginPath(); Context.context.fillStyle = "rgba(0,0,0,0.2)"; Context.context.fillRect(0,0,Context.width, Context.height); Context.context.fill();Context.context.closePath();
     resetAnimationCounter();
     playerMovement();
+    checkBattle();
     is_playerMove = false;
     playerDirection = 0;
     if (key.escape) {return;} //Access Player Menu
