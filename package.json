@@ -1,0 +1,24 @@
+{
+  "name": "Reaver",
+  "version": "1.0.0",
+  "description": "RPG game using JavaScript with HTML5 canvas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mizuone/Reaver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mizuone/Reaver/issues"
+  },
+  "homepage": "https://github.com/Mizuone/Reaver#readme",
+  "dependencies": {
+    "glob": "^7.1.2",
+    "webpack": "^4.8.3"
+  }
+}
