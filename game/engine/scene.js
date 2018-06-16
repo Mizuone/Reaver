@@ -84,6 +84,7 @@ export default class Scene {
               let tile_y = y * this.BLOCK_H;
               let tileIndex = this.mapArr[arrIndex];
 
+
               let tileDetails = {
                 tilex: tile_x,
                 tiley: tile_y,
@@ -126,54 +127,3 @@ export default class Scene {
 
 
 }
-
-
-
-
-
-function drawForest() {
-    /*//console.log(player_coordinates_x + "X");
-    //console.log(player_coordinates_y + "Y");
-        collisionDection();
-        is_slimeMove = false;
-        requestID = requestAnimationFrame(drawForest);
-        resetAnimationCounter();
-        drawMap();
-        playerMovement();
-        is_playerMove = false;
-        playerDirection = 0;
-        if (key.escape) {return;} //Access Player Menu
-        checkBattle();
-    //collision for battle against slime1, width and height are based off total W & H of spritesheet
-        slime1_Engaged = enemyAggro(slime1_x, slime1_y, slime1_Alive, slime1_Engaged);
-        slime2_Engaged = enemyAggro(slime2_x, slime2_y, slime2_Alive, slime2_Engaged);
-        slime3_Engaged = enemyAggro(slime3_x, slime3_y, slime3_Alive, slime3_Engaged);
-        slime4_Engaged = enemyAggro(slime4_x, slime4_y, slime4_Alive, slime4_Engaged);
-
-        //Animated Enemies
-        if (slime1_Alive) {
-            slime1_x = enemyPatrol(slime1_Alive, slime1_x, slime1_y, slime1_left, slime1_right, "slime", 360, 150, false);
-            if (slime1_x >= 350 && slime1_right) { slime1_right = false; slime1_left = true; }
-            if (slime1_x === 160 && slime1_left) { slime1_left = false; slime1_right = true; }
-        }
-        if (slime2_Alive) {
-            slime2_x = enemyPatrol(slime2_Alive, slime2_x, slime2_y, slime2_Left, slime2_Right, "slime", 560, 430, false);
-            if (slime2_x >= 545 && slime2_Right) { slime2_Right = false; slime2_Left = true; }
-            if (slime2_x === 450 && slime2_Left) { slime2_Left = false; slime2_Right = true; }
-        }
-        if (slime3_Alive) {
-            slime3_y = enemyPatrol(slime3_Alive, slime3_x, slime3_y, slime3_Up, slime3_Down, "slime", 400, 250, true);
-            if (slime3_y >= 390 && slime3_Down) { slime3_Down = false; slime3_Up = true; }
-            if (slime3_y === 255 && slime3_Up) { slime3_Up = false; slime3_Down = true; }
-        }
-         if (slime4_Alive) {
-            slime4_x = enemyPatrol(slime4_Alive, slime4_x, slime4_y, slime4_Left, slime4_Right, "slime", 460, 150, false);
-            if (slime4_x >= 320 && slime4_Right) { slime4_Right = false; slime4_Left = true; }
-            if (slime4_x === 155 && slime4_Left) { slime4_Left = false; slime4_Right = true; }
-        }
-
-        if (player_coordinates_x == 610 && player_coordinates_y >= 75) {
-            cancelAnimationFrame(requestID);
-            caveEntrance(); player_coordinates_x = 40; player_coordinates_y = 96; return;
-        }*/
-    };

@@ -18,6 +18,7 @@ export default class Player {
     this.xCoordinates = 0;
     this.yCoordinates = 340;
     this.playerMoving = false;
+    this.playerFighting = false;
   }
 
   renderPlayer() {

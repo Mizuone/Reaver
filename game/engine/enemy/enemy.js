@@ -1,5 +1,9 @@
 import Sprite from '../sprite';
 import computeDistance from '../computeDistanceBetweenObject';
+import animationID from '../animationframeid/animationid';
+
+import BattleScreen from '../../scenes/battlescreen';
+import mapbattle from '../../scenes/maps/maps';
 
 /** Class representing an enemy */
 
@@ -24,10 +28,24 @@ export default class Enemy {
     this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction)
   }
 
-  fightPlayer(playerObject) {
+  fightPlayer(playerObject, battleEventOrigin) {
 
     if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
-      // TODO initlaize battle event
+      const battleScreen = new BattleScreen();
+      cancelAnimationFrame(animationID.animationid.id)
+
+      playerObject.playerFighting = true;
+      playerObject.xCoordinates = 350;
+      playerObject.yCoordinates = 225;
+      playerObject.direction = [3,4,5];
+
+      this.xCoordinates = 250;
+      this.yCoordinates = 225;
+      this.direction = [6,7,8];
+
+
+      battleScreen.draw(playerObject, this, battleEventOrigin);
+
     }
 
   }
