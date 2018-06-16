@@ -9,6 +9,7 @@ export default class Keyboard {
     this.s = false;
     this.d = false;
     this.escape = false;
+    this.keyBoardOff = false;
 
     this.KEY_W = 87;
     this.KEY_A = 65;
@@ -20,6 +21,11 @@ export default class Keyboard {
   intializeKeyBoardEvents() {
 
     window.addEventListener('keydown', (event) => {
+
+      if (this.influenceObject.playerFighting) {
+        this.influenceObject.playerMoving = false;
+        return;
+      }
 
       switch (event.keyCode) {
         case this.KEY_W:
@@ -47,6 +53,11 @@ export default class Keyboard {
     });
 
     window.addEventListener('keyup', (event) => {
+
+      if (this.influenceObject.playerFighting) {
+        this.influenceObject.playerMoving = false;
+        return;
+      }
 
       switch (event.keyCode) {
         case this.KEY_W:

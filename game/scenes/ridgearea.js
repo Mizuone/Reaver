@@ -8,8 +8,6 @@ import animation from '../engine/animationcounter';
 
 import Scene from '../engine/scene';
 
-import Player from '../engine/character/player';
-
 import Enemy from '../engine/enemy/enemy';
 import slimeDetails from '../engine/enemyentities/slime';
 
@@ -76,7 +74,7 @@ export default class RidgeArea {
 
     slimeLeft.renderEnemy();
     slimeLeft.patrol(300);
-    slimeLeft.fightPlayer(influenceObject);
+    slimeLeft.fightPlayer(influenceObject, this.draw);
 
     animation.resetanimationcounter();
   }

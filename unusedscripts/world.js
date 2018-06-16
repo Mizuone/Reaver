@@ -320,53 +320,11 @@ function playerBattleMovement() {
 
 
 
-        var mapBattle = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ];
+
 
         var mapBattleIndex = 0;
 
 
-        function drawBattleMap() {
-            mapBattleIndex = 0;
-            if (battleScreen && slime1_Engaged || slime2_Engaged || slime3_Engaged || slime4_Engaged || slimeEntrance1_Engaged || slimeEntrance2_Engaged) {
-                    for (var y = 6; y < 11; y++)
-                {
-                    for (var x = 6; x < 14; x++, mapBattleIndex++)
-                    {
-                        var tile_x = x * BLOCK_W;
-                        var tile_y = y * BLOCK_H;
-
-                        var tileType = mapBattle[mapBattleIndex];
-
-                        if (tileType == 0) {
-                             grass.draw(tile_x, tile_y);
-                        }
-
-                    }
-                }
-            }
-            if (battleScreen && shadewalker1_Engaged || shadewalker2_Engaged || shadekeeper1_Engaged) {
-                  for (var y = 6; y < 11; y++)
-                {
-                    for (var x = 6; x < 14; x++, mapBattleIndex++)
-                    {
-                        var tile_x = x * BLOCK_W;
-                        var tile_y = y * BLOCK_H;
-
-                        var tileType = mapBattle[mapBattleIndex];
-
-                        if (tileType == 0) {
-                             cave_Wall.draw(tile_x, tile_y);
-                        }
-
-                    }
-                }
-            }
-
-
-        };
         function resetPlayerPositionX(playerx) {
             return playerx;
         };
