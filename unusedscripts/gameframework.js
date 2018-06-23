@@ -69,52 +69,7 @@ function drawBattleUI() {
         Context.context.closePath();
     };
 
-    function drawPlayerinterface() {
-        Context.context.beginPath();
-        Context.context.fillStyle = "rgba(77,150,255,0.7)";
-        Context.context.fill();
-        Context.context.fillRect(475, 125, 125, 300);
-        Context.context.closePath();
-        Context.context.beginPath();
-        Context.context.fillStyle = "rgba(77,150,255,0.7)";
-        Context.context.fill();
-        Context.context.fillRect(190, 100, 260, 75);
-        Context.context.closePath();
-        //Draws player Health
-        Context.context.font = "bold 1.2em Arial";
-        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
-        Context.context.shadowColor= "black";
-        Context.context.shadowBlur= 1;
-        Context.context.lineWidth= 1;
-        Context.context.strokeText("Player HP: ", 350, 140);
-        Context.context.strokeText(playerHealth + "/" + playerMaxHealth, 360, 160);
-        Context.context.shadowBlur= 0;
-        Context.context.fillStyle = "white";
-        if (playerHealth < playerMaxHealth / 3) {
-            Context.context.fillStyle = "Crimson";
-        }
-        Context.context.fillText("Player HP: ", 350, 140);
-        Context.context.fillText(playerHealth + "/" + playerMaxHealth, 360, 160);
-        Context.context.fill();
 
-    };
-    var drawAttackinterface = function() {
-        Context.context.font = "bold 1.2em Arial";
-
-        screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
-        Context.context.shadowColor= "black";
-        Context.context.shadowBlur= 1;
-        Context.context.lineWidth= 1;
-        Context.context.strokeText("Potions", 507, 350);
-        Context.context.strokeText("Special", 507, 275);
-        Context.context.strokeText("Attack", 507, 200);
-
-        Context.context.shadowBlur= 0;
-        Context.context.fillStyle = "white";
-        Context.context.fillText("Potions", 507, 350);
-        Context.context.fillText("Special", 507, 275);
-        Context.context.fillText("Attack", 507, 200);
-    };
     var drawEnemyHP = function() {
 
             //forest enemies
@@ -131,29 +86,9 @@ function drawBattleUI() {
             shadewalker2_Alive && shadewalker2_Engaged ? displayEnemyHealth("Shade Walker", shadewalker2_HP, 60) : false;
             shadekeeper1_Alive && shadekeeper1_Engaged ? displayEnemyHealth("Shade Keeper", shadekeeper1_HP, 90) : false;
 
-            function displayEnemyHealth(enemyName, enemyHP, totalHealth) {
-                Context.context.font = "bold 1.2em Arial";
-                screen.width <= 699 ? Context.context.font = "bold 1.3em Arial" : false;
-                Context.context.shadowColor= "black";
-                Context.context.shadowBlur= 1;
-                Context.context.lineWidth= 1;
-                Context.context.strokeText( enemyName + " HP: ", 200, 140);
-                Context.context.strokeText( enemyHP + "/" + totalHealth, 230, 160);
-               /* Context.context.strokeText("Player HP: ", 350, 140);
-                Context.context.strokeText(playerHealth + "/" + playerMaxHealth, 360, 160); */
 
-                Context.context.shadowBlur= 0;
-                Context.context.fillStyle = "white";
-                if (enemyHP < totalHealth / 3) {
-                    Context.context.fillStyle = "Crimson";
-                }
-                Context.context.fillText( enemyName + " HP: ", 200, 140);
-                Context.context.fillText( enemyHP + "/" + totalHealth, 230, 160);
-            }
         };
     drawBattleBackground();
-    drawPlayerinterface();
-    drawEnemyHP();
     if (attackShow) {
         drawAttackinterface();
     }

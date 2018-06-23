@@ -10,6 +10,7 @@ export default class Player {
     this.luck = 3;
     this.intelligence = 4;
     this.health = 100;
+    this.maxHealth = 100;
     this.defense = 0;
     this.hitchance = 76;
     this.critchance = 5.0;
