@@ -33,7 +33,7 @@ export default class BattleScreen {
     let battleScene = new Scene(battleMap.mapbattle, spriteObj, playerObject);
     battleScene.renderMap(-1);
 
-    console.log(playerBattleInterface);
+    console.log(playerBattleInterface, 'player');
     // Draw BattleScreen Interface
     playerBattleInterface(Context.context, playerObject);
     playerAttackMenu(Context.context, playerObject);
