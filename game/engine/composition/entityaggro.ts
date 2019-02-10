@@ -1,6 +1,6 @@
 
-export default (influenceObject) => ({
-  aggro: (playerX, playerY) => {
+export default (influenceObject: { xCoordinates: number; yCoordinates: number; }) => ({
+  aggro: (playerX: number, playerY: number) => {
 
     let xDistance = influenceObject.xCoordinates - playerX;
     let yDistance = influenceObject.yCoordinates - playerY;

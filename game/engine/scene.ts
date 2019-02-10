@@ -1,7 +1,10 @@
-import Context from './context/context';
-
 /** Class representing a scene */
 export default class Scene {
+  mapArr: any;
+  tileObj: any;
+  influenceObject: any;
+  BLOCK_W: number;
+  BLOCK_H: number;
 
   /**
 
@@ -9,7 +12,7 @@ export default class Scene {
   * @param {Array} mapArr - An array of tiles.
   * @param {Object} Player - A player object that is used to apply collision with each tile object.
   */
-  constructor(mapArr, tileObj, influenceObject) {
+  constructor(mapArr: Array<any>, tileObj: any, influenceObject: any) {
     this.mapArr = mapArr;
     this.tileObj = tileObj;
     this.influenceObject = influenceObject;
@@ -27,7 +30,7 @@ export default class Scene {
 
   */
 
-  renderTile(obj, propertyIndex, tilex, tiley) {
+  renderTile(obj: { [x: string]: { draw: (arg0: any, arg1: any) => void; }; }, propertyIndex: any, tilex: number, tiley: number) {
     let objectKeys = Object.keys(obj);
     obj[objectKeys[propertyIndex]].draw(tilex, tiley);
   }
@@ -39,7 +42,7 @@ export default class Scene {
 
   */
 
-  tileCollision(influenceObject, tileDetails) {
+  tileCollision(influenceObject: any, tileDetails: { tilex: any; tiley: any; tileIndex: any; tileCollisionMin: any; }) {
 
     if (tileDetails.tileIndex >= tileDetails.tileCollisionMin) {
 
@@ -74,7 +77,7 @@ export default class Scene {
 
   */
 
-  renderMap(tileCollisionMin) {
+  renderMap(tileCollisionMin: number) {
       let arrIndex = 0;
 
       for (let y = 0; y < 15; y++) {
@@ -116,7 +119,7 @@ export default class Scene {
     @param {Array} coordArr - An array of coordinates to draw mutiple sprite objects.
 
   */
-  renderMiscellaneousSprites(obj, coordArr) {
+  renderMiscellaneousSprites(obj: import("../../../../../../../Users/kyle/desktop/Projects/Reaver/game/engine/sprite").default, coordArr: any) {
 
     for (var i = 0; i < coordArr.length; i++) {
       obj.draw(coordArr[i].x, coordArr[i].y);

@@ -21,7 +21,7 @@ export default class BattleScreen {
   /**
     * Draws the battle area to the canvas
   */
-  draw(playerObject, enemyObject, battleEventOrigin) {
+  draw(playerObject: { renderPlayer: () => void; }, enemyObject: any, battleEventOrigin: any) {
     let tileCollisionMin = 2;
     let battleScreenThis = this;
 

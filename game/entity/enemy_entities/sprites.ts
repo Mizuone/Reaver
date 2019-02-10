@@ -1,4 +1,3 @@
-import Sprite from '../../engine/sprite';
 
 const slimeSprite = "sprites/slime_spritesheet.png";
 const slimeSuper_Sprite = "sprites/slimeSuper_spritesheet.png";

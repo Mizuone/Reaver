@@ -4,9 +4,9 @@ import Context from './context/context';
 import utility from '../utility';
 
 let animationCounterIndex = 0;
-let animationArr = [];
+let animationArr: any[] | Animate[] = [];
 
-function drawAnimation(animationImageObj) {
+function drawAnimation(animationImageObj: { various: any; sprite: any; x: any; y: any; }) {
   // Draw player Sprite
   let various = animationImageObj.various;
   const delayAmount = -2;
@@ -16,7 +16,7 @@ function drawAnimation(animationImageObj) {
       return;
   }
       // if various is a single numeric frame id
-  if ($.isNumeric(various) && various >= 0) {
+  if (typeof various === 'number' && various >= 0) {
       var res = utility.i2xy(various, 3);
       Context.context.drawImage(animationImageObj.sprite, res[0]*32, res[1]*32, 32, 32, animationImageObj.x, animationImageObj.y, 32, 32);
   } else
@@ -53,7 +53,7 @@ function resetAnimationCounter() {
 }
 
 export default {
-  drawanimation: (animationImageObj) => {
+  drawanimation: (animationImageObj: any) => {
     drawAnimation(animationImageObj)
   },
   initializeanimationcounters: initializeAnimationCounters,

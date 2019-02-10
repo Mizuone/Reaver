@@ -1,5 +1,5 @@
 
-export default function (xOne, yOne, xTwo, yTwo) {
+export default function (xOne: number, yOne: number, xTwo: number, yTwo: number) {
 
   let xDistance = xOne - xTwo;
   let yDistance = yOne - yTwo;

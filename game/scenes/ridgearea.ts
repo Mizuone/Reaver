@@ -43,7 +43,7 @@ export default class RidgeArea {
   /**
     * Draws the ridge area to the canvas
   */
-  draw(influenceObject) {
+  draw(influenceObject: any) {
     let tileCollisionMin = 2;
 
     let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
@@ -61,19 +61,18 @@ export default class RidgeArea {
       ]);
     }
     slimeMidBottom.renderEnemy();
-    slimeMidBottom.patrol(200);
-
     slimeMidTop.renderEnemy();
-    slimeMidTop.patrol(250);
-
     slimeBottom.renderEnemy();
-    slimeBottom.patrol(false, 380)
-
     slimeRight.renderEnemy();
-    slimeRight.patrol(450);
-
     slimeLeft.renderEnemy();
-    slimeLeft.patrol(300);
+
+    // Attach optional composition to Enemy Objects
+    slimeMidBottom.canPatrol(this).patrol(200);
+    slimeMidTop.canPatrol(this).patrol(250);
+    slimeBottom.canPatrol(this).patrol(false, 380)
+    slimeRight.canPatrol(this).patrol(450);
+    slimeLeft.canPatrol(this).patrol(300);
+    
     slimeLeft.fightPlayer(influenceObject, this.draw);
 
     animation.resetanimationcounter();

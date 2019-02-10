@@ -8,8 +8,23 @@ import mapbattle from '../../scenes/maps/maps';
 /** Class representing an enemy */
 
 export default class Enemy {
+  enemySprite: Sprite;
+  health: number;
+  name: string;
+  totalHealth: number;
+  defense: number;
+  damage: number;
+  direction: number[];
+  startX: number;
+  startY: number;
+  patrolled: boolean;
+  xCoordinates: number;
+  yCoordinates: number;
+  canPatrol?: (influenceObject: any) => {
+    patrol?: (patToX?: any, patToY?: any) => void
+  };
 
-  constructor(obj, x, y) {
+  constructor(obj: any, x: any, y: any) {
     this.enemySprite = new Sprite(obj.sprite);
     this.health = obj.health;
     this.name = obj.name;
@@ -30,7 +45,7 @@ export default class Enemy {
     this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction)
   }
 
-  fightPlayer(playerObject, battleEventOrigin) {
+  fightPlayer(playerObject: any, battleEventOrigin: any) {
 
     if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
       const battleScreen = new BattleScreen();

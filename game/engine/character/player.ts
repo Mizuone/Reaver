@@ -1,8 +1,25 @@
 import Sprite from '../sprite';
 
 export default class Player {
+  playerSprite: Sprite;
+  strength: number;
+  stamina: number;
+  agility: number;
+  luck: number;
+  intelligence: number;
+  health: number;
+  maxHealth: number;
+  defense: number;
+  hitchance: number;
+  critchance: number;
+  direction: number[];
+  playerhit: boolean;
+  xCoordinates: number;
+  yCoordinates: number;
+  playerMoving: boolean;
+  playerFighting: boolean;
 
-  constructor(playerSpriteImage) {
+  constructor(playerSpriteImage: string) {
     this.playerSprite = new Sprite(playerSpriteImage);
     this.strength = 5;
     this.stamina = 10;

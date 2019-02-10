@@ -1,6 +1,11 @@
 export default class Limiter {
+  fps: number;
+  now: any;
+  currentTime: number;
+  interval: number;
+  delta: any;
 
-  constructor(fps) {
+  constructor(fps: number) {
       this.fps = fps;
       this.now;
       this.currentTime = Date.now();

@@ -2,7 +2,7 @@
   Animation ID to manage current requestAnimationFrame
 */
 
-const animationID = {
+const animationID: any = {
   id: undefined
 };
 

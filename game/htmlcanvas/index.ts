@@ -1,10 +1,3 @@
-const component = () => {
-    const element = document.createElement('canvas');
-    element.id = 'myCanvas';
-    element.width = 640;
-    element.height = 480;
+import { runGame } from '../rungame'
 
-    return element;
-}
-
-document.body.appendChild(component());
+runGame();

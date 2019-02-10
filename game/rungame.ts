@@ -3,7 +3,7 @@ import animationCounter from './engine/animationcounter';
 import animationID from './engine/animationframeid/animationid';
 import Player from './engine/character/player';
 import Keyboard from './engine/keyboard';
-import Limiter from './engine/fpslimiter.js';
+import Limiter from './engine/fpslimiter';
 
 const player = new Player('sprites/character_spritesheet.png');
 const keyboard = new Keyboard(player);
@@ -13,7 +13,7 @@ const limiter = new Limiter(60);
 animationCounter.initializeanimationcounters();
 keyboard.intializeKeyBoardEvents();
 
-const runGame = () => {
+export const runGame = () => {
   animationID.animationid.id = requestAnimationFrame(runGame);
 
   if (limiter.fpsLimiter()) {
@@ -25,7 +25,4 @@ const runGame = () => {
 
   }
 
-
 }
-
-runGame();

@@ -1,7 +1,19 @@
 
 export default class Keyboard {
+  influenceObject: import("c:/Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default;
+  w: boolean;
+  a: boolean;
+  s: boolean;
+  d: boolean;
+  escape: boolean;
+  keyBoardOff: boolean;
+  KEY_W: number;
+  KEY_A: number;
+  KEY_S: number;
+  KEY_D: number;
+  KEY_ESCAPE: number;
 
-  constructor(influenceObject) {
+  constructor(influenceObject: import("../../../../../../../Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default) {
     this.influenceObject = influenceObject;
 
     this.w = false;

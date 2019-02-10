@@ -1,4 +1,4 @@
-var Spritesheet = function(fn) {
+var Spritesheet = function(fn: any) {
     this.image = new Image();
     this.image.src = fn;
 };

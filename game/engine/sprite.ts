@@ -1,8 +1,18 @@
 import animation from './animationcounter';
+import Context from './context/context';
 
 export default class Sprite {
+  image: any;
+  filepath: string;
+  TO_RADIANS: number;
+  is_pattern: boolean;
+  pattern: any;
+  pattern_x_times: number;
+  load: (filename: any) => any;
+  to_pattern: (x_times: any) => void;
+  spritesheet: any;
 
-  constructor(filepath) {
+  constructor(filepath: string) {
     this.filepath = filepath;
 
     this.TO_RADIANS = Math.PI/180;
@@ -25,7 +35,7 @@ export default class Sprite {
 
   }
 
-  draw(x, y, various) {
+  draw(x: any, y: any, various?: any) {
     const animationImageObj = {
       x,
       y,

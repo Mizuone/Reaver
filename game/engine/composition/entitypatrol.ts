@@ -1,7 +1,7 @@
 
-export default (influenceObject) => ({
+export default (influenceObject: any) => ({
 
-  patrol: (patToX, patToY) => {
+  patrol: (patToX?: any, patToY?: any): void => {
 
     if (patToX) {
 
@@ -30,7 +30,7 @@ export default (influenceObject) => ({
 
 });
 
-function togglePatrolled(patrolDetailsObj) {
+function togglePatrolled(patrolDetailsObj: any) {
 
   if (patrolDetailsObj.entityCoordinate === patrolDetailsObj.patrolToCoordinate) {
     patrolDetailsObj.entity.patrolled = true;
@@ -41,7 +41,7 @@ function togglePatrolled(patrolDetailsObj) {
 
 }
 
-function patrolCoordinates(patrolDetailsObj) {
+function patrolCoordinates(patrolDetailsObj: any) {
 
   togglePatrolled(patrolDetailsObj);
 

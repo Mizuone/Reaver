@@ -1,5 +1,5 @@
 
-export function playerBattleInterface(context, playerObject) {
+export function playerBattleInterface(context: any, playerObject: any) {
 
   // Top Rectangle Shape
   context.beginPath();
@@ -39,7 +39,7 @@ export function playerBattleInterface(context, playerObject) {
   context.fill();
 }
 
-export function displayEnemyHealth(context, enemyObject) {
+export function displayEnemyHealth(context: any, enemyObject: any) {
     context.font = "bold 1.2em Arial";
     screen.width <= 699 ? context.font = "bold 1.3em Arial" : false;
     context.shadowColor= "black";
@@ -57,7 +57,7 @@ export function displayEnemyHealth(context, enemyObject) {
     context.fillText( enemyObject.health + "/" + enemyObject.totalHealth, 230, 105);
 }
 
-export function playerAttackMenu(context, playerObject) {
+export function playerAttackMenu(context: any, playerObject: any) {
   context.font = "bold 1.2em Arial";
 
   screen.width <= 699 ? context.font = "bold 1.3em Arial" : false;

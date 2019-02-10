@@ -1,6 +1,6 @@
 import computeDistance from '../computeDistanceBetweenObject';
 
-export default (influenceObject) => ({
+export default (influenceObject: any) => ({
   canFight: () => {
 
     
