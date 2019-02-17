@@ -3,11 +3,11 @@ import computeDistance from '../computeDistanceBetweenObject';
 import animationID from '../animationframeid/animationid';
 
 import BattleScreen from '../../scenes/battlescreen';
+import { NPCComposition } from '../interfaces/npc-composition';
 import mapbattle from '../../scenes/maps/maps';
 
 /** Class representing an enemy */
-
-export default class Enemy {
+export default class Enemy implements NPCComposition {
   enemySprite: Sprite;
   health: number;
   name: string;
@@ -20,9 +20,7 @@ export default class Enemy {
   patrolled: boolean;
   xCoordinates: number;
   yCoordinates: number;
-  canPatrol?: (influenceObject: any) => {
-    patrol?: (patToX?: any, patToY?: any) => void
-  };
+  patrol?: (patToX?: any, patToY?: any) => void;
 
   constructor(obj: any, x: any, y: any) {
     this.enemySprite = new Sprite(obj.sprite);

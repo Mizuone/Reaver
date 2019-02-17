@@ -23,6 +23,7 @@ const spriteObj = {
 };
 
 let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
+// slimeMidBottom.canPatrol = canPatrol();
 Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
 
 let slimeMidTop = new Enemy(slimeDetails, 325, 155);
@@ -67,11 +68,11 @@ export default class RidgeArea {
     slimeLeft.renderEnemy();
 
     // Attach optional composition to Enemy Objects
-    slimeMidBottom.canPatrol(this).patrol(200);
-    slimeMidTop.canPatrol(this).patrol(250);
-    slimeBottom.canPatrol(this).patrol(false, 380)
-    slimeRight.canPatrol(this).patrol(450);
-    slimeLeft.canPatrol(this).patrol(300);
+    slimeMidBottom.patrol(200)
+    slimeMidTop.patrol(250);
+    slimeBottom.patrol(false, 380)
+    slimeRight.patrol(450);
+    slimeLeft.patrol(300);
     
     slimeLeft.fightPlayer(influenceObject, this.draw);
 

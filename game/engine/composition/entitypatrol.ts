@@ -1,4 +1,3 @@
-
 export default (influenceObject: any) => ({
 
   patrol: (patToX?: any, patToY?: any): void => {

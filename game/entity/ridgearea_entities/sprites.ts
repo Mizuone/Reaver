@@ -1,18 +1,18 @@
 import Sprite from '../../engine/sprite';
 
-const cliffgrass_back = new Sprite("sprites/Cliffgrass_Back.png");
-const cliffgrass_front = new Sprite("sprites/Cliffgrass_Front.png");
-const cliffgrass_left = new Sprite("sprites/Cliffgrass_leftside.png");
-const cliffgrass_right = new Sprite("sprites/Cliffgrass_side.png");
-const cliff_front = new Sprite("sprites/cliff_Front.png");
+const cliffgrass_back = new Sprite("sprites/cliffgrass_back.png");
+const cliffgrass_front = new Sprite("sprites/cliffgrass_front.png");
+const cliffgrass_left = new Sprite("sprites/cliffgrass_leftside.png");
+const cliffgrass_right = new Sprite("sprites/cliffgrass_side.png");
+const cliff_front = new Sprite("sprites/cliff_front.png");
 const cliffgrass_topright = new Sprite("sprites/cliffgrass_topright.png");
 const cliffgrass_all = new Sprite("sprites/cliffgrass_all.png");
 const cliffgrass_bottomright = new Sprite("sprites/cliffgrass_bottomright.png");
 const cliffgrass_bottomleft = new Sprite("sprites/cliffgrass_bottomleft.png");
 const cliffgrass_topleft = new Sprite("sprites/cliffgrass_topleft.png");
 const cliffgrass_toprightbottom = new Sprite("sprites/cliffgrass_uprightbottom.png");
-const cliffgrass_topbottom = new Sprite("sprites/Cliffgrass_topbottom.png");
-const cliffentrance_open = new Sprite("sprites/CaveEntrance_Open.png");
+const cliffgrass_topbottom = new Sprite("sprites/cliffgrass_topbottom.png");
+const cliffentrance_open = new Sprite("sprites/caveentrance_open.png");
 
 export default {
 
