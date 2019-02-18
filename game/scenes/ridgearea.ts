@@ -50,8 +50,6 @@ export default class RidgeArea {
     let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
     ridgeScene.renderMap(tileCollisionMin);
 
-
-
     for (let i = 0; i < 6; i++) {
       ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
         { x:230, y:300 },

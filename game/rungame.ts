@@ -10,6 +10,7 @@ const keyboard = new Keyboard(player);
 const ridgeAreaScene = new RidgeArea();
 const limiter = new Limiter(60);
 
+
 animationCounter.initializeanimationcounters();
 keyboard.intializeKeyBoardEvents();
 

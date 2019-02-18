@@ -5,6 +5,7 @@ import animationID from '../animationframeid/animationid';
 import BattleScreen from '../../scenes/battlescreen';
 import { NPCComposition } from '../interfaces/npc-composition';
 import mapbattle from '../../scenes/maps/maps';
+import { addCursorEventListener } from '../context/addcursoreventlistener';
 
 /** Class representing an enemy */
 export default class Enemy implements NPCComposition {
@@ -22,6 +23,12 @@ export default class Enemy implements NPCComposition {
   yCoordinates: number;
   patrol?: (patToX?: any, patToY?: any) => void;
 
+  // Enemy Battle Properties
+  fighting: boolean;
+  battleMoveForward: boolean;
+  battleMoveBackward: boolean;
+  disableAttack: boolean;
+
   constructor(obj: any, x: any, y: any) {
     this.enemySprite = new Sprite(obj.sprite);
     this.health = obj.health;
@@ -35,6 +42,10 @@ export default class Enemy implements NPCComposition {
     this.patrolled = false;
     this.xCoordinates = x;
     this.yCoordinates = y;
+    this.fighting = false;
+    this.battleMoveForward = false;
+    this.battleMoveBackward = false;
+    this.disableAttack = false;
   }
 
   renderEnemy() {
@@ -58,6 +69,7 @@ export default class Enemy implements NPCComposition {
       this.yCoordinates = 225;
       this.direction = [6,7,8];
 
+      addCursorEventListener(playerObject, this);
 
       battleScreen.draw(playerObject, this, battleEventOrigin);
 

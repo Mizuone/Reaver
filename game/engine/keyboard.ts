@@ -34,7 +34,7 @@ export default class Keyboard {
 
     window.addEventListener('keydown', (event) => {
 
-      if (this.influenceObject.playerFighting) {
+      if (this.influenceObject.fighting) {
         this.influenceObject.playerMoving = false;
         return;
       }
@@ -66,7 +66,7 @@ export default class Keyboard {
 
     window.addEventListener('keyup', (event) => {
 
-      if (this.influenceObject.playerFighting) {
+      if (this.influenceObject.fighting) {
         this.influenceObject.playerMoving = false;
         return;
       }

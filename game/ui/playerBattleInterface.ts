@@ -72,5 +72,8 @@ export function playerAttackMenu(context: any, playerObject: any) {
   context.fillStyle = "white";
   context.fillText("Potions", 507, 350);
   context.fillText("Special", 507, 275);
+  if (playerObject.playerDisableAttack) {
+    context.fillStyle = "grey";
+  }
   context.fillText("Attack", 507, 200);
 }

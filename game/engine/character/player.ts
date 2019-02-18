@@ -2,6 +2,7 @@ import Sprite from '../sprite';
 
 export default class Player {
   playerSprite: Sprite;
+  damage: number;
   strength: number;
   stamina: number;
   agility: number;
@@ -17,7 +18,12 @@ export default class Player {
   xCoordinates: number;
   yCoordinates: number;
   playerMoving: boolean;
-  playerFighting: boolean;
+  
+  // Player Battle Screen Properties
+  fighting: boolean;
+  disableAttack: boolean;
+  battleMoveForward: boolean;
+  battleMoveBackward: boolean;
 
   constructor(playerSpriteImage: string) {
     this.playerSprite = new Sprite(playerSpriteImage);
@@ -35,8 +41,13 @@ export default class Player {
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
     this.xCoordinates = 0;
     this.yCoordinates = 340;
+    this.damage = this.strength * 1.5;
     this.playerMoving = false;
-    this.playerFighting = false;
+    // Player Battle Screen Properties
+    this.fighting = false;
+    this.battleMoveForward = false;
+    this.battleMoveBackward = false;
+    this.disableAttack = false;
   }
 
   renderPlayer() {

@@ -1,5 +1,6 @@
+import Sprite from "../../engine/sprite";
 
-const playerBasicAttack_Sprite = "sprites/playerAttack_Spritesheet.png";
+const playerBasicAttack_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png");
 const player_sprite = "sprites/character_spritesheet.png";
 
 
