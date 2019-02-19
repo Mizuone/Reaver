@@ -1,3 +1,5 @@
+import Enemy from "../engine/enemy/enemy";
+import Player from "../engine/character/player";
 
 export function playerBattleInterface(context: any, playerObject: any) {
 
@@ -72,8 +74,32 @@ export function playerAttackMenu(context: any, playerObject: any) {
   context.fillStyle = "white";
   context.fillText("Potions", 507, 350);
   context.fillText("Special", 507, 275);
-  if (playerObject.playerDisableAttack) {
+  if (playerObject.disableAttack) {
     context.fillStyle = "grey";
   }
   context.fillText("Attack", 507, 200);
+}
+
+export function displayRewardMenu(context: any, enemyObject: Enemy, playerObject: Player) {
+  // Bottom Rectangle Shape
+  context.beginPath();
+  context.fillStyle = "rgba(77,150,255,0.7)";
+  context.fill();
+  context.fillRect(190, 350, 260, 75);
+  context.closePath();
+
+  context.font = "bold 1.2em Arial";
+  screen.width <= 699 ? context.font = "bold 1.3em Arial" : false;
+  context.shadowColor = "black";
+  context.shadowBlur = 1;
+  context.lineWidth = 1;
+  context.strokeText(`${enemyObject.name} Slain!`, 200, 370);
+  context.strokeText(`+${enemyObject.goldReward} gold coins`, 200, 395);
+  context.strokeText(`+${enemyObject.experienceReward} Experience`, 200, 420);
+
+  context.shadowBlur = 0;
+  context.fillStyle = "white";
+  context.fillText(`${enemyObject.name} Slain!`, 200, 370);
+  context.fillText(`+${enemyObject.goldReward} gold coins`, 200, 395);
+  context.fillText(`+${enemyObject.experienceReward} Experience`, 200, 420);
 }

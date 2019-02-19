@@ -59,20 +59,27 @@ export default class RidgeArea {
         { x:125, y:350 }
       ]);
     }
-    slimeMidBottom.renderEnemy();
-    slimeMidTop.renderEnemy();
+    if (slimeMidBottom) {
+      slimeMidBottom.renderEnemy();
+      slimeMidBottom.patrol(200)
+    }
+    if (slimeMidTop) {
+      slimeMidTop.renderEnemy();
+      slimeMidTop.patrol(250);
+    }
     slimeBottom.renderEnemy();
     slimeRight.renderEnemy();
-    slimeLeft.renderEnemy();
 
-    // Attach optional composition to Enemy Objects
-    slimeMidBottom.patrol(200)
-    slimeMidTop.patrol(250);
+    console.log(slimeLeft);
+    if (slimeLeft) {
+      slimeLeft.renderEnemy();
+      slimeLeft.patrol(300);
+      slimeLeft.fightPlayer(influenceObject, this.draw);
+    }
+
     slimeBottom.patrol(false, 380)
     slimeRight.patrol(450);
-    slimeLeft.patrol(300);
     
-    slimeLeft.fightPlayer(influenceObject, this.draw);
 
     animation.resetanimationcounter();
   }

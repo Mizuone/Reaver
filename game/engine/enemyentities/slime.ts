@@ -5,5 +5,7 @@ export default {
   name: 'Green Slime',
   health: 25,
   defense: 0,
-  damage: 2
+  damage: 2,
+  goldReward: 10,
+  experienceReward: 25,
 }

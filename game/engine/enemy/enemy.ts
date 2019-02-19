@@ -6,6 +6,8 @@ import BattleScreen from '../../scenes/battlescreen';
 import { NPCComposition } from '../interfaces/npc-composition';
 import mapbattle from '../../scenes/maps/maps';
 import { addCursorEventListener } from '../context/addcursoreventlistener';
+import Player from '../character/player';
+import playerEntities from '../../entity/character_entities/sprites';
 
 /** Class representing an enemy */
 export default class Enemy implements NPCComposition {
@@ -21,13 +23,18 @@ export default class Enemy implements NPCComposition {
   patrolled: boolean;
   xCoordinates: number;
   yCoordinates: number;
+  
+  // Reward Properties
+  goldReward: number;
+  experienceReward: number;
+  // Composition Optional Properties
   patrol?: (patToX?: any, patToY?: any) => void;
 
   // Enemy Battle Properties
   fighting: boolean;
+  battleTurn: boolean;
   battleMoveForward: boolean;
   battleMoveBackward: boolean;
-  disableAttack: boolean;
 
   constructor(obj: any, x: any, y: any) {
     this.enemySprite = new Sprite(obj.sprite);
@@ -36,6 +43,8 @@ export default class Enemy implements NPCComposition {
     this.totalHealth = obj.health
     this.defense = obj.defense;
     this.damage = obj.damage;
+    this.goldReward = obj.goldReward;
+    this.experienceReward = obj.experienceReward
     this.direction = [0,0,0];
     this.startX = x;
     this.startY = y;
@@ -45,7 +54,7 @@ export default class Enemy implements NPCComposition {
     this.fighting = false;
     this.battleMoveForward = false;
     this.battleMoveBackward = false;
-    this.disableAttack = false;
+    this.battleTurn = false;
   }
 
   renderEnemy() {
@@ -58,9 +67,9 @@ export default class Enemy implements NPCComposition {
 
     if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
       const battleScreen = new BattleScreen();
-      cancelAnimationFrame(animationID.animationid.id)
+      cancelAnimationFrame(animationID.animationid.id);
 
-      playerObject.playerFighting = true;
+      playerObject.fighting = true;
       playerObject.direction = [3,4,5];
       playerObject.xCoordinates = 350;
       playerObject.yCoordinates = 225;
@@ -75,6 +84,47 @@ export default class Enemy implements NPCComposition {
 
     }
 
+  }
+
+  basicAttackSequence(enemy: Enemy, player: Player) {
+    if (enemy.battleTurn) {
+      // Move Player forward on x axis
+      // Once Player reaches certain point do damage to enemy
+      if (!enemy.battleMoveBackward &&
+        enemy.battleMoveForward &&
+        enemy.xCoordinates <= 320) {
+
+        enemy.xCoordinates += 2;
+
+        if (enemy.xCoordinates === 320) {
+          player.health -= enemy.damage * 2
+        }
+
+        // Once Player reaches enemy draw attack sprite and move backward after delay
+        if (enemy.xCoordinates > 320) {
+          playerEntities.playerbasicattack_sprite.draw(player.xCoordinates, player.yCoordinates, [0, 0, 0]);
+          setTimeout(() => {
+            enemy.battleMoveForward = false;
+            enemy.battleMoveBackward = true;
+          }, 150);
+        }
+      }
+
+      // Move Player backward on x axis
+      // Once Player reaches original point, give turn to enemy
+      if (!enemy.battleMoveForward &&
+        enemy.battleMoveBackward &&
+        enemy.xCoordinates >= 252) {
+        enemy.xCoordinates -= 2;
+
+        if (enemy.xCoordinates === 250) {
+          enemy.battleTurn = false;
+          enemy.battleMoveBackward = false;
+          player.disableAttack = false;
+        }
+      }
+
+    }
   }
 
 }

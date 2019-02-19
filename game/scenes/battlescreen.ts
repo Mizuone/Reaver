@@ -10,9 +10,12 @@ import animation from '../engine/animationcounter';
 import Scene from '../engine/scene';
 import Enemy from '../engine/enemy/enemy';
 
-import { playerBattleInterface, playerAttackMenu, displayEnemyHealth } from '../ui/playerBattleInterface';
+import { playerBattleInterface, playerAttackMenu, displayEnemyHealth, displayRewardMenu } from '../ui/playerBattleInterface';
 import Player from '../engine/character/player';
 import Sprite from '../engine/sprite';
+import Limiter from '../engine/fpslimiter';
+import { removeCursorEventListener } from '../engine/context/addcursoreventlistener';
+import RidgeArea from './ridgearea';
 
 const spriteObj = {
   blackblock: miscellaneousEntities.blackblock,
@@ -20,80 +23,57 @@ const spriteObj = {
 }
 
 export default class BattleScreen {
-
-  private basicAttackSequence(influenceObject: Player | Enemy, enemyObject: Player | Enemy, options: any) {
-
-      if (!influenceObject.battleMoveBackward &&
-        influenceObject.battleMoveForward &&
-        influenceObject.xCoordinates >= 280) {
-
-        influenceObject.xCoordinates -= 2;
-
-        if (influenceObject.xCoordinates === 280) {
-          enemyObject.health -= influenceObject.damage * 2
-        }
-      }
-
-      if (!influenceObject.battleMoveForward &&
-        influenceObject.battleMoveBackward &&
-        influenceObject.xCoordinates <= 348) {
-        influenceObject.xCoordinates += 2;
-
-        if (influenceObject.xCoordinates === 350) {
-          influenceObject.battleMoveBackward = false;
-          influenceObject.battleMoveForward = true;
-        }
-      }
-
-      if (influenceObject.xCoordinates < 280) {
-        playerEntities.playerbasicattack_sprite.draw(influenceObject.xCoordinates, influenceObject.yCoordinates, [0, 0, 0]);
-        setTimeout(() => {
-          influenceObject.battleMoveForward = false;
-          influenceObject.battleMoveBackward = true;
-        }, 150);
-        console.log('this should not be happening');
-      }
-  }
+  private readonly limiter = new Limiter(60);
   /**
     * Draws the battle area to the canvas
   */
   public draw(playerObject: Player, enemyObject: Enemy, battleEventOrigin: any) {
     let tileCollisionMin = 2;
     let battleScreenThis = this;
-
+    console.log(battleEventOrigin);
+    // Recursivily draws this scenes draw method based on monitor refresh rate
     animationID.animationid.id = requestAnimationFrame(() => {
-      battleScreenThis.draw(playerObject, enemyObject, battleEventOrigin);
+        battleScreenThis.draw(playerObject, enemyObject, battleEventOrigin);
     });
 
-    // Render BattleScreen Map
-    let battleScene = new Scene(battleMap.mapbattle, spriteObj, playerObject);
-    battleScene.renderMap(-1);
+    // @Note FPS Limiter limits the refresh rate, Calls logic at this refresh rate.
+    if (this.limiter.fpsLimiter()) {
+      this.limiter.updateCurrentTime();
 
-    // console.log(playerBattleInterface, 'player');
-    // Draw BattleScreen Interface
-    playerBattleInterface(Context.context, playerObject);
-    playerAttackMenu(Context.context, playerObject);
-    displayEnemyHealth(Context.context, enemyObject);
+      // Render BattleScreen Map
+      let battleScene = new Scene(battleMap.mapbattle, spriteObj, playerObject);
+      battleScene.renderMap(-1);
+  
+      // console.log(playerBattleInterface, 'player');
+      // Draw BattleScreen Interface
+      playerBattleInterface(Context.context, playerObject);
+      playerAttackMenu(Context.context, playerObject);
+      displayEnemyHealth(Context.context, enemyObject);
+      
+      // Renders Enemy and Player Sprites
+      playerObject.renderPlayer();
+      enemyObject.renderEnemy();
+      
+      playerObject.basicAttackSequence(playerObject, enemyObject);
+      enemyObject.basicAttackSequence(enemyObject, playerObject);
+      
+      if (playerObject.victory) {
+        displayRewardMenu(Context.context, enemyObject, playerObject);
 
-    // Renders Enemy and Player Sprites
-    playerObject.renderPlayer();
-    enemyObject.renderEnemy();
-
-    // TODO complete generic method that runs logic for player and enemy attack sequence
-    if (playerObject.disableAttack) {
-      const playerAttackOptions = {
-        moveForwardXCoord: 350,
-        moveForwardRate: 280,
-        moveBackwardXCoord: 348,
-        resetXCoord: 350,
-
+        if (playerObject.disableAttack) {
+          playerObject.disableAttack = false;
+          setTimeout(() => {
+            playerObject.victory = false;
+            removeCursorEventListener(playerObject, enemyObject);
+            enemyObject = undefined;
+            cancelAnimationFrame(animationID.animationid.id);
+            battleEventOrigin(playerObject);
+          }, 2500);
+        }
       }
-      this.basicAttackSequence(playerObject);
-      this.basicAttackSequence(enemyObject);
+
+      animation.resetanimationcounter();
     }
-
-
-    animation.resetanimationcounter();
   }
 
 }
