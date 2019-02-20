@@ -15,15 +15,8 @@ animationCounter.initializeanimationcounters();
 keyboard.intializeKeyBoardEvents();
 
 export const runGame = () => {
-  animationID.animationid.id = requestAnimationFrame(runGame);
-
-  if (limiter.fpsLimiter()) {
-    limiter.updateCurrentTime();
-
     keyboard.keyboardPlayerMovement();
     ridgeAreaScene.draw(player);
     player.renderPlayer();
-
-  }
 
 }

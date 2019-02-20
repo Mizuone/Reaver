@@ -46,7 +46,7 @@ export default class Player {
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
     this.xCoordinates = 50;
     this.yCoordinates = 64;
-    this.damage = this.strength * 1.5;
+    this.damage = this.strength * 4;
     this.playerMoving = false;
     // Player Battle Screen Properties
     this.fighting = false;

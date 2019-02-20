@@ -28,12 +28,10 @@ export default class BattleScreen {
     * Draws the battle area to the canvas
   */
   public draw(playerObject: Player, enemyObject: Enemy, battleEventOrigin: any) {
-    let tileCollisionMin = 2;
-    let battleScreenThis = this;
-    console.log(battleEventOrigin);
+    const classThis = this;
     // Recursivily draws this scenes draw method based on monitor refresh rate
     animationID.animationid.id = requestAnimationFrame(() => {
-        battleScreenThis.draw(playerObject, enemyObject, battleEventOrigin);
+        classThis.draw(playerObject, enemyObject, battleEventOrigin);
     });
 
     // @Note FPS Limiter limits the refresh rate, Calls logic at this refresh rate.
@@ -65,9 +63,9 @@ export default class BattleScreen {
           setTimeout(() => {
             playerObject.victory = false;
             removeCursorEventListener(playerObject, enemyObject);
-            enemyObject = undefined;
+            
             cancelAnimationFrame(animationID.animationid.id);
-            battleEventOrigin(playerObject);
+            battleEventOrigin.call(battleEventOrigin, playerObject);
           }, 2500);
         }
       }

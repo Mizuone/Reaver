@@ -13,6 +13,7 @@ import slimeDetails from '../engine/enemyentities/slime';
 
 import canPatrol from '../engine/composition/entitypatrol';
 import canAggro from '../engine/composition/entityaggro';
+import Limiter from '../engine/fpslimiter';
 
 console.log(canPatrol);
 
@@ -40,48 +41,64 @@ Object.assign(slimeLeft, canPatrol(slimeLeft));
 
 /** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeArea {
-
+  private readonly limiter = new Limiter(60);
   /**
     * Draws the ridge area to the canvas
   */
   draw(influenceObject: any) {
-    let tileCollisionMin = 2;
+    const classThis = this;
+    console.log(classThis);
+    console.log(this.limiter);
+    animationID.animationid.id = requestAnimationFrame(() => {
+      classThis.draw(influenceObject);
+    });
+    console.log('here');
+    if (this.limiter.fpsLimiter()) {
+      this.limiter.updateCurrentTime();
 
-    let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
-    ridgeScene.renderMap(tileCollisionMin);
-
-    for (let i = 0; i < 6; i++) {
-      ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
-        { x:230, y:300 },
-        { x:400, y:250 },
-        { x:425, y:10 },
-        { x:120, y:100 },
-        { x:125, y:350 }
-      ]);
+      let tileCollisionMin = 2;
+      let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
+      ridgeScene.renderMap(tileCollisionMin);
+  
+      for (let i = 0; i < 6; i++) {
+        ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
+          { x:230, y:300 },
+          { x:400, y:250 },
+          { x:425, y:10 },
+          { x:120, y:100 },
+          { x:125, y:350 }
+        ]);
+      }
+  
+      if (slimeMidBottom.health > 0) {
+        slimeMidBottom.renderEnemy();
+        slimeMidBottom.patrol(200)
+      } else {
+        slimeMidBottom = null;
+      }
+      if (slimeMidTop.health > 0) {
+        slimeMidTop.renderEnemy();
+        slimeMidTop.patrol(250);
+      } else {
+        slimeMidTop = null;
+      }
+      slimeBottom.renderEnemy();
+      slimeRight.renderEnemy();
+  
+      if (slimeLeft.health > 0) {
+        slimeLeft.renderEnemy();
+        slimeLeft.patrol(300);
+        slimeLeft.fightPlayer(influenceObject, this.draw);
+      } else {
+        slimeLeft = null;
+      }
+  
+      slimeBottom.patrol(false, 380)
+      slimeRight.patrol(450);
+      
+  
+      animation.resetanimationcounter();
     }
-    if (slimeMidBottom) {
-      slimeMidBottom.renderEnemy();
-      slimeMidBottom.patrol(200)
-    }
-    if (slimeMidTop) {
-      slimeMidTop.renderEnemy();
-      slimeMidTop.patrol(250);
-    }
-    slimeBottom.renderEnemy();
-    slimeRight.renderEnemy();
-
-    console.log(slimeLeft);
-    if (slimeLeft) {
-      slimeLeft.renderEnemy();
-      slimeLeft.patrol(300);
-      slimeLeft.fightPlayer(influenceObject, this.draw);
-    }
-
-    slimeBottom.patrol(false, 380)
-    slimeRight.patrol(450);
-    
-
-    animation.resetanimationcounter();
   }
 
 

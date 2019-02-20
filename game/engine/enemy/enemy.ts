@@ -35,6 +35,7 @@ export default class Enemy implements NPCComposition {
   battleTurn: boolean;
   battleMoveForward: boolean;
   battleMoveBackward: boolean;
+  dead: boolean;
 
   constructor(obj: any, x: any, y: any) {
     this.enemySprite = new Sprite(obj.sprite);
@@ -55,6 +56,7 @@ export default class Enemy implements NPCComposition {
     this.battleMoveForward = false;
     this.battleMoveBackward = false;
     this.battleTurn = false;
+    this.dead = false;
   }
 
   renderEnemy() {
