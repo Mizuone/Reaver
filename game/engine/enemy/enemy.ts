@@ -62,7 +62,7 @@ export default class Enemy implements NPCComposition {
   renderEnemy() {
     this.enemySprite.image.width = 32;
     this.enemySprite.image.height = 32;
-    this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction)
+    this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
   }
 
   fightPlayer(playerObject: any, battleEventOrigin: any) {
@@ -82,7 +82,7 @@ export default class Enemy implements NPCComposition {
 
       addCursorEventListener(playerObject, this);
 
-      battleScreen.draw(playerObject, this, battleEventOrigin);
+      battleScreen.draw(playerObject, this);
 
     }
 
@@ -98,13 +98,13 @@ export default class Enemy implements NPCComposition {
 
         enemy.xCoordinates += 2;
 
-        if (enemy.xCoordinates === 320) {
-          player.health -= enemy.damage * 2
+        if (enemy.xCoordinates > 312) {
+          playerEntities.playerbasicattack_sprite.draw(player.xCoordinates, player.yCoordinates, [0, 0, 0]);
         }
 
-        // Once Player reaches enemy draw attack sprite and move backward after delay
-        if (enemy.xCoordinates > 320) {
-          playerEntities.playerbasicattack_sprite.draw(player.xCoordinates, player.yCoordinates, [0, 0, 0]);
+        if (enemy.xCoordinates === 320) {
+          player.health -= enemy.damage * 2
+
           setTimeout(() => {
             enemy.battleMoveForward = false;
             enemy.battleMoveBackward = true;

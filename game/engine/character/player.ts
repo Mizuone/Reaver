@@ -44,7 +44,7 @@ export default class Player {
     this.critchance = 5.0;
     this.direction = [0,0,0];
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
-    this.xCoordinates = 50;
+    this.xCoordinates = 25;
     this.yCoordinates = 64;
     this.damage = this.strength * 4;
     this.playerMoving = false;
@@ -73,24 +73,25 @@ export default class Player {
 
         player.xCoordinates -= 2;
 
+        if (player.xCoordinates < 288) {
+          playerEntities.playerbasicattack_sprite.draw(enemy.xCoordinates, enemy.yCoordinates, [0, 0, 0]);
+        }
+
         if (player.xCoordinates === 280) {
-          console.log(enemy.health);
+          setTimeout(() => {
+            player.battleMoveForward = false;
+            player.battleMoveBackward = true;
+          }, 150);
+
           enemy.health -= player.damage < enemy.health ? player.damage : enemy.health;
+
           if (enemy.health <= 0) {
+            enemy.direction = [0,0,0];
             player.battleTurn = false;
             player.battleMoveForward = false;
             player.victory = true;
             return;
           }
-        }
-
-        // Once Player reaches enemy draw attack sprite and move backward after delay
-        if (player.xCoordinates < 280) {
-          playerEntities.playerbasicattack_sprite.draw(enemy.xCoordinates, enemy.yCoordinates, [0, 0, 0]);
-          setTimeout(() => {
-            player.battleMoveForward = false;
-            player.battleMoveBackward = true;
-          }, 150);
         }
       }
 

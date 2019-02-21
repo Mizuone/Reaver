@@ -1,3 +1,4 @@
+import Player from "./character/player";
 
 export default class Keyboard {
   influenceObject: import("c:/Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default;
@@ -13,7 +14,7 @@ export default class Keyboard {
   KEY_D: number;
   KEY_ESCAPE: number;
 
-  constructor(influenceObject: import("../../../../../../../Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default) {
+  constructor(influenceObject: Player) {
     this.influenceObject = influenceObject;
 
     this.w = false;
@@ -36,6 +37,7 @@ export default class Keyboard {
 
       if (this.influenceObject.fighting) {
         this.influenceObject.playerMoving = false;
+        this.setKeysToFalse();
         return;
       }
 
@@ -68,6 +70,7 @@ export default class Keyboard {
 
       if (this.influenceObject.fighting) {
         this.influenceObject.playerMoving = false;
+        this.setKeysToFalse();
         return;
       }
 
@@ -107,6 +110,11 @@ export default class Keyboard {
   }
 
   keyboardPlayerMovement() {
+    if (this.influenceObject.fighting) {
+      this.influenceObject.playerMoving = false;
+      this.setKeysToFalse();
+      return;
+    }
 
     if (this.w) {
       this.influenceObject.yCoordinates -= 2;
@@ -125,6 +133,13 @@ export default class Keyboard {
       this.influenceObject.direction = [6,7,8];
     }
 
+  }
+
+  setKeysToFalse() {
+    this.w = false;
+    this.a = false;
+    this.s = false;
+    this.d = false;
   }
 
 }

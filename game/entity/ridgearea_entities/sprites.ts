@@ -1,4 +1,7 @@
 import Sprite from '../../engine/sprite';
+import canPatrol from '../../engine/composition/entitypatrol';
+import Enemy from '../../engine/enemy/enemy';
+import slimeDetails from '../../engine/enemyentities/slime';
 
 const cliffgrass_back = new Sprite("sprites/cliffgrass_back.png");
 const cliffgrass_front = new Sprite("sprites/cliffgrass_front.png");
@@ -31,3 +34,20 @@ export default {
     cliffentrance_open: cliffentrance_open
 
 }
+
+let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
+Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
+
+let slimeMidTop = new Enemy(slimeDetails, 325, 155);
+Object.assign(slimeMidTop, canPatrol(slimeMidTop));
+
+let slimeBottom = new Enemy(slimeDetails, 285, 275);
+Object.assign(slimeBottom, canPatrol(slimeBottom));
+
+let slimeRight = new Enemy(slimeDetails, 525, 155);
+Object.assign(slimeRight, canPatrol(slimeRight));
+
+let slimeLeft = new Enemy(slimeDetails, 75, 55);
+Object.assign(slimeLeft, canPatrol(slimeLeft));
+
+export const ridgeEnemies = [slimeMidBottom, slimeMidTop, slimeBottom, slimeRight, slimeLeft];

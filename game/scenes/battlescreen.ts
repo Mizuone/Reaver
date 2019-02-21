@@ -16,6 +16,7 @@ import Sprite from '../engine/sprite';
 import Limiter from '../engine/fpslimiter';
 import { removeCursorEventListener } from '../engine/context/addcursoreventlistener';
 import RidgeArea from './ridgearea';
+import { runGame } from '../rungame';
 
 const spriteObj = {
   blackblock: miscellaneousEntities.blackblock,
@@ -24,14 +25,15 @@ const spriteObj = {
 
 export default class BattleScreen {
   private readonly limiter = new Limiter(60);
+  private victoryScreen: boolean = false;
   /**
     * Draws the battle area to the canvas
   */
-  public draw(playerObject: Player, enemyObject: Enemy, battleEventOrigin: any) {
+  public draw(playerObject: Player, enemyObject: Enemy) {
     const classThis = this;
     // Recursivily draws this scenes draw method based on monitor refresh rate
     animationID.animationid.id = requestAnimationFrame(() => {
-        classThis.draw(playerObject, enemyObject, battleEventOrigin);
+        classThis.draw(playerObject, enemyObject);
     });
 
     // @Note FPS Limiter limits the refresh rate, Calls logic at this refresh rate.
@@ -57,15 +59,19 @@ export default class BattleScreen {
       
       if (playerObject.victory) {
         displayRewardMenu(Context.context, enemyObject, playerObject);
+        if (!this.victoryScreen) {
+          this.victoryScreen = true;
 
-        if (playerObject.disableAttack) {
-          playerObject.disableAttack = false;
           setTimeout(() => {
             playerObject.victory = false;
+            playerObject.disableAttack = false;
+            playerObject.xCoordinates = enemyObject.startX;
+            playerObject.yCoordinates = enemyObject.startY;
+            playerObject.fighting = false;
+            playerObject.direction = [0,0,0];
             removeCursorEventListener(playerObject, enemyObject);
-            
             cancelAnimationFrame(animationID.animationid.id);
-            battleEventOrigin.call(battleEventOrigin, playerObject);
+            runGame();
           }, 2500);
         }
       }

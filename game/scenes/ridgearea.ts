@@ -12,8 +12,6 @@ import Enemy from '../engine/enemy/enemy';
 import slimeDetails from '../engine/enemyentities/slime';
 
 import canPatrol from '../engine/composition/entitypatrol';
-import canAggro from '../engine/composition/entityaggro';
-import Limiter from '../engine/fpslimiter';
 
 console.log(canPatrol);
 
@@ -22,9 +20,7 @@ const spriteObj = {
   dirt_terrain: terrain.dirt_terrain,
   ...ridgeEntities
 };
-
 let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
-// slimeMidBottom.canPatrol = canPatrol();
 Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
 
 let slimeMidTop = new Enemy(slimeDetails, 325, 155);
@@ -39,22 +35,13 @@ Object.assign(slimeRight, canPatrol(slimeRight));
 let slimeLeft = new Enemy(slimeDetails, 75, 55);
 Object.assign(slimeLeft, canPatrol(slimeLeft));
 
+
 /** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeArea {
-  private readonly limiter = new Limiter(60);
   /**
     * Draws the ridge area to the canvas
   */
   draw(influenceObject: any) {
-    const classThis = this;
-    console.log(classThis);
-    console.log(this.limiter);
-    animationID.animationid.id = requestAnimationFrame(() => {
-      classThis.draw(influenceObject);
-    });
-    console.log('here');
-    if (this.limiter.fpsLimiter()) {
-      this.limiter.updateCurrentTime();
 
       let tileCollisionMin = 2;
       let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
@@ -73,33 +60,31 @@ export default class RidgeArea {
       if (slimeMidBottom.health > 0) {
         slimeMidBottom.renderEnemy();
         slimeMidBottom.patrol(200)
-      } else {
-        slimeMidBottom = null;
+        slimeMidBottom.fightPlayer(influenceObject, this.draw);
       }
       if (slimeMidTop.health > 0) {
         slimeMidTop.renderEnemy();
         slimeMidTop.patrol(250);
-      } else {
-        slimeMidTop = null;
+        slimeMidTop.fightPlayer(influenceObject, this.draw);
       }
-      slimeBottom.renderEnemy();
-      slimeRight.renderEnemy();
+      if (slimeBottom.health > 0) {
+        slimeBottom.renderEnemy();
+        slimeBottom.patrol(false, 380)
+        slimeBottom.fightPlayer(influenceObject, this.draw);
+      }
+
+      if (slimeRight.health > 0) {
+        slimeRight.renderEnemy();
+        slimeRight.patrol(450);
+        slimeRight.fightPlayer(influenceObject, this.draw);
+      }
   
       if (slimeLeft.health > 0) {
         slimeLeft.renderEnemy();
         slimeLeft.patrol(300);
         slimeLeft.fightPlayer(influenceObject, this.draw);
-      } else {
-        slimeLeft = null;
       }
   
-      slimeBottom.patrol(false, 380)
-      slimeRight.patrol(450);
-      
-  
       animation.resetanimationcounter();
-    }
   }
-
-
 }
