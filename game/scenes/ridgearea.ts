@@ -2,9 +2,8 @@ import ridgeAreaMap from './maps/maps';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import terrain from '../entity/terrain_entities/sprites';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-
-import animationID from '../engine/animationframeid/animationid';
-import animation from '../engine/animationcounter';
+import animation from '../engine/animation/animationcounter';
+import animationID from '../engine/animation/animationframeid/animationid';
 
 import Scene from '../engine/scene';
 
@@ -12,8 +11,11 @@ import Enemy from '../engine/enemy/enemy';
 import slimeDetails from '../engine/enemyentities/slime';
 
 import canPatrol from '../engine/composition/entitypatrol';
-
-console.log(canPatrol);
+import Player from '../engine/character/player';
+import { Location } from '../engine/interfaces/location';
+import { TransferOptions } from '../engine/dtos/transfer-options';
+import RidgeAreaCave from './ridgeareacave';
+import { runGame } from '../rungame';
 
 const spriteObj = {
   grass_terrain: terrain.grass_terrain,
@@ -37,11 +39,11 @@ Object.assign(slimeLeft, canPatrol(slimeLeft));
 
 
 /** Class representing a ridge area that will be drawn on the canvas */
-export default class RidgeArea {
+export default class RidgeArea implements Location {
   /**
     * Draws the ridge area to the canvas
   */
-  draw(influenceObject: any) {
+  draw(influenceObject: Player) {
 
       let tileCollisionMin = 2;
       let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
@@ -60,31 +62,44 @@ export default class RidgeArea {
       if (slimeMidBottom.health > 0) {
         slimeMidBottom.renderEnemy();
         slimeMidBottom.patrol(200)
-        slimeMidBottom.fightPlayer(influenceObject, this.draw);
+        slimeMidBottom.fightPlayer(influenceObject, this);
       }
       if (slimeMidTop.health > 0) {
         slimeMidTop.renderEnemy();
         slimeMidTop.patrol(250);
-        slimeMidTop.fightPlayer(influenceObject, this.draw);
+        slimeMidTop.fightPlayer(influenceObject, this);
       }
       if (slimeBottom.health > 0) {
         slimeBottom.renderEnemy();
         slimeBottom.patrol(false, 380)
-        slimeBottom.fightPlayer(influenceObject, this.draw);
+        slimeBottom.fightPlayer(influenceObject, this);
       }
 
       if (slimeRight.health > 0) {
         slimeRight.renderEnemy();
         slimeRight.patrol(450);
-        slimeRight.fightPlayer(influenceObject, this.draw);
+        slimeRight.fightPlayer(influenceObject, this);
       }
   
       if (slimeLeft.health > 0) {
         slimeLeft.renderEnemy();
         slimeLeft.patrol(300);
-        slimeLeft.fightPlayer(influenceObject, this.draw);
+        slimeLeft.fightPlayer(influenceObject, this);
       }
   
+      this.transferNewLocation(new RidgeAreaCave(), {player: influenceObject, transferXCoordinate: 635, transferYCoordinate: 120} );
       animation.resetanimationcounter();
+  }
+
+  transferNewLocation(location: any, transferOptions: TransferOptions) {
+    if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
+        transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates&&
+        transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
+        transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+
+          cancelAnimationFrame(animationID.animationid.id);
+          transferOptions.player.setPlayerCoordinates(53, 90);
+          runGame(location, transferOptions.player);
+    }
   }
 }

@@ -3,19 +3,19 @@ import canPatrol from '../../engine/composition/entitypatrol';
 import Enemy from '../../engine/enemy/enemy';
 import slimeDetails from '../../engine/enemyentities/slime';
 
-const cliffgrass_back = new Sprite("sprites/cliffgrass_back.png");
-const cliffgrass_front = new Sprite("sprites/cliffgrass_front.png");
-const cliffgrass_left = new Sprite("sprites/cliffgrass_leftside.png");
-const cliffgrass_right = new Sprite("sprites/cliffgrass_side.png");
-const cliff_front = new Sprite("sprites/cliff_front.png");
-const cliffgrass_topright = new Sprite("sprites/cliffgrass_topright.png");
-const cliffgrass_all = new Sprite("sprites/cliffgrass_all.png");
-const cliffgrass_bottomright = new Sprite("sprites/cliffgrass_bottomright.png");
-const cliffgrass_bottomleft = new Sprite("sprites/cliffgrass_bottomleft.png");
-const cliffgrass_topleft = new Sprite("sprites/cliffgrass_topleft.png");
-const cliffgrass_toprightbottom = new Sprite("sprites/cliffgrass_uprightbottom.png");
-const cliffgrass_topbottom = new Sprite("sprites/cliffgrass_topbottom.png");
-const cliffentrance_open = new Sprite("sprites/caveentrance_open.png");
+export const cliffgrass_back = new Sprite("sprites/cliffgrass_back.png");
+export const cliffgrass_front = new Sprite("sprites/cliffgrass_front.png");
+export const cliffgrass_left = new Sprite("sprites/cliffgrass_leftside.png");
+export const cliffgrass_right = new Sprite("sprites/cliffgrass_side.png");
+export const cliff_front = new Sprite("sprites/cliff_front.png");
+export const cliffgrass_topright = new Sprite("sprites/cliffgrass_topright.png");
+export const cliffgrass_all = new Sprite("sprites/cliffgrass_all.png");
+export const cliffgrass_bottomright = new Sprite("sprites/cliffgrass_bottomright.png");
+export const cliffgrass_bottomleft = new Sprite("sprites/cliffgrass_bottomleft.png");
+export const cliffgrass_topleft = new Sprite("sprites/cliffgrass_topleft.png");
+export const cliffgrass_toprightbottom = new Sprite("sprites/cliffgrass_uprightbottom.png");
+export const cliffgrass_topbottom = new Sprite("sprites/cliffgrass_topbottom.png");
+export const cliffentrance_open = new Sprite("sprites/caveentrance_open.png");
 
 export default {
 
@@ -35,7 +35,7 @@ export default {
 
 }
 
-let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
+/* let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
 Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
 
 let slimeMidTop = new Enemy(slimeDetails, 325, 155);
@@ -50,4 +50,4 @@ Object.assign(slimeRight, canPatrol(slimeRight));
 let slimeLeft = new Enemy(slimeDetails, 75, 55);
 Object.assign(slimeLeft, canPatrol(slimeLeft));
 
-export const ridgeEnemies = [slimeMidBottom, slimeMidTop, slimeBottom, slimeRight, slimeLeft];
+export const ridgeEnemies = [slimeMidBottom, slimeMidTop, slimeBottom, slimeRight, slimeLeft];*/

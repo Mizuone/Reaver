@@ -1,8 +1,12 @@
+import Sprite from "./sprite";
+import { TileDetails } from "./dtos/tile-details";
+import Player from "./character/player";
+
 /** Class representing a scene */
 export default class Scene {
   mapArr: any;
   tileObj: any;
-  influenceObject: any;
+  influenceObject: Player;
   BLOCK_W: number;
   BLOCK_H: number;
 
@@ -12,7 +16,7 @@ export default class Scene {
   * @param {Array} mapArr - An array of tiles.
   * @param {Object} Player - A player object that is used to apply collision with each tile object.
   */
-  constructor(mapArr: Array<any>, tileObj: any, influenceObject: any) {
+  constructor(mapArr: Array<any>, tileObj: any, influenceObject: Player) {
     this.mapArr = mapArr;
     this.tileObj = tileObj;
     this.influenceObject = influenceObject;
@@ -23,7 +27,7 @@ export default class Scene {
   /**
 
   * Renders a tile on the canvas element
-  * @param {Object} obj - An object of sprite properies.
+  * @param {Object} obj - An object of sprite properties.
   * @param {Number} propertyIndex - Index of property in obj.
   * @param {Number} tilex - Coordinate of x position for tile on canvas.
   * @param {Number} tiley - Coordinate of y position for tile on canvas.
@@ -42,7 +46,7 @@ export default class Scene {
 
   */
 
-  tileCollision(influenceObject: any, tileDetails: { tilex: any; tiley: any; tileIndex: any; tileCollisionMin: any; }) {
+  tileCollision(tileDetails: TileDetails) {
 
     if (tileDetails.tileIndex >= tileDetails.tileCollisionMin) {
 
@@ -88,7 +92,7 @@ export default class Scene {
               let tileIndex = this.mapArr[arrIndex];
 
 
-              let tileDetails = {
+              let tileDetails: TileDetails = {
                 tilex: tile_x,
                 tiley: tile_y,
                 tileIndex: tileIndex,
@@ -102,7 +106,7 @@ export default class Scene {
                 this.influenceObject.yCoordinates + 30 > tile_y &&
                 this.influenceObject.yCoordinates - 25 < tile_y) {
 
-                  this.tileCollision(this.influenceObject, tileDetails);
+                  this.tileCollision(tileDetails);
               }
 
               this.renderTile(this.tileObj, tileIndex, tile_x, tile_y);
@@ -119,7 +123,7 @@ export default class Scene {
     @param {Array} coordArr - An array of coordinates to draw mutiple sprite objects.
 
   */
-  renderMiscellaneousSprites(obj: import("../../../../../../../Users/kyle/desktop/Projects/Reaver/game/engine/sprite").default, coordArr: any) {
+  renderMiscellaneousSprites(obj: Sprite, coordArr: any) {
 
     for (var i = 0; i < coordArr.length; i++) {
       obj.draw(coordArr[i].x, coordArr[i].y);

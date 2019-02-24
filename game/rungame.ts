@@ -1,28 +1,20 @@
-import RidgeArea from './scenes/ridgearea';
-import animationCounter from './engine/animationcounter';
-import animationID from './engine/animationframeid/animationid';
+import animationID from './engine/animation/animationframeid/animationid';
 import Player from './engine/character/player';
-import Keyboard from './engine/keyboard';
 import Limiter from './engine/fpslimiter';
 
-const player = new Player('sprites/character_spritesheet.png');
-const keyboard = new Keyboard(player);
-const ridgeAreaScene = new RidgeArea();
 const limiter = new Limiter(60);
 
-
-animationCounter.initializeanimationcounters();
-keyboard.intializeKeyBoardEvents();
-
-export const runGame = () => {
-    animationID.animationid.id = requestAnimationFrame(runGame);
+export const runGame = (locationClass: any, playerObject: Player) => {
+    animationID.animationid.id = requestAnimationFrame(() => {
+        runGame(locationClass, playerObject);
+    });
 
     if (limiter.fpsLimiter()) {
         limiter.updateCurrentTime();
         
-        keyboard.keyboardPlayerMovement();
-        ridgeAreaScene.draw(player);
-        player.renderPlayer();
+        playerObject.keyboard.keyboardPlayerMovement();
+        locationClass.draw(playerObject);
+        playerObject.renderPlayer();
     }
 
 }

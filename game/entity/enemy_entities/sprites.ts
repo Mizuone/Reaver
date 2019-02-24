@@ -1,8 +1,8 @@
 
-const slimeSprite = "sprites/slime_spritesheet.png";
-const slimeSuper_Sprite = "sprites/slimeSuper_spritesheet.png";
-const shadeWalker_Sprite = "sprites/shadewalker_Spritesheet.png";
-const shadeKeeper_Sprite = "sprites/shadeKeeper_Spritesheet.png";
+export const slimeSprite = "sprites/slime_spritesheet.png";
+export const slimeSuper_Sprite = "sprites/slimeSuper_spritesheet.png";
+export const shadeWalker_Sprite = "sprites/shadewalker_Spritesheet.png";
+export const shadeKeeper_Sprite = "sprites/shadeKeeper_Spritesheet.png";
 
 export default {
   slimesprite: slimeSprite,

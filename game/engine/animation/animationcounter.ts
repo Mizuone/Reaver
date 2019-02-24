@@ -1,7 +1,7 @@
 import Animate from './animate';
-import blockSize from './blocksize/blocksize';
-import Context from './context/context';
-import utility from '../utility';
+import blockSize from '../blocksize/blocksize';
+import Context from '../context/context';
+import utility from '../../utility';
 
 let animationCounterIndex = 0;
 let animationArr: any[] | Animate[] = [];

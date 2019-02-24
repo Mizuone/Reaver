@@ -1,6 +1,7 @@
 import Sprite from '../sprite';
 import Enemy from '../enemy/enemy';
 import playerEntities from '../../entity/character_entities/sprites';
+import Keyboard from '../keyboard';
 
 
 export default class Player {
@@ -30,6 +31,9 @@ export default class Player {
   battleMoveBackward: boolean;
   victory: boolean;
 
+  // Player Keyboard Properties
+  keyboard: Keyboard;
+
   constructor(playerSpriteImage: string) {
     this.playerSprite = new Sprite(playerSpriteImage);
     this.strength = 5;
@@ -44,8 +48,8 @@ export default class Player {
     this.critchance = 5.0;
     this.direction = [0,0,0];
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
-    this.xCoordinates = 25;
-    this.yCoordinates = 64;
+    this.xCoordinates = 50; // 25 battlescreen test
+    this.yCoordinates = 95; // 64 battlescreen test
     this.damage = this.strength * 4;
     this.playerMoving = false;
     // Player Battle Screen Properties
@@ -55,6 +59,13 @@ export default class Player {
     this.battleMoveBackward = false;
     this.disableAttack = false;
     this.victory = false;
+    // Player Keyboard Properties
+    this.keyboard = new Keyboard(this);
+  }
+
+  setPlayerCoordinates(xCoordinates: number, yCoordinates: number) {
+    this.xCoordinates = xCoordinates;
+    this.yCoordinates = yCoordinates;
   }
 
   renderPlayer() {
@@ -111,6 +122,16 @@ export default class Player {
       }
 
     }
+  }
+
+  resetPlayerBattleStatusToDefault(enemyObject: Enemy) {
+    this.victory = false;
+    this.disableAttack = false;
+    this.xCoordinates = enemyObject.startX;
+    this.yCoordinates = enemyObject.startY;
+    this.fighting = false;
+    this.direction = [0, 0, 0];
+    this.battleMoveBackward = false;
   }
 
 }

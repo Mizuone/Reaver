@@ -1,21 +1,18 @@
 import battleMap from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
 import terrianEntities from '../entity/terrain_entities/sprites';
-import playerEntities from '../entity/character_entities/sprites';
 import Context from '../engine/context/context';
 
-import animationID from '../engine/animationframeid/animationid';
-import animation from '../engine/animationcounter';
+import animationID from '../engine/animation/animationframeid/animationid';
+import animation from '../engine/animation/animationcounter';
 
 import Scene from '../engine/scene';
 import Enemy from '../engine/enemy/enemy';
 
 import { playerBattleInterface, playerAttackMenu, displayEnemyHealth, displayRewardMenu } from '../ui/playerBattleInterface';
 import Player from '../engine/character/player';
-import Sprite from '../engine/sprite';
 import Limiter from '../engine/fpslimiter';
-import { removeCursorEventListener } from '../engine/context/addcursoreventlistener';
-import RidgeArea from './ridgearea';
+import { removeCursorEventListener } from '../engine/context/addcursoreventlistener';1
 import { runGame } from '../rungame';
 
 const spriteObj = {
@@ -29,11 +26,11 @@ export default class BattleScreen {
   /**
     * Draws the battle area to the canvas
   */
-  public draw(playerObject: Player, enemyObject: Enemy) {
+  public draw(playerObject: Player, enemyObject: Enemy, battleEventOrigin: any) {
     const classThis = this;
     // Recursivily draws this scenes draw method based on monitor refresh rate
     animationID.animationid.id = requestAnimationFrame(() => {
-        classThis.draw(playerObject, enemyObject);
+        classThis.draw(playerObject, enemyObject, battleEventOrigin);
     });
 
     // @Note FPS Limiter limits the refresh rate, Calls logic at this refresh rate.
@@ -44,7 +41,6 @@ export default class BattleScreen {
       let battleScene = new Scene(battleMap.mapbattle, spriteObj, playerObject);
       battleScene.renderMap(-1);
   
-      // console.log(playerBattleInterface, 'player');
       // Draw BattleScreen Interface
       playerBattleInterface(Context.context, playerObject);
       playerAttackMenu(Context.context, playerObject);
@@ -63,15 +59,10 @@ export default class BattleScreen {
           this.victoryScreen = true;
 
           setTimeout(() => {
-            playerObject.victory = false;
-            playerObject.disableAttack = false;
-            playerObject.xCoordinates = enemyObject.startX;
-            playerObject.yCoordinates = enemyObject.startY;
-            playerObject.fighting = false;
-            playerObject.direction = [0,0,0];
+            playerObject.resetPlayerBattleStatusToDefault(enemyObject);
             removeCursorEventListener(playerObject, enemyObject);
             cancelAnimationFrame(animationID.animationid.id);
-            runGame();
+            runGame(battleEventOrigin, playerObject);
           }, 2500);
         }
       }

@@ -1,7 +1,7 @@
 import Sprite from "../../engine/sprite";
 
-const playerBasicAttack_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png");
-const player_sprite = "sprites/character_spritesheet.png";
+export const playerBasicAttack_Sprite = new Sprite("sprites/playerAttack_Spritesheet.png");
+export const player_sprite = "sprites/character_spritesheet.png";
 
 
 export default {

@@ -59,5 +59,15 @@ console.log(cliffgrass_back, cliffgrass_front, cliffgrass_leftside, cliffgrass_f
     shadeKeeper_Spritesheet, playerAttack_Spritesheet, character_spritesheet, cliffgrass_side, dirt_terrian, cave_terrain, grass1);
 
 import { runGame } from '../rungame'
+import RidgeArea from '../scenes/ridgearea';
+import Player from '../engine/character/player';
+import animationCounter from '../engine/animation/animationcounter';
+import RidgeAreaCave from '../scenes/ridgeareacave';
 
-runGame();
+const player = new Player('sprites/character_spritesheet.png');
+const startArea = new RidgeAreaCave();
+
+player.keyboard.intializeKeyBoardEvents();
+animationCounter.initializeanimationcounters();
+
+runGame(startArea, player);

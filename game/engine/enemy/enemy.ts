@@ -1,6 +1,6 @@
 import Sprite from '../sprite';
 import computeDistance from '../computeDistanceBetweenObject';
-import animationID from '../animationframeid/animationid';
+import animationID from '../animation/animationframeid/animationid';
 
 import BattleScreen from '../../scenes/battlescreen';
 import { NPCComposition } from '../interfaces/npc-composition';
@@ -65,7 +65,7 @@ export default class Enemy implements NPCComposition {
     this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
   }
 
-  fightPlayer(playerObject: any, battleEventOrigin: any) {
+  fightPlayer(playerObject: Player, battleEventOrigin: any) {
 
     if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
       const battleScreen = new BattleScreen();
@@ -82,7 +82,7 @@ export default class Enemy implements NPCComposition {
 
       addCursorEventListener(playerObject, this);
 
-      battleScreen.draw(playerObject, this);
+      battleScreen.draw(playerObject, this, battleEventOrigin);
 
     }
 
