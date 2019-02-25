@@ -48,8 +48,8 @@ export default class Player {
     this.critchance = 5.0;
     this.direction = [0,0,0];
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
-    this.xCoordinates = 50; // 25 battlescreen test
-    this.yCoordinates = 95; // 64 battlescreen test
+    this.xCoordinates = 485;
+    this.yCoordinates = 320;
     this.damage = this.strength * 4;
     this.playerMoving = false;
     // Player Battle Screen Properties

@@ -14,8 +14,8 @@ import canPatrol from '../engine/composition/entitypatrol';
 import Player from '../engine/character/player';
 import { Location } from '../engine/interfaces/location';
 import { TransferOptions } from '../engine/dtos/transfer-options';
-import RidgeAreaCave from './ridgeareacave';
 import { runGame } from '../rungame';
+import { sceneDictionary } from './scenedictionary';
 
 const spriteObj = {
   grass_terrain: terrain.grass_terrain,
@@ -44,7 +44,6 @@ export default class RidgeArea implements Location {
     * Draws the ridge area to the canvas
   */
   draw(influenceObject: Player) {
-
       let tileCollisionMin = 2;
       let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
       ridgeScene.renderMap(tileCollisionMin);
@@ -87,19 +86,30 @@ export default class RidgeArea implements Location {
         slimeLeft.fightPlayer(influenceObject, this);
       }
   
-      this.transferNewLocation(new RidgeAreaCave(), {player: influenceObject, transferXCoordinate: 635, transferYCoordinate: 120} );
+      for (let i = 0; i < sceneDictionary.ridgeArea.transitionLocations.length; i++) {
+        const transfer = sceneDictionary.ridgeArea.transitionLocations[i];
+        
+        this.transferNewLocation(transfer.location,
+          {
+            player: influenceObject,
+            transferXCoordinate: transfer.transferXCoordinate,
+            transferYCoordinate: transfer.transferYCoordinate,
+            playerNewX: 0,
+            playerNewY: 0
+          });
+      }
       animation.resetanimationcounter();
   }
 
   transferNewLocation(location: any, transferOptions: TransferOptions) {
     if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
-        transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates&&
-        transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
-        transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+      transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
+      transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
+      transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
 
-          cancelAnimationFrame(animationID.animationid.id);
-          transferOptions.player.setPlayerCoordinates(53, 90);
-          runGame(location, transferOptions.player);
+      cancelAnimationFrame(animationID.animationid.id);
+      transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
+      runGame({ playerObject: transferOptions.player, locationClass: location });
     }
   }
 }

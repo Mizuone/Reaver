@@ -62,7 +62,7 @@ export default class BattleScreen {
             playerObject.resetPlayerBattleStatusToDefault(enemyObject);
             removeCursorEventListener(playerObject, enemyObject);
             cancelAnimationFrame(animationID.animationid.id);
-            runGame(battleEventOrigin, playerObject);
+            runGame({ playerObject: playerObject, locationClass: battleEventOrigin });
           }, 2500);
         }
       }

@@ -1,20 +1,20 @@
 import animationID from './engine/animation/animationframeid/animationid';
-import Player from './engine/character/player';
 import Limiter from './engine/fpslimiter';
+import { RunGameOptions } from './engine/dtos/run-game-options';
 
 const limiter = new Limiter(60);
 
-export const runGame = (locationClass: any, playerObject: Player) => {
+export const runGame = (runGameOptions: RunGameOptions) => {
     animationID.animationid.id = requestAnimationFrame(() => {
-        runGame(locationClass, playerObject);
+        runGame(runGameOptions);
     });
 
     if (limiter.fpsLimiter()) {
         limiter.updateCurrentTime();
         
-        playerObject.keyboard.keyboardPlayerMovement();
-        locationClass.draw(playerObject);
-        playerObject.renderPlayer();
+        runGameOptions.playerObject.keyboard.keyboardPlayerMovement();
+        runGameOptions.locationClass.draw(runGameOptions.playerObject);
+        runGameOptions.playerObject.renderPlayer();
     }
 
 }

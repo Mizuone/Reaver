@@ -4,4 +4,6 @@ export interface TransferOptions {
     player: Player;
     transferXCoordinate: number;
     transferYCoordinate: number;
+    playerNewX: number;
+    playerNewY: number;
 }
