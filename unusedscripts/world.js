@@ -277,7 +277,7 @@ function playerBattleMovement() {
         playerAttack_y = 0,
 
         //object properties being set
-        playerAttackhit_Sprite.image.width = 32;
+        playerAttackhit_Sprite,image,width = 32;
         playerAttackhit_Sprite.image.height = 32;
 
         player_sprite.image.width = 32;
