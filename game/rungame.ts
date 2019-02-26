@@ -11,10 +11,13 @@ export const runGame = (runGameOptions: RunGameOptions) => {
 
     if (limiter.fpsLimiter()) {
         limiter.updateCurrentTime();
-        
-        runGameOptions.playerObject.keyboard.keyboardPlayerMovement();
-        runGameOptions.locationClass.draw(runGameOptions.playerObject);
-        runGameOptions.playerObject.renderPlayer();
+        if (runGameOptions.playerObject.keyboard.escapeToggle > 0) {
+            runGameOptions.playerObject.keyboard.checkToDisplayUserMenu(runGameOptions.playerObject);
+        } else {
+            runGameOptions.playerObject.keyboard.keyboardPlayerMovement();
+            runGameOptions.locationClass.draw(runGameOptions.playerObject);
+            runGameOptions.playerObject.renderPlayer();
+        }
     }
 
 }

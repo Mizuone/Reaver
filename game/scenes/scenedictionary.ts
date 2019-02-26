@@ -7,7 +7,9 @@ export const sceneDictionary = {
             {
                 location: location.ridgeAreaCave,
                 transferXCoordinate: 635,
-                transferYCoordinate: 120
+                transferYCoordinate: 120,
+                playerNewX: 40, 
+                playerNewY: 95
             },
         ]
     },
@@ -17,7 +19,9 @@ export const sceneDictionary = {
             {
                 location: location.ridgeArea,
                 transferXCoordinate: 9,
-                transferYCoordinate: 100
+                transferYCoordinate: 100,
+                playerNewX: 590,
+                playerNewY: 95
             },
             {
                 location: location.ridgeAreaCaveLevelOne,
@@ -42,8 +46,8 @@ export const sceneDictionary = {
                 location: location.ridgeAreaCaveLevelTwo,
                 transferXCoordinate: 496,
                 transferYCoordinate: 52,
-                playerNewX: 0,
-                playerNewY: 0,
+                playerNewX: 450,
+                playerNewY: 436,
             }
         ]
     },
@@ -52,10 +56,10 @@ export const sceneDictionary = {
         transitionLocations: [
             {
                 location: location.ridgeAreaCaveLevelOne,
-                transferXCoordinate: 330,
-                transferYCoordinate: 480,
-                playerNewX: 485,
-                playerNewY: 325
+                transferXCoordinate: 460,
+                transferYCoordinate: 475,
+                playerNewX: 484,
+                playerNewY: 75
             },
         ]
     }

@@ -8,6 +8,3 @@ export const attackEnemy = (playerObject: Player, enemyObject: Enemy) => {
         playerObject.battleMoveForward = true;
     }
 }
-
-// {x: 507, y: 184}
-// {x: 564, y: 197}

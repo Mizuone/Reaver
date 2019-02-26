@@ -60,6 +60,7 @@ export default class BattleScreen {
 
           setTimeout(() => {
             playerObject.resetPlayerBattleStatusToDefault(enemyObject);
+            playerObject.playerVictoryRewardSequence(enemyObject);
             removeCursorEventListener(playerObject, enemyObject);
             cancelAnimationFrame(animationID.animationid.id);
             runGame({ playerObject: playerObject, locationClass: battleEventOrigin });

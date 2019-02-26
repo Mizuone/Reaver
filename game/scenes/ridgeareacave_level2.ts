@@ -9,8 +9,7 @@ import animationID from '../engine/animation/animationframeid/animationid';
 import Scene from '../engine/scene';
 
 import Enemy from '../engine/enemy/enemy';
-import slimeDetails from '../engine/enemyentities/slime';
-import slimeSuperDetails from '../engine/enemyentities/slimesuper';
+import shadeKeeperDetails from '../engine/enemyentities/shadekeeper';
 
 import canPatrol from '../engine/composition/entitypatrol';
 import Player from '../engine/character/player';
@@ -21,19 +20,13 @@ import RidgeAreaCave from './ridgeareacave';
 import { sceneDictionary } from './scenedictionary';
 
 const spriteObj = {
-    cave_terrain: terrain.cave_terrain,
     cave_wall: cave_wall,
+    cave_terrain: terrain.cave_terrain,
     cave_ceiling: cave_ceiling,
     blackblock: blackblock,
 };
-let slimeSuper = new Enemy(slimeSuperDetails, 429, 315);
-Object.assign(slimeSuper, canPatrol(slimeSuper));
-
-let slimeTop = new Enemy(slimeDetails, 175, 115);
-Object.assign(slimeTop, canPatrol(slimeTop));
-
-let slimeMiddle = new Enemy(slimeDetails, 255, 270);
-Object.assign(slimeMiddle, canPatrol(slimeMiddle));
+let shadeKeeper = new Enemy(shadeKeeperDetails, 275, 200);
+Object.assign(shadeKeeper, canPatrol(shadeKeeper));
 
 
 /** Class representing a ridge area that will be drawn on the canvas */
@@ -43,37 +36,17 @@ export default class RidgeAreaCaveLevelTwo implements Location {
     */
     draw(influenceObject: Player) {
 
-        let tileCollisionMin = 3;
+        let tileCollisionMin = 1;
         let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacaveleveltwo, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
-        /*for (let i = 0; i < 6; i++) {
-            ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
-                { x: 230, y: 300 },
-                { x: 400, y: 250 },
-                { x: 425, y: 10 },
-                { x: 120, y: 100 },
-                { x: 125, y: 350 }
-            ]);
+        if (shadeKeeper.health > 0) {
+            shadeKeeper.renderEnemy();
+            shadeKeeper.direction = [6, 6, 7];
+            shadeKeeper.fightPlayer(influenceObject, this);
         }
-
-        if (slimeSuper.health > 0) {
-            slimeSuper.renderEnemy();
-            slimeSuper.direction = [1, 1, 2];
-            slimeSuper.fightPlayer(influenceObject, this);
-        }
-        if (slimeTop.health > 0) {
-            slimeTop.renderEnemy();
-            slimeTop.patrol(350);
-            slimeTop.fightPlayer(influenceObject, this);
-        }
-        if (slimeMiddle.health > 0) {
-            slimeMiddle.renderEnemy();
-            slimeMiddle.patrol(350)
-            slimeMiddle.fightPlayer(influenceObject, this);
-        }*/
-        for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelOne.transitionLocations.length; i++) {
-            const transfer = sceneDictionary.ridgeAreaCaveLevelOne.transitionLocations[i];
+        for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations.length; i++) {
+            const transfer = sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations[i];
 
 
             this.transferNewLocation(transfer.location,

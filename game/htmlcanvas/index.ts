@@ -71,7 +71,7 @@ import Player from '../engine/character/player';
 import animationCounter from '../engine/animation/animationcounter';
 
 const player = new Player('sprites/character_spritesheet.png');
-const startArea = sceneDictionary.ridgeAreaCave.location;
+const startArea = sceneDictionary.ridgeArea.location;
 
 player.keyboard.intializeKeyBoardEvents();
 animationCounter.initializeanimationcounters();

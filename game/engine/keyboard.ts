@@ -1,4 +1,5 @@
 import Player from "./character/player";
+import { PlayerMenu } from "../ui/playerMenu";
 
 export default class Keyboard {
   influenceObject: import("c:/Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default;
@@ -6,7 +7,7 @@ export default class Keyboard {
   a: boolean;
   s: boolean;
   d: boolean;
-  escape: boolean;
+  escapeToggle: number;
   keyBoardOff: boolean;
   KEY_W: number;
   KEY_A: number;
@@ -21,8 +22,8 @@ export default class Keyboard {
     this.a = false;
     this.s = false;
     this.d = false;
-    this.escape = false;
     this.keyBoardOff = false;
+    this.escapeToggle = 0;
 
     this.KEY_W = 87;
     this.KEY_A = 65;
@@ -59,6 +60,7 @@ export default class Keyboard {
             this.influenceObject.playerMoving = true;
             break;
         case this.KEY_ESCAPE:
+            this.escapeToggle++;
             break;
         default:
           break;
@@ -133,6 +135,14 @@ export default class Keyboard {
       this.influenceObject.direction = [6,7,8];
     }
 
+  }
+
+  checkToDisplayUserMenu(playerObject: Player) {
+    playerObject.displayPlayerMenu();
+    
+    if (this.escapeToggle === 2) {
+      this.escapeToggle = 0;
+    }
   }
 
   setKeysToFalse() {

@@ -94,8 +94,8 @@ export default class RidgeArea implements Location {
             player: influenceObject,
             transferXCoordinate: transfer.transferXCoordinate,
             transferYCoordinate: transfer.transferYCoordinate,
-            playerNewX: 0,
-            playerNewY: 0
+            playerNewX: transfer.playerNewX,
+            playerNewY: transfer.playerNewY
           });
       }
       animation.resetanimationcounter();

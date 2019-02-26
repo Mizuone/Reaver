@@ -2,11 +2,15 @@ import Sprite from '../sprite';
 import Enemy from '../enemy/enemy';
 import playerEntities from '../../entity/character_entities/sprites';
 import Keyboard from '../keyboard';
+import { PlayerMenu } from '../../ui/playerMenu';
+import Context from '../context/context';
+import { playerLevelArray } from './playerlevelarray';
 
 
 export default class Player {
   playerSprite: Sprite;
   damage: number;
+  level: number;
   strength: number;
   stamina: number;
   agility: number;
@@ -22,7 +26,8 @@ export default class Player {
   xCoordinates: number;
   yCoordinates: number;
   playerMoving: boolean;
-  
+  gold: number;
+  experience: number;
   // Player Battle Screen Properties
   fighting: boolean;
   disableAttack: boolean;
@@ -44,14 +49,17 @@ export default class Player {
     this.health = 100;
     this.maxHealth = 100;
     this.defense = 0;
+    this.level = 1;
     this.hitchance = 76;
     this.critchance = 5.0;
     this.direction = [0,0,0];
     this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
-    this.xCoordinates = 485;
-    this.yCoordinates = 320;
+    this.xCoordinates = 30;
+    this.yCoordinates = 90;
     this.damage = this.strength * 4;
     this.playerMoving = false;
+    this.gold = 0;
+    this.experience = 0;
     // Player Battle Screen Properties
     this.fighting = false;
     this.battleTurn = false;
@@ -61,6 +69,41 @@ export default class Player {
     this.victory = false;
     // Player Keyboard Properties
     this.keyboard = new Keyboard(this);
+  }
+  playerVictoryRewardSequence(enemyObject: Enemy) {
+    this.gold += enemyObject.goldReward;
+    this.experience += enemyObject.experienceReward;
+
+    this.levelPlayer();
+  }
+  levelPlayer() {
+    let playerNewLevel: number = 1;
+
+    for (let i = 0; i < playerLevelArray.length; i++) {
+      if (this.experience >= playerLevelArray[i]) {
+        playerNewLevel++;
+      } else {
+        break;
+      }
+    }
+
+    if (playerNewLevel > this.level) {
+      this.level = playerNewLevel;
+      this.levelUpPlayerStats();
+      this.levelUpHealPlayer();
+    }
+  }
+  levelUpHealPlayer() {
+    this.health = this.maxHealth;
+  }
+  levelUpPlayerStats() {
+    this.maxHealth += 50 + Math.ceil(this.stamina * 0.3);
+    this.strength += Math.ceil(Math.random() * (4 * 1));
+    this.stamina += Math.ceil(Math.random() * (4 * 1));
+    this.agility += Math.ceil(Math.random() * (4 * 1));
+    this.intelligence += Math.ceil(Math.random() * (4 * 1));
+    this.luck += Math.ceil(Math.random() * (2 * 1));
+    this.damage += Math.ceil(Math.random() * (4 * 1));
   }
 
   setPlayerCoordinates(xCoordinates: number, yCoordinates: number) {
@@ -73,6 +116,9 @@ export default class Player {
     this.playerSprite.image.height = 32;
     this.playerSprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
   }
+  displayPlayerMenu() {
+    PlayerMenu(Context.context, this);
+  } 
 
   basicAttackSequence(player: Player, enemy: Enemy) {
     if (player.battleTurn) {
