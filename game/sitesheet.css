@@ -45,6 +45,7 @@ h2 {
     float: left;
     margin: 0 auto;
     width: 100%;
+    margin-bottom: 2.5rem;
 }
 .MoveFormat .row {
     margin-top: 15px;
@@ -60,7 +61,7 @@ button {
     display: none;
 }
 .MoveFormat p {
-    text-align: left;
+    text-align: center;
     margin: 0 auto;
     width:100%;
     font-weight: 500;

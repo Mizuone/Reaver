@@ -26,44 +26,19 @@ let shadeWalkerLeft = new Enemy(shadeWalkerDetails, 100, 150);
 Object.assign(shadeWalkerLeft, canPatrol(shadeWalkerLeft));
 
 let shadeWalkerRight = new Enemy(shadeWalkerDetails, 480, 65);
-Object.assign(shadeWalkerRight, canPatrol(shadeWalkerRight));
 
-
-
-/** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeAreaCaveLevelOne implements Location {
-    /**
-      * Draws the ridge area to the canvas
-    */
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 2;
         let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacavelevelone, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
-        /*for (let i = 0; i < 6; i++) {
-            ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
-                { x: 230, y: 300 },
-                { x: 400, y: 250 },
-                { x: 425, y: 10 },
-                { x: 120, y: 100 },
-                { x: 125, y: 350 }
-            ]);
-        }*/
+        shadeWalkerLeft.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });
+        shadeWalkerRight.process(influenceObject, this);
 
-        if (shadeWalkerLeft.health > 0) {
-            shadeWalkerLeft.render();
-            shadeWalkerLeft.patrol(200);
-            shadeWalkerLeft.fightPlayer(influenceObject, this);
-        }
-        if (shadeWalkerRight.health > 0) {
-            shadeWalkerRight.render();
-            shadeWalkerRight.direction = [1,1,2];
-            shadeWalkerRight.fightPlayer(influenceObject, this);
-        }
         for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelOne.transitionLocations.length; i++) {
             const transfer = sceneDictionary.ridgeAreaCaveLevelOne.transitionLocations[i];
-
 
             this.transferNewLocation(transfer.location,
                 {

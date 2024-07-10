@@ -8,7 +8,6 @@ import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
-import canPatrol from '../engine/composition/entitypatrol';
 import ridgeAreaMap from './maps/maps';
 import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
@@ -22,25 +21,17 @@ const spriteObj = {
     blackblock: blackblock,
 };
 let shadeKeeper = new Enemy(shadeKeeperDetails, 275, 200);
-Object.assign(shadeKeeper, canPatrol(shadeKeeper));
+shadeKeeper.direction = [6, 6, 7];
 
-
-/** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeAreaCaveLevelTwo implements Location {
-    /**
-      * Draws the ridge area to the canvas
-    */
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 1;
         let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacaveleveltwo, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
-        if (shadeKeeper.health > 0) {
-            shadeKeeper.render();
-            shadeKeeper.direction = [6, 6, 7];
-            shadeKeeper.fightPlayer(influenceObject, this);
-        }
+        shadeKeeper.process(influenceObject, this);
+
         for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations.length; i++) {
             const transfer = sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations[i];
 

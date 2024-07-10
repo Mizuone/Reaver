@@ -24,6 +24,8 @@ export default class Enemy implements NPCComposition {
   direction: number[];
   startX: number;
   startY: number;
+  aggroX: number;
+  aggroY: number;
   patrolled: boolean;
   xCoordinates: number;
   yCoordinates: number;
@@ -48,7 +50,7 @@ export default class Enemy implements NPCComposition {
     this.damage = obj.damage;
     this.goldReward = obj.goldReward;
     this.experienceReward = obj.experienceReward
-    this.direction = [0,0,0];
+    this.direction = [1, 1, 2];
     this.startX = x;
     this.startY = y;
     this.patrolled = false;
@@ -61,13 +63,14 @@ export default class Enemy implements NPCComposition {
     this.dead = false;
   }
 
-  process(influenceObject: Player, composition: CompositionParameters) {
+  process(influenceObject: Player, scene: any, composition?: CompositionParameters) {
     if (this.health <= 0) return;
     
     this.render();
+
     if (this.patrol) this.patrol(composition.patrol.patToX, composition.patrol.patToY);
     
-    this.fightPlayer(influenceObject, this);
+    this.fightPlayer(influenceObject, scene);
   }
 
   render() {
@@ -87,6 +90,8 @@ export default class Enemy implements NPCComposition {
       playerObject.xCoordinates = 350;
       playerObject.yCoordinates = 225;
 
+      this.aggroX = this.xCoordinates;
+      this.aggroY = this.yCoordinates;
       this.xCoordinates = 250;
       this.yCoordinates = 225;
       this.direction = [6,7,8];

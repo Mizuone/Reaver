@@ -56,7 +56,7 @@ export default class BattleScreen {
             removeCursorEventListener(playerObject, enemyObject);
             cancelAnimationFrame(animationID.animationid.id);
             runGame({ playerObject: playerObject, locationClass: battleEventOrigin });
-          }, 2500);
+          }, 2300);
         }
       }
 

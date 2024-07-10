@@ -35,7 +35,7 @@ Object.assign(slimeRight, canPatrol(slimeRight));
 let slimeLeft = new Enemy(slimeDetails, 75, 55);
 Object.assign(slimeLeft, canPatrol(slimeLeft));
 
-let slimeSuper = new Enemy(slimeSuperDetails, 429, 315);
+let slimeSuper = new Enemy(slimeSuperDetails, 542, 93);
 
 export default class RidgeArea implements Location {
 
@@ -54,35 +54,12 @@ export default class RidgeArea implements Location {
         ]);
       }
 
-      slimeMidBottom.process
-
-      if (slimeMidBottom.health > 0) {
-        slimeMidBottom.render();
-        slimeMidBottom.patrol(200)
-        slimeMidBottom.fightPlayer(influenceObject, this);
-      }
-      if (slimeMidTop.health > 0) {
-        slimeMidTop.render();
-        slimeMidTop.patrol(250);
-        slimeMidTop.fightPlayer(influenceObject, this);
-      }
-      if (slimeBottom.health > 0) {
-        slimeBottom.render();
-        slimeBottom.patrol(false, 380)
-        slimeBottom.fightPlayer(influenceObject, this);
-      }
-
-      if (slimeRight.health > 0) {
-        slimeRight.render();
-        slimeRight.patrol(450);
-        slimeRight.fightPlayer(influenceObject, this);
-      }
-  
-      if (slimeLeft.health > 0) {
-        slimeLeft.render();
-        slimeLeft.patrol(300);
-        slimeLeft.fightPlayer(influenceObject, this);
-      }
+      slimeMidBottom.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });
+      slimeMidTop.process(influenceObject, this, { patrol: { patToX: 250, patToY: undefined } });
+      slimeBottom.process(influenceObject, this, { patrol: { patToX: undefined, patToY: 380 } });
+      slimeRight.process(influenceObject, this, { patrol: { patToX: 450, patToY: undefined } });
+      slimeLeft.process(influenceObject, this, { patrol: { patToX: 300, patToY: undefined } });
+      slimeSuper.process(influenceObject, this);
   
       for (let i = 0; i < sceneDictionary.ridgeArea.transitionLocations.length; i++) {
         const transfer = sceneDictionary.ridgeArea.transitionLocations[i];

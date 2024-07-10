@@ -30,8 +30,8 @@ const spriteObj = {
     cliffgrass_bottomleft: cliffgrass_bottomleft,
     cliff_front: cliff_front
 };
+
 let slimeSuper = new Enemy(slimeSuperDetails, 429, 315);
-Object.assign(slimeSuper, canPatrol(slimeSuper));
 
 let slimeTop = new Enemy(slimeDetails, 175, 115);
 Object.assign(slimeTop, canPatrol(slimeTop));
@@ -39,12 +39,8 @@ Object.assign(slimeTop, canPatrol(slimeTop));
 let slimeMiddle = new Enemy(slimeDetails, 255, 270);
 Object.assign(slimeMiddle, canPatrol(slimeMiddle));
 
-
-/** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeAreaCave implements Location {
-    /**
-      * Draws the ridge area to the canvas
-    */
+
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 3;
@@ -61,21 +57,10 @@ export default class RidgeAreaCave implements Location {
             ]);
         }
 
-        if (slimeSuper.health > 0) {
-            slimeSuper.render();
-            slimeSuper.direction = [1,1,2];
-            slimeSuper.fightPlayer(influenceObject, this);
-        }
-        if (slimeTop.health > 0) {
-            slimeTop.render();
-            slimeTop.patrol(350);
-            slimeTop.fightPlayer(influenceObject, this);
-        }
-        if (slimeMiddle.health > 0) {
-            slimeMiddle.render();
-            slimeMiddle.patrol(350)
-            slimeMiddle.fightPlayer(influenceObject, this);
-        }
+        slimeSuper.process(influenceObject, this);
+        slimeTop.process(influenceObject, this, { patrol: { patToX: 350, patToY: undefined} });
+        slimeMiddle.process(influenceObject, this, { patrol: { patToX: 350, patToY: undefined } });
+
         for (let i = 0; i < sceneDictionary.ridgeAreaCave.transitionLocations.length; i++) {
             const transfer = sceneDictionary.ridgeAreaCave.transitionLocations[i];
 
