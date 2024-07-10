@@ -1,8 +1,7 @@
 import Player from "./character/player";
-import { PlayerMenu } from "../ui/playerMenu";
 
 export default class Keyboard {
-  influenceObject: import("c:/Users/kyle/desktop/Projects/Reaver/game/engine/character/player").default;
+  influenceObject: Player;
   w: boolean;
   a: boolean;
   s: boolean;

@@ -1,6 +1,6 @@
+import Player from "./character/player";
 import Sprite from "./sprite";
 import { TileDetails } from "./dtos/tile-details";
-import Player from "./character/player";
 
 /** Class representing a scene */
 export default class Scene {

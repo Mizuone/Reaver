@@ -1,21 +1,19 @@
-import ridgeAreaMap from './maps/maps';
-import ridgeEntities from '../entity/ridgearea_entities/sprites';
-import terrain from '../entity/terrain_entities/sprites';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import Enemy from '../engine/enemy/enemy';
+import { Location } from '../engine/interfaces/location';
+import Player from '../engine/character/player';
+import Scene from '../engine/scene';
+import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
-
-import Scene from '../engine/scene';
-
-import Enemy from '../engine/enemy/enemy';
-import slimeDetails from '../engine/enemyentities/slime';
-
 import canPatrol from '../engine/composition/entitypatrol';
-import Player from '../engine/character/player';
-import { Location } from '../engine/interfaces/location';
-import { TransferOptions } from '../engine/dtos/transfer-options';
+import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import ridgeAreaMap from './maps/maps';
+import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
+import slimeDetails from '../engine/enemyentities/slime';
+import slimeSuperDetails from '../engine/enemyentities/slimesuper';
+import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
   grass_terrain: terrain.grass_terrain,
@@ -37,12 +35,10 @@ Object.assign(slimeRight, canPatrol(slimeRight));
 let slimeLeft = new Enemy(slimeDetails, 75, 55);
 Object.assign(slimeLeft, canPatrol(slimeLeft));
 
+let slimeSuper = new Enemy(slimeSuperDetails, 429, 315);
 
-/** Class representing a ridge area that will be drawn on the canvas */
 export default class RidgeArea implements Location {
-  /**
-    * Draws the ridge area to the canvas
-  */
+
   draw(influenceObject: Player) {
       let tileCollisionMin = 2;
       let ridgeScene = new Scene(ridgeAreaMap.mapridge, spriteObj, influenceObject);
@@ -57,31 +53,33 @@ export default class RidgeArea implements Location {
           { x:125, y:350 }
         ]);
       }
-  
+
+      slimeMidBottom.process
+
       if (slimeMidBottom.health > 0) {
-        slimeMidBottom.renderEnemy();
+        slimeMidBottom.render();
         slimeMidBottom.patrol(200)
         slimeMidBottom.fightPlayer(influenceObject, this);
       }
       if (slimeMidTop.health > 0) {
-        slimeMidTop.renderEnemy();
+        slimeMidTop.render();
         slimeMidTop.patrol(250);
         slimeMidTop.fightPlayer(influenceObject, this);
       }
       if (slimeBottom.health > 0) {
-        slimeBottom.renderEnemy();
+        slimeBottom.render();
         slimeBottom.patrol(false, 380)
         slimeBottom.fightPlayer(influenceObject, this);
       }
 
       if (slimeRight.health > 0) {
-        slimeRight.renderEnemy();
+        slimeRight.render();
         slimeRight.patrol(450);
         slimeRight.fightPlayer(influenceObject, this);
       }
   
       if (slimeLeft.health > 0) {
-        slimeLeft.renderEnemy();
+        slimeLeft.render();
         slimeLeft.patrol(300);
         slimeLeft.fightPlayer(influenceObject, this);
       }

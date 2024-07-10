@@ -1,25 +1,20 @@
-import ridgeAreaMap from './maps/maps';
-import ridgeEntities, { cliffgrass_front, cliffgrass_topleft, cliffgrass_topright, cliffentrance_open, cliffgrass_back, cliffgrass_right, cliffgrass_left, cliffgrass_bottomleft, cliffgrass_bottomright, cliff_front } from '../entity/ridgearea_entities/sprites';
-import caveEntities from '../entity/cave_entities/sprites';
-import terrain from '../entity/terrain_entities/sprites';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-import animation from '../engine/animation/animationcounter';
-import animationID from '../engine/animation/animationframeid/animationid';
-
-import Scene from '../engine/scene';
+import { cliff_front, cliffentrance_open, cliffgrass_back, cliffgrass_bottomleft, cliffgrass_bottomright, cliffgrass_front, cliffgrass_left, cliffgrass_right, cliffgrass_topleft, cliffgrass_topright } from '../entity/ridgearea_entities/sprites';
 
 import Enemy from '../engine/enemy/enemy';
+import { Location } from '../engine/interfaces/location';
+import Player from '../engine/character/player';
+import Scene from '../engine/scene';
+import { TransferOptions } from '../engine/dtos/transfer-options';
+import animation from '../engine/animation/animationcounter';
+import animationID from '../engine/animation/animationframeid/animationid';
+import canPatrol from '../engine/composition/entitypatrol';
+import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import ridgeAreaMap from './maps/maps';
+import { runGame } from '../rungame';
+import { sceneDictionary } from './scenedictionary';
 import slimeDetails from '../engine/enemyentities/slime';
 import slimeSuperDetails from '../engine/enemyentities/slimesuper';
-
-import canPatrol from '../engine/composition/entitypatrol';
-import Player from '../engine/character/player';
-import { Location } from '../engine/interfaces/location';
-import { TransferOptions } from '../engine/dtos/transfer-options';
-import RidgeArea from './ridgearea';
-import { runGame } from '../rungame';
-import RidgeAreaCaveLevelOne from './ridgeareacave_level1';
-import { sceneDictionary } from './scenedictionary';
+import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
     grass_terrain: terrain.grass_terrain,
@@ -67,17 +62,17 @@ export default class RidgeAreaCave implements Location {
         }
 
         if (slimeSuper.health > 0) {
-            slimeSuper.renderEnemy();
+            slimeSuper.render();
             slimeSuper.direction = [1,1,2];
             slimeSuper.fightPlayer(influenceObject, this);
         }
         if (slimeTop.health > 0) {
-            slimeTop.renderEnemy();
+            slimeTop.render();
             slimeTop.patrol(350);
             slimeTop.fightPlayer(influenceObject, this);
         }
         if (slimeMiddle.health > 0) {
-            slimeMiddle.renderEnemy();
+            slimeMiddle.render();
             slimeMiddle.patrol(350)
             slimeMiddle.fightPlayer(influenceObject, this);
         }

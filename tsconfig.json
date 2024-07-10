@@ -1,15 +1,28 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "es6",
         "target": "es5",
-        "lib": ["es2015", "es2017", "dom"],
-        "jsx": "react",
-        "allowJs": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": [
+            "es2015",
+            "dom",
+            "es2017"
+        ],
+        "typeRoots": [
+            "node_modules/"
+        ],
+        "outDir": "dist/",
+        "rootDir": ".",
+        "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "./game/custom.d.ts"
+        "game/**/*.ts",
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
     ]
 }

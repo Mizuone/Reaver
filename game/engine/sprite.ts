@@ -1,5 +1,5 @@
-import animation from './animation/animationcounter';
 import Context from './context/context';
+import animation from './animation/animationcounter';
 
 export default class Sprite {
   image: any;
