@@ -1,9 +1,28 @@
 import * as location from './location-creation';
 
 export const sceneDictionary = {
+    ridgeBackArea: {
+        location: location.ridgeBackArea,
+        transitionLocations: [
+            {
+                location: location.ridgeArea,
+                transferXCoordinate: 630,
+                transferYCoordinate: 370,
+                playerNewX: 43,
+                playerNewY: 367
+            },
+        ]
+    },
     ridgeArea: {
         location: location.ridgeArea,
         transitionLocations: [
+            {
+                location: location.ridgeBackArea,
+                transferXCoordinate: 0,
+                transferYCoordinate: 370,
+                playerNewX: 609,
+                playerNewY: 369
+            },
             {
                 location: location.ridgeAreaCave,
                 transferXCoordinate: 635,

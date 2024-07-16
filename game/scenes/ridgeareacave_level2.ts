@@ -27,7 +27,7 @@ export default class RidgeAreaCaveLevelTwo implements Location {
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 1;
-        let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacaveleveltwo, spriteObj, influenceObject);
+        let ridgeScene = new Scene(ridgeAreaMap.mapRidgeAreaCaveLevelTwo, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
         shadeKeeper.process(influenceObject, this);

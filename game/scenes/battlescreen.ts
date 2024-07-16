@@ -39,7 +39,7 @@ export default class BattleScreen {
       playerAttackMenu(Context.context, playerObject);
       displayEnemyHealth(Context.context, enemyObject);
       
-      playerObject.renderPlayer();
+      playerObject.render();
       enemyObject.render();
       
       playerObject.basicAttackSequence(playerObject, enemyObject);
@@ -47,12 +47,13 @@ export default class BattleScreen {
       
       if (playerObject.victory) {
         displayRewardMenu(Context.context, enemyObject, playerObject);
+
         if (!this.victoryScreen) {
           this.victoryScreen = true;
 
           setTimeout(() => {
-            playerObject.resetPlayerBattleStatusToDefault(enemyObject);
-            playerObject.playerVictoryRewardSequence(enemyObject);
+            playerObject.rewardFromBattle(enemyObject);
+            playerObject.resetToDefaultState(enemyObject);
             removeCursorEventListener(playerObject, enemyObject);
             cancelAnimationFrame(animationID.animationid.id);
             runGame({ playerObject: playerObject, locationClass: battleEventOrigin });

@@ -4,7 +4,7 @@ import Keyboard from '../keyboard';
 import { PlayerMenu } from '../../ui/playerMenu';
 import Sprite from '../sprite';
 import playerEntities from '../../entity/character_entities/sprites';
-import { playerLevelArray } from './playerlevelarray';
+import { playerLevelDictionary } from './playerleveldictionary';
 
 export default class Player {
   playerSprite: Sprite;
@@ -46,7 +46,7 @@ export default class Player {
     this.maxHealth = 100;
     this.defense = 0;
     this.level = 1;
-    this.critchance = 5.0;
+    this.critchance = 12.0;
     this.direction = [0,0,0];
     this.xCoordinates = 30;
     this.yCoordinates = 90;
@@ -62,40 +62,51 @@ export default class Player {
     this.victory = false;
     this.keyboard = new Keyboard(this);
   }
-  playerVictoryRewardSequence(enemyObject: Enemy) {
+
+  render() {
+    this.playerSprite.image.width = 32;
+    this.playerSprite.image.height = 32;
+    this.playerSprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
+  }
+
+  rewardFromBattle(enemyObject: Enemy) {
     this.gold += enemyObject.goldReward;
-    this.experience += enemyObject.experienceReward;
-
-    this.levelPlayer();
+    this.processNewExperience(enemyObject.experienceReward);
   }
+  
+  canPlayerLevel(): boolean {
+    if (Object.keys(playerLevelDictionary).length === this.level) return false;
+
+    var nextLevelExperience: number = playerLevelDictionary[this.level + 1].xp;
+
+    if (this.experience >= nextLevelExperience) {
+      return true;
+    }
+    
+    return false;
+  }
+
   levelPlayer() {
-    let playerNewLevel: number = 1;
+    this.level++;
 
-    for (let i = 0; i < playerLevelArray.length; i++) {
-      if (this.experience >= playerLevelArray[i]) {
-        playerNewLevel++;
-      } else {
-        break;
-      }
-    }
-
-    if (playerNewLevel > this.level) {
-      this.level = playerNewLevel;
-      this.levelUpPlayerStats();
-      this.levelUpHealPlayer();
-    }
+    this.processNewLevel();
   }
-  levelUpHealPlayer() {
+
+  processNewLevel() {
     this.health = this.maxHealth;
+
+    this.levelUpStats();
   }
-  levelUpPlayerStats() {
+
+  levelUpStats() {
+    this.strength += Math.ceil(Math.random() * 4);;
+    this.damage = this.strength * 4;
+
     this.maxHealth += 25 + Math.ceil(this.stamina * 0.3);
-    this.strength += Math.ceil(Math.random() * (4 * 1));
-    this.stamina += Math.ceil(Math.random() * (4 * 1));
-    this.agility += Math.ceil(Math.random() * (4 * 1));
-    this.intelligence += Math.ceil(Math.random() * (4 * 1));
-    this.luck += Math.ceil(Math.random() * (2 * 1));
-    this.damage += Math.ceil(Math.random() * (4 * 1));
+    this.stamina += Math.ceil(Math.random() * 4);
+    this.agility += Math.ceil(Math.random() * 4);
+    this.intelligence += Math.ceil(Math.random() * 4);
+    this.luck += Math.ceil(Math.random() * 2);
   }
 
   setPlayerCoordinates(xCoordinates: number, yCoordinates: number) {
@@ -103,11 +114,14 @@ export default class Player {
     this.yCoordinates = yCoordinates;
   }
 
-  renderPlayer() {
-    this.playerSprite.image.width = 32;
-    this.playerSprite.image.height = 32;
-    this.playerSprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
+  processNewExperience(xp: number) {
+    this.experience += xp;
+
+    if (this.canPlayerLevel) {
+      this.levelPlayer();
+    }
   }
+  
   displayPlayerMenu() {
     PlayerMenu(Context.context, this);
   } 
@@ -158,7 +172,7 @@ export default class Player {
     }
   }
 
-  resetPlayerBattleStatusToDefault(enemyObject: Enemy) {
+  resetToDefaultState(enemyObject: Enemy) {
     this.victory = false;
     this.disableAttack = false;
     this.xCoordinates = enemyObject.aggroX;

@@ -1,6 +1,6 @@
-import animationID from './engine/animation/animationframeid/animationid';
 import Limiter from './engine/fpslimiter';
 import { RunGameOptions } from './engine/dtos/run-game-options';
+import animationID from './engine/animation/animationframeid/animationid';
 
 const limiter = new Limiter(60);
 
@@ -16,7 +16,7 @@ export const runGame = (runGameOptions: RunGameOptions) => {
         } else {
             runGameOptions.playerObject.keyboard.keyboardPlayerMovement();
             runGameOptions.locationClass.draw(runGameOptions.playerObject);
-            runGameOptions.playerObject.renderPlayer();
+            runGameOptions.playerObject.render();
         }
     }
 

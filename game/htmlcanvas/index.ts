@@ -32,6 +32,7 @@ import '../sitesheet.css';
 
 import Player from '../engine/character/player';
 import animationCounter from '../engine/animation/animationcounter';
+import { debugCursorCoordinates } from '../engine/context/addcursoreventlistener';
 import { runGame } from '../rungame'
 import { sceneDictionary } from '../scenes/scenedictionary';
 
@@ -42,3 +43,5 @@ player.keyboard.intializeKeyBoardEvents();
 animationCounter.initializeanimationcounters();
 
 runGame({ playerObject: player, locationClass: startArea });
+
+debugCursorCoordinates();

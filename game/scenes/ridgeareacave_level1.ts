@@ -31,7 +31,7 @@ export default class RidgeAreaCaveLevelOne implements Location {
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 2;
-        let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacavelevelone, spriteObj, influenceObject);
+        let ridgeScene = new Scene(ridgeAreaMap.mapRidgeAreaCaveLevelOne, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
         shadeWalkerLeft.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });

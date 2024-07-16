@@ -8,8 +8,8 @@ import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/composition/entitypatrol';
+import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-import ridgeAreaMap from './maps/maps';
 import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
 import slimeDetails from '../engine/enemyentities/slime';
@@ -44,7 +44,7 @@ export default class RidgeAreaCave implements Location {
     draw(influenceObject: Player) {
 
         let tileCollisionMin = 3;
-        let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacave, spriteObj, influenceObject);
+        let ridgeScene = new Scene(maps.mapRidgeAreaCave, spriteObj, influenceObject);
         ridgeScene.renderMap(tileCollisionMin);
 
         for (let i = 0; i < 6; i++) {

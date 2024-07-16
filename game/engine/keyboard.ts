@@ -8,11 +8,11 @@ export default class Keyboard {
   d: boolean;
   escapeToggle: number;
   keyBoardOff: boolean;
-  KEY_W: number;
-  KEY_A: number;
-  KEY_S: number;
-  KEY_D: number;
-  KEY_ESCAPE: number;
+  KEY_W: string;
+  KEY_A: string;
+  KEY_S: string;
+  KEY_D: string;
+  KEY_ESCAPE: string;
 
   constructor(influenceObject: Player) {
     this.influenceObject = influenceObject;
@@ -24,16 +24,16 @@ export default class Keyboard {
     this.keyBoardOff = false;
     this.escapeToggle = 0;
 
-    this.KEY_W = 87;
-    this.KEY_A = 65;
-    this.KEY_S = 83;
-    this.KEY_D = 68;
-    this.KEY_ESCAPE = 27;
+    this.KEY_W = "w";
+    this.KEY_A = "a";
+    this.KEY_S = "s";
+    this.KEY_D = "d";
+    this.KEY_ESCAPE = "escape";
   }
 
   intializeKeyBoardEvents() {
 
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', (event: KeyboardEvent) => {
 
       if (this.influenceObject.fighting) {
         this.influenceObject.playerMoving = false;
@@ -41,7 +41,9 @@ export default class Keyboard {
         return;
       }
 
-      switch (event.keyCode) {
+      console.log(event.key);
+
+      switch (event.key.toLowerCase()) {
         case this.KEY_W:
             this.w = true;
             this.influenceObject.playerMoving = true;
@@ -75,7 +77,7 @@ export default class Keyboard {
         return;
       }
 
-      switch (event.keyCode) {
+      switch (event.key) {
         case this.KEY_W:
             this.w = false;
             this.influenceObject.direction = [9];

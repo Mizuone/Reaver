@@ -1,1 +1,0 @@
-export const playerLevelArray = [ 125, 350, 810, 943, 1031 ]
