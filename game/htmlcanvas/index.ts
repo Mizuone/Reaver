@@ -28,6 +28,7 @@ import '../sprites/cliffgrass_leftside.png';
 import '../sprites/cliffgrass_topright.png';
 import '../sprites/cliffgrass_topleft.png';
 import '../sprites/cliffgrass_uprightbottom.png';
+import '../sprites/cliffgrass_upleftbottom.png';
 import '../sitesheet.css';
 
 import Player from '../engine/character/player';

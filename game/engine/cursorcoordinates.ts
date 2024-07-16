@@ -16,8 +16,17 @@ export const ClickPointCoordinates = (playerObject: Player, enemyObject: Enemy, 
 
 export const DebugClickCursorCoordinates = (canvas: Element, event: MouseEvent) => {
     const rect: DOMRect = canvas.getBoundingClientRect();
-    const x: number = event.clientX - rect.left;
-    const y: number = event.clientY - rect.top;
+    const x: number = Math.ceil(event.x - rect.left);
+    const y: number = Math.ceil(event.y - rect.top);
+    
+    console.log(event.x)
+    console.log(event.y)
+    console.log(event.clientX)
+    console.log(event.clientY)
+    console.log(rect.left)
+    console.log(rect.top)
+
+    
 
     console.log({x: x, y: y});
 }

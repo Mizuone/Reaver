@@ -7,9 +7,9 @@ export const sceneDictionary = {
             {
                 location: location.ridgeArea,
                 transferXCoordinate: 630,
-                transferYCoordinate: 370,
-                playerNewX: 43,
-                playerNewY: 367
+                transferYCoordinate: 355,
+                playerNewX: 30,
+                playerNewY: 346
             },
         ]
     },
@@ -19,9 +19,9 @@ export const sceneDictionary = {
             {
                 location: location.ridgeBackArea,
                 transferXCoordinate: 0,
-                transferYCoordinate: 370,
-                playerNewX: 609,
-                playerNewY: 369
+                transferYCoordinate: 356,
+                playerNewX: 585,
+                playerNewY: 352
             },
             {
                 location: location.ridgeAreaCave,

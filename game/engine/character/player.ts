@@ -1,7 +1,7 @@
 import Context from '../context/context';
 import Enemy from '../enemy/enemy';
 import Keyboard from '../keyboard';
-import { PlayerMenu } from '../../ui/playerMenu';
+import { PlayerPauseMenu } from '../../ui/playerPauseMenu';
 import Sprite from '../sprite';
 import playerEntities from '../../entity/character_entities/sprites';
 import { playerLevelDictionary } from './playerleveldictionary';
@@ -46,11 +46,11 @@ export default class Player {
     this.maxHealth = 100;
     this.defense = 0;
     this.level = 1;
-    this.critchance = 12.0;
+    this.critchance = Math.ceil(12 + (this.agility / 10));
     this.direction = [0,0,0];
     this.xCoordinates = 30;
     this.yCoordinates = 90;
-    this.damage = this.strength * 4;
+    this.damage = this.strength * 2;
     this.playerMoving = false;
     this.gold = 0;
     this.experience = 0;
@@ -73,6 +73,14 @@ export default class Player {
     this.gold += enemyObject.goldReward;
     this.processNewExperience(enemyObject.experienceReward);
   }
+
+  processNewExperience(xp: number) {
+    this.experience += xp;
+
+    if (this.canPlayerLevel()) {
+      this.levelPlayer();
+    }
+  }
   
   canPlayerLevel(): boolean {
     if (Object.keys(playerLevelDictionary).length === this.level) return false;
@@ -86,6 +94,12 @@ export default class Player {
     return false;
   }
 
+  getNextPlayerLevelExperience(): string {
+    if (Object.keys(playerLevelDictionary).length === this.level) return 'Reached Max Level';
+
+    return (playerLevelDictionary[this.level + 1].xp - this.experience).toString();
+  }
+
   levelPlayer() {
     this.level++;
 
@@ -93,19 +107,22 @@ export default class Player {
   }
 
   processNewLevel() {
-    this.health = this.maxHealth;
-
     this.levelUpStats();
+    
+    this.health = this.maxHealth;
   }
 
   levelUpStats() {
-    this.strength += Math.ceil(Math.random() * 4);;
-    this.damage = this.strength * 4;
+    this.strength += Math.ceil(Math.random() * 2);;
+    this.damage = this.strength * 2;
 
+    this.stamina += Math.ceil(Math.random() * 2);
     this.maxHealth += 25 + Math.ceil(this.stamina * 0.3);
-    this.stamina += Math.ceil(Math.random() * 4);
-    this.agility += Math.ceil(Math.random() * 4);
-    this.intelligence += Math.ceil(Math.random() * 4);
+    
+    this.agility += Math.ceil(Math.random() * 2);
+    this.critchance = Math.ceil(12 + (this.agility / 10));
+    
+    this.intelligence += Math.ceil(Math.random() * 2);
     this.luck += Math.ceil(Math.random() * 2);
   }
 
@@ -113,17 +130,9 @@ export default class Player {
     this.xCoordinates = xCoordinates;
     this.yCoordinates = yCoordinates;
   }
-
-  processNewExperience(xp: number) {
-    this.experience += xp;
-
-    if (this.canPlayerLevel) {
-      this.levelPlayer();
-    }
-  }
   
   displayPlayerMenu() {
-    PlayerMenu(Context.context, this);
+    PlayerPauseMenu(Context.context, this);
   } 
 
   basicAttackSequence(player: Player, enemy: Enemy) {
@@ -144,7 +153,9 @@ export default class Player {
             player.battleMoveBackward = true;
           }, 150);
 
-          enemy.health -= player.damage < enemy.health ? player.damage : enemy.health;
+          let playerDamage = Math.random() * 100 < player.critchance ? this.damage * 2 : this.damage;
+
+          enemy.health -= playerDamage < enemy.health ? playerDamage : enemy.health;
 
           if (enemy.health <= 0) {
             enemy.direction = [0,0,0];

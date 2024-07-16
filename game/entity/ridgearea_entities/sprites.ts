@@ -13,19 +13,21 @@ export const cliffgrass_topleft = new Sprite("sprites/cliffgrass_topleft.png");
 export const cliffgrass_toprightbottom = new Sprite("sprites/cliffgrass_uprightbottom.png");
 export const cliffgrass_topbottom = new Sprite("sprites/cliffgrass_topbottom.png");
 export const cliffentrance_open = new Sprite("sprites/caveentrance_open.png");
+export const cliffgrass_topleftbottom = new Sprite("sprites/cliffgrass_upleftbottom.png");
 
 export default {
-    cliffgrass_back: cliffgrass_back,
-    cliffgrass_front: cliffgrass_front,
-    cliffgrass_left: cliffgrass_left,
-    cliffgrass_right: cliffgrass_right,
-    cliff_front: cliff_front,
-    cliffgrass_topright: cliffgrass_topright,
-    cliffgrass_all: cliffgrass_all,
-    cliffgrass_bottomright: cliffgrass_bottomright,
-    cliffgrass_bottomleft: cliffgrass_bottomleft,
-    cliffgrass_topleft: cliffgrass_topleft,
-    cliffgrass_toprightbottom: cliffgrass_toprightbottom,
-    cliffgrass_topbottom: cliffgrass_topbottom,
-    cliffentrance_open: cliffentrance_open
+    cliffgrass_back,
+    cliffgrass_front,
+    cliffgrass_left,
+    cliffgrass_right,
+    cliff_front,
+    cliffgrass_topright,
+    cliffgrass_all,
+    cliffgrass_bottomright,
+    cliffgrass_bottomleft,
+    cliffgrass_topleft,
+    cliffgrass_toprightbottom,
+    cliffgrass_topbottom,
+    cliffentrance_open,
+    cliffgrass_topleftbottom
 }

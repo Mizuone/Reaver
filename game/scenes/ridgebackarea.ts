@@ -11,81 +11,77 @@ import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
+import shadewalker from '../engine/enemyentities/shadewalker';
 import slimeDetails from '../engine/enemyentities/slime';
 import slimeSuperDetails from '../engine/enemyentities/slimesuper';
 import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
-  grass_terrain: terrain.grass_terrain,
-  dirt_terrain: terrain.dirt_terrain,
-  ...ridgeEntities
+	grass_terrain: terrain.grass_terrain,
+	dirt_terrain: terrain.dirt_terrain,
+	...ridgeEntities
 };
-let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
+let shadeWalker = new Enemy(shadewalker, 259, 164)
+
+let slimeMidBottom = new Enemy(slimeDetails, 355, 345);
 Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
 
-let slimeMidTop = new Enemy(slimeDetails, 325, 155);
-Object.assign(slimeMidTop, canPatrol(slimeMidTop));
+let slimeCenterTop = new Enemy(slimeDetails, 350, 197);
+Object.assign(slimeCenterTop, canPatrol(slimeCenterTop));
 
-let slimeBottom = new Enemy(slimeDetails, 285, 275);
-Object.assign(slimeBottom, canPatrol(slimeBottom));
+let slimeCenterBottom = new Enemy(slimeDetails, 199, 250);
+Object.assign(slimeCenterBottom, canPatrol(slimeCenterBottom));
 
-let slimeRight = new Enemy(slimeDetails, 525, 155);
-Object.assign(slimeRight, canPatrol(slimeRight));
-
-let slimeLeft = new Enemy(slimeDetails, 75, 55);
-Object.assign(slimeLeft, canPatrol(slimeLeft));
-
-let slimeSuper = new Enemy(slimeSuperDetails, 542, 93);
+let slimeSuper = new Enemy(slimeSuperDetails, 317, 345);
 
 export default class RidgeAreaBack implements Location {
 
-  draw(influenceObject: Player) {
-      let tileCollisionMin = 2;
-      let ridgeScene = new Scene(maps.mapRidgeAreaBack, spriteObj, influenceObject);
+	draw(influenceObject: Player) {
+			let tileCollisionMin = 2;
+			let ridgeScene = new Scene(maps.mapRidgeAreaBack, spriteObj, influenceObject);
 
-      ridgeScene.renderMap(tileCollisionMin);
-  
-      for (let i = 0; i < 6; i++) {
-        ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
-          { x:230, y:300 },
-          { x:400, y:250 },
-          { x:425, y:10 },
-          { x:120, y:100 },
-          { x:125, y:350 }
-        ]);
-      }
+			ridgeScene.renderMap(tileCollisionMin);
+	
+			for (let i = 0; i < 6; i++) {
+				ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
+					{ x: 47, y: 200 },
+					{ x: 174, y: 71 },
+					{ x: 533, y: 86 },
+					{ x: 332, y: 435 },
+					{ x: 299, y: 48 }
+				]);
+			}
 
-      slimeMidBottom.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });
-      slimeMidTop.process(influenceObject, this, { patrol: { patToX: 250, patToY: undefined } });
-      slimeBottom.process(influenceObject, this, { patrol: { patToX: undefined, patToY: 380 } });
-      slimeRight.process(influenceObject, this, { patrol: { patToX: 450, patToY: undefined } });
-      slimeLeft.process(influenceObject, this, { patrol: { patToX: 300, patToY: undefined } });
-      slimeSuper.process(influenceObject, this);
-  
-      for (let i = 0; i < sceneDictionary.ridgeArea.transitionLocations.length; i++) {
-        const transfer = sceneDictionary.ridgeArea.transitionLocations[i];
-        
-        this.transferNewLocation(transfer.location,
-          {
-            player: influenceObject,
-            transferXCoordinate: transfer.transferXCoordinate,
-            transferYCoordinate: transfer.transferYCoordinate,
-            playerNewX: transfer.playerNewX,
-            playerNewY: transfer.playerNewY
-          });
-      }
-      animation.resetanimationcounter();
-  }
+			slimeCenterTop.process(influenceObject, this, { patrol: { patToX: 190, patToY: undefined } });
+			slimeCenterBottom.process(influenceObject, this, { patrol: { patToX: 401, patToY: undefined } });
+			slimeMidBottom.process(influenceObject, this, { patrol: { patToX: 520, patToY: undefined } });
+			slimeSuper.process(influenceObject, this);
+			shadeWalker.process(influenceObject, this);
+	
+			for (let i = 0; i < sceneDictionary.ridgeBackArea.transitionLocations.length; i++) {
+				const transfer = sceneDictionary.ridgeBackArea.transitionLocations[i];
+				
+				this.transferNewLocation(transfer.location,
+					{
+						player: influenceObject,
+						transferXCoordinate: transfer.transferXCoordinate,
+						transferYCoordinate: transfer.transferYCoordinate,
+						playerNewX: transfer.playerNewX,
+						playerNewY: transfer.playerNewY
+					});
+			}
+			animation.resetanimationcounter();
+	}
 
-  transferNewLocation(location: any, transferOptions: TransferOptions) {
-    if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
-      transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
-      transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
-      transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+	transferNewLocation(location: any, transferOptions: TransferOptions) {
+		if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
+			transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
+			transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
+			transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
 
-      cancelAnimationFrame(animationID.animationid.id);
-      transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-      runGame({ playerObject: transferOptions.player, locationClass: location });
-    }
-  }
+			cancelAnimationFrame(animationID.animationid.id);
+			transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
+			runGame({ playerObject: transferOptions.player, locationClass: location });
+		}
+	}
 }

@@ -95,7 +95,7 @@ ul li img:hover {
 	margin: 0 auto;
     margin-top: 10em;
     box-shadow: 0 0 5px black;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 a, img {
     transition: all .2s ease-in-out;

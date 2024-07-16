@@ -1,6 +1,6 @@
 export interface TileDetails {
-    tilex: number;
-    tiley: number;
+    tileX: number;
+    tileY: number;
     tileIndex: number;
     tileCollisionMin: number;
 }

@@ -52,6 +52,7 @@ export function displayEnemyHealth(context: any, enemyObject: any) {
 
     context.shadowBlur= 0;
     context.fillStyle = "white";
+    
     if (enemyObject.health < enemyObject.totalHealth / 3) {
         context.fillStyle = "Crimson";
     }
@@ -71,9 +72,10 @@ export function playerAttackMenu(context: any, playerObject: any) {
   context.strokeText("Attack", 507, 200);
 
   context.shadowBlur= 0;
-  context.fillStyle = "white";
+  context.fillStyle = "grey";
   context.fillText("Potions", 507, 350);
   context.fillText("Special", 507, 275);
+  context.fillStyle = "white";
   if (playerObject.disableAttack) {
     context.fillStyle = "grey";
   }

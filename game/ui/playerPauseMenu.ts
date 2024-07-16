@@ -1,6 +1,6 @@
 import Player from "../engine/character/player";
 
-export function PlayerMenu(context: any, playerObject: Player) {
+export function PlayerPauseMenu(context: CanvasRenderingContext2D, playerObject: Player) {
     function drawBackground() {
         context.beginPath();
         context.fillStyle = "rgba(161, 255, 173, .8)";
@@ -46,7 +46,10 @@ export function PlayerMenu(context: any, playerObject: Player) {
         context.fillText("XP: " + playerObject.experience, 30, 310);
         context.font = "bold 1em Arial";
         context.fillStyle = "black";
-        context.fillText("Gold: " + playerObject.gold, 30, 340);
+        context.fillText("XP till level: " + playerObject.getNextPlayerLevelExperience(), 30, 340);
+        context.font = "bold 1em Arial";
+        context.fillStyle = "black";
+        context.fillText("Gold: " + playerObject.gold, 30, 370);
         context.fill();
         context.closePath();
     }
