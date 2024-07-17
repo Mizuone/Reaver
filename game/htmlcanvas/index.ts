@@ -32,17 +32,21 @@ import '../sprites/cliffgrass_upleftbottom.png';
 import '../sitesheet.css';
 
 import Player from '../engine/character/player';
+import { RunGame } from '../rungame'
 import animationCounter from '../engine/animation/animationcounter';
-import { debugCursorCoordinates } from '../engine/context/addcursoreventlistener';
-import { runGame } from '../rungame'
+import { debugCursorCoordinates } from '../engine/eventlisteners/debug-event-listeners';
 import { sceneDictionary } from '../scenes/scenedictionary';
 
-const player = new Player('sprites/character_spritesheet.png');
-const startArea = sceneDictionary.ridgeArea.location;
+export const startGame = () => {
+    const player = new Player('sprites/character_spritesheet.png');
+    const startArea = sceneDictionary.ridgeArea.location;
 
-player.keyboard.intializeKeyBoardEvents();
+    player.keyboard.intializeKeyBoardEvents();
+
+    RunGame({ player: player, locationClass: startArea });
+}
+
 animationCounter.initializeanimationcounters();
-
-runGame({ playerObject: player, locationClass: startArea });
+startGame();
 
 debugCursorCoordinates();

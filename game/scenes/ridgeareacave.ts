@@ -3,6 +3,7 @@ import { cliff_front, cliffentrance_open, cliffgrass_back, cliffgrass_bottomleft
 import Enemy from '../engine/enemy/enemy';
 import { Location } from '../engine/interfaces/location';
 import Player from '../engine/character/player';
+import { RunGame } from '../rungame';
 import Scene from '../engine/scene';
 import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
@@ -10,7 +11,6 @@ import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
 import slimeDetails from '../engine/enemyentities/slime';
 import slimeSuperDetails from '../engine/enemyentities/slimesuper';
@@ -85,7 +85,7 @@ export default class RidgeAreaCave implements Location {
 
               cancelAnimationFrame(animationID.animationid.id);
               transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-              runGame({ playerObject: transferOptions.player, locationClass:location });
+              RunGame({ player: transferOptions.player, locationClass:location });
         }
     }
 }

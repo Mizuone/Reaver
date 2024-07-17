@@ -1,7 +1,7 @@
 import Player from "./character/player";
 
 export default class Keyboard {
-  influenceObject: Player;
+  player: Player;
   w: boolean;
   a: boolean;
   s: boolean;
@@ -14,8 +14,8 @@ export default class Keyboard {
   KEY_D: string;
   KEY_ESCAPE: string;
 
-  constructor(influenceObject: Player) {
-    this.influenceObject = influenceObject;
+  constructor(_player: Player) {
+    this.player = _player;
 
     this.w = false;
     this.a = false;
@@ -31,109 +31,114 @@ export default class Keyboard {
     this.KEY_ESCAPE = "escape";
   }
 
-  intializeKeyBoardEvents() {
+  inputKeyDown(event: KeyboardEvent) {
+    {
+      if (this.player.dead) return;
 
-    window.addEventListener('keydown', (event: KeyboardEvent) => {
-
-      if (this.influenceObject.fighting) {
-        this.influenceObject.playerMoving = false;
+      if (this.player.fighting) {
+        this.player.moving = false;
         this.setKeysToFalse();
         return;
       }
-
-      console.log(event.key);
 
       switch (event.key.toLowerCase()) {
         case this.KEY_W:
-            this.w = true;
-            this.influenceObject.playerMoving = true;
-            break;
+          this.w = true;
+          this.player.moving = true;
+          break;
         case this.KEY_A:
-            this.a = true;
-            this.influenceObject.playerMoving = true;
-            break;
+          this.a = true;
+          this.player.moving = true;
+          break;
         case this.KEY_S:
-            this.s = true;
-            this.influenceObject.playerMoving = true;
-            break;
+          this.s = true;
+          this.player.moving = true;
+          break;
         case this.KEY_D:
-            this.d = true;
-            this.influenceObject.playerMoving = true;
-            break;
+          this.d = true;
+          this.player.moving = true;
+          break;
         case this.KEY_ESCAPE:
-            this.escapeToggle++;
-            break;
+          this.escapeToggle++;
+          break;
         default:
           break;
       }
 
-    });
+    }
+  }
 
-    window.addEventListener('keyup', (event) => {
+  inputKeyUp(event: KeyboardEvent) {
+    if (this.player.dead) return;
 
-      if (this.influenceObject.fighting) {
-        this.influenceObject.playerMoving = false;
-        this.setKeysToFalse();
-        return;
-      }
+    if (this.player.fighting) {
+      this.player.moving = false;
+      this.setKeysToFalse();
+      return;
+    }
 
-      switch (event.key) {
-        case this.KEY_W:
-            this.w = false;
-            this.influenceObject.direction = [9];
-            break;
-        case this.KEY_A:
-            this.a = false;
-            this.influenceObject.direction = [3];
-            break;
-        case this.KEY_S:
-            this.s = false;
-            this.influenceObject.direction = [0];
-            break;
-        case this.KEY_D:
-            this.d = false;
-            this.influenceObject.direction = [6];
-            break;
-        case this.KEY_ESCAPE:
-            break;
-        default:
-          break;
-      }
+    switch (event.key) {
+      case this.KEY_W:
+        this.w = false;
+        this.player.direction = [9];
+        break;
+      case this.KEY_A:
+        this.a = false;
+        this.player.direction = [3];
+        break;
+      case this.KEY_S:
+        this.s = false;
+        this.player.direction = [0];
+        break;
+      case this.KEY_D:
+        this.d = false;
+        this.player.direction = [6];
+        break;
+      case this.KEY_ESCAPE:
+        break;
+      default:
+        break;
+    }
 
-      /**
-        Aids collision detection, checks to see if movement keys are activated.
-        Collision detection is only enabled if this.influenceObject.playerMoving equals true.
-      */
-      if (!this.KEY_W && !this.KEY_A && !this.KEY_S && !this.KEY_D) {
-        this.influenceObject.playerMoving = false;
-      }
+    if (!this.KEY_W && !this.KEY_A && !this.KEY_S && !this.KEY_D) {
+      this.player.moving = false;
+    }
+  }
 
-    });
+  removeKeyboardEvents() {
+    window.removeEventListener('keydown', (event: KeyboardEvent) => this.inputKeyDown(event));
+    window.removeEventListener('keyup', (event: KeyboardEvent) => this.inputKeyUp(event));
+  }
 
+  intializeKeyBoardEvents() {
+    window.addEventListener('keydown', (event: KeyboardEvent) => this.inputKeyDown(event));
+    window.addEventListener('keyup', (event: KeyboardEvent) => this.inputKeyUp(event));
   }
 
   keyboardPlayerMovement() {
-    if (this.influenceObject.fighting) {
-      this.influenceObject.playerMoving = false;
+    if (this.player.dead) return;
+
+    if (this.player.fighting) {
+      this.player.moving = false;
       this.setKeysToFalse();
       return;
     }
 
     if (this.w) {
-      this.influenceObject.yCoordinates -= 2;
-      this.influenceObject.direction = [9,10,11];
+      this.player.yCoordinates -= 2;
+      this.player.direction = [9,10,11];
     }
     if (this.a) {
-      this.influenceObject.xCoordinates -= 2;
-      this.influenceObject.direction = [3,4,5];
+      this.player.xCoordinates -= 2;
+      this.player.direction = [3,4,5];
     }
     if (this.s) {
-      this.influenceObject.yCoordinates += 2;
-      this.influenceObject.direction = [0,1,2];
+      this.player.yCoordinates += 2;
+      this.player.direction = [0,1,2];
     }
     if (this.d) {
-      this.influenceObject.xCoordinates += 2;
-      this.influenceObject.direction = [6,7,8];
+      this.player.xCoordinates += 2;
+      this.player.direction = [6,7,8];
     }
 
   }

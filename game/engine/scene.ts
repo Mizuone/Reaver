@@ -70,7 +70,7 @@ export default class Scene {
               }
 
 
-              if (this.influenceObject.playerMoving &&
+              if (this.influenceObject.moving &&
                 this.influenceObject.xCoordinates + 20 > tileX &&
                 this.influenceObject.xCoordinates - 30 < tileX &&
                 this.influenceObject.yCoordinates + 30 > tileY &&

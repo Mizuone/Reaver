@@ -24,7 +24,7 @@ export default class Player {
   playerhit: boolean;
   xCoordinates: number;
   yCoordinates: number;
-  playerMoving: boolean;
+  moving: boolean;
   gold: number;
   experience: number;
   fighting: boolean;
@@ -33,6 +33,7 @@ export default class Player {
   battleMoveForward: boolean;
   battleMoveBackward: boolean;
   victory: boolean;
+  dead: boolean;
   keyboard: Keyboard;
 
   constructor(playerSpriteImage: string) {
@@ -51,7 +52,7 @@ export default class Player {
     this.xCoordinates = 30;
     this.yCoordinates = 90;
     this.damage = this.strength * 2;
-    this.playerMoving = false;
+    this.moving = false;
     this.gold = 0;
     this.experience = 0;
     this.fighting = false;
@@ -61,6 +62,7 @@ export default class Player {
     this.disableAttack = false;
     this.victory = false;
     this.keyboard = new Keyboard(this);
+    this.dead = false;
   }
 
   render() {
@@ -159,6 +161,7 @@ export default class Player {
 
           if (enemy.health <= 0) {
             enemy.direction = [0,0,0];
+            enemy.dead = true;
             player.battleTurn = false;
             player.battleMoveForward = false;
             player.victory = true;

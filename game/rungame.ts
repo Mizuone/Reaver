@@ -4,19 +4,19 @@ import animationID from './engine/animation/animationframeid/animationid';
 
 const limiter = new Limiter(60);
 
-export const runGame = (runGameOptions: RunGameOptions) => {
+export const RunGame = (runGameOptions: RunGameOptions) => {
     animationID.animationid.id = requestAnimationFrame(() => {
-        runGame(runGameOptions);
+        RunGame(runGameOptions);
     });
 
     if (limiter.fpsLimiter()) {
         limiter.updateCurrentTime();
-        if (runGameOptions.playerObject.keyboard.escapeToggle > 0) {
-            runGameOptions.playerObject.keyboard.checkToDisplayUserMenu(runGameOptions.playerObject);
+        if (runGameOptions.player.keyboard.escapeToggle > 0) {
+            runGameOptions.player.keyboard.checkToDisplayUserMenu(runGameOptions.player);
         } else {
-            runGameOptions.playerObject.keyboard.keyboardPlayerMovement();
-            runGameOptions.locationClass.draw(runGameOptions.playerObject);
-            runGameOptions.playerObject.render();
+            runGameOptions.player.keyboard.keyboardPlayerMovement();
+            runGameOptions.locationClass.draw(runGameOptions.player);
+            runGameOptions.player.render();
         }
     }
 

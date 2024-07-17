@@ -1,6 +1,7 @@
 import Enemy from '../engine/enemy/enemy';
 import { Location } from '../engine/interfaces/location';
 import Player from '../engine/character/player';
+import { RunGame } from '../rungame';
 import Scene from '../engine/scene';
 import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
@@ -9,7 +10,6 @@ import canPatrol from '../engine/composition/entitypatrol';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
 import ridgeAreaMap from './maps/maps';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
-import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
 import slimeDetails from '../engine/enemyentities/slime';
 import slimeSuperDetails from '../engine/enemyentities/slimesuper';
@@ -84,7 +84,7 @@ export default class RidgeArea implements Location {
 
       cancelAnimationFrame(animationID.animationid.id);
       transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-      runGame({ playerObject: transferOptions.player, locationClass: location });
+      RunGame({ player: transferOptions.player, locationClass: location });
     }
   }
 }

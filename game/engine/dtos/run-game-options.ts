@@ -1,6 +1,6 @@
 import Player from "../character/player";
 
 export interface RunGameOptions {
-    playerObject: Player;
+    player: Player;
     locationClass: any;
 }

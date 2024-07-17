@@ -3,13 +3,13 @@ import { cave_ceiling, cave_wall } from '../entity/cave_entities/sprites';
 import Enemy from '../engine/enemy/enemy';
 import { Location } from '../engine/interfaces/location';
 import Player from '../engine/character/player';
+import { RunGame } from '../rungame';
 import Scene from '../engine/scene';
 import { TransferOptions } from '../engine/dtos/transfer-options';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
 import ridgeAreaMap from './maps/maps';
-import { runGame } from '../rungame';
 import { sceneDictionary } from './scenedictionary';
 import shadeKeeperDetails from '../engine/enemyentities/shadekeeper';
 import terrain from '../entity/terrain_entities/sprites';
@@ -57,7 +57,7 @@ export default class RidgeAreaCaveLevelTwo implements Location {
 
             cancelAnimationFrame(animationID.animationid.id);
             transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-            runGame({ playerObject: transferOptions.player, locationClass: location });
+            RunGame({ player: transferOptions.player, locationClass: location });
         }
     }
 }

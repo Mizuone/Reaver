@@ -2,7 +2,7 @@ import BattleScreen from '../../scenes/battlescreen';
 import { NPCComposition } from '../interfaces/npc-composition';
 import Player from '../character/player';
 import Sprite from '../sprite';
-import { addCursorEventListener } from '../context/addcursoreventlistener';
+import { addBattleEventListeners } from '../eventlisteners/battle-event-listeners';
 import animationID from '../animation/animationframeid/animationid';
 import computeDistance from '../computeDistanceBetweenObject';
 import playerEntities from '../../entity/character_entities/sprites';
@@ -64,7 +64,7 @@ export default class Enemy implements NPCComposition {
   }
 
   process(influenceObject: Player, scene: any, composition?: CompositionParameters) {
-    if (this.health <= 0) return;
+    if (this.dead) return;
     
     this.render();
 
@@ -82,7 +82,7 @@ export default class Enemy implements NPCComposition {
   fightPlayer(playerObject: Player, battleEventOrigin: any) {
 
     if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
-      const battleScreen = new BattleScreen();
+      const battleScreen = new BattleScreen(playerObject.level);
       cancelAnimationFrame(animationID.animationid.id);
 
       playerObject.fighting = true;
@@ -96,7 +96,7 @@ export default class Enemy implements NPCComposition {
       this.yCoordinates = 225;
       this.direction = [6,7,8];
 
-      addCursorEventListener(playerObject, this);
+      addBattleEventListeners(playerObject, this);
 
       battleScreen.draw(playerObject, this, battleEventOrigin);
 
@@ -105,7 +105,7 @@ export default class Enemy implements NPCComposition {
   }
 
   basicAttackSequence(enemy: Enemy, player: Player) {
-    if (enemy.battleTurn) {
+    if (enemy.battleTurn && !player.dead) {
       if (!enemy.battleMoveBackward &&
         enemy.battleMoveForward &&
         enemy.xCoordinates <= 320) {
@@ -117,12 +117,18 @@ export default class Enemy implements NPCComposition {
         }
 
         if (enemy.xCoordinates === 320) {
-          player.health -= enemy.damage * 2
+          player.health -= Math.max(enemy.damage * 2, 0);
 
           setTimeout(() => {
             enemy.battleMoveForward = false;
             enemy.battleMoveBackward = true;
           }, 150);
+
+          if (player.health <= 0) {
+            player.dead = true;
+            player.direction = [0, 0, 0];
+            return;
+          }
         }
       }
 
