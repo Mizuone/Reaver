@@ -4,8 +4,16 @@ import RidgeAreaCave from "./ridgeareacave";
 import RidgeAreaCaveLevelOne from "./ridgeareacave_level1";
 import RidgeAreaCaveLevelTwo from './ridgeareacave_level2';
 
-export const ridgeBackArea = new RidgeAreaBack();
-export const ridgeArea = new RidgeArea();
-export const ridgeAreaCave = new RidgeAreaCave();
-export const ridgeAreaCaveLevelOne = new RidgeAreaCaveLevelOne();
-export const ridgeAreaCaveLevelTwo = new RidgeAreaCaveLevelTwo();
+export let ridgeBackArea = new RidgeAreaBack();
+export let ridgeArea = new RidgeArea();
+export let ridgeAreaCave = new RidgeAreaCave();
+export let ridgeAreaCaveLevelOne = new RidgeAreaCaveLevelOne();
+export let ridgeAreaCaveLevelTwo = new RidgeAreaCaveLevelTwo();
+
+export const RestartScenes = () => {
+    ridgeBackArea = new RidgeAreaBack();
+    ridgeArea = new RidgeArea();
+    ridgeAreaCave = new RidgeAreaCave();
+    ridgeAreaCaveLevelOne = new RidgeAreaCaveLevelOne();
+    ridgeAreaCaveLevelTwo = new RidgeAreaCaveLevelTwo();
+};

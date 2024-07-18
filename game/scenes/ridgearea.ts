@@ -20,24 +20,34 @@ const spriteObj = {
   dirt_terrain: terrain.dirt_terrain,
   ...ridgeEntities
 };
-let slimeMidBottom = new Enemy(slimeDetails, 300, 215);
-Object.assign(slimeMidBottom, canPatrol(slimeMidBottom));
-
-let slimeMidTop = new Enemy(slimeDetails, 325, 155);
-Object.assign(slimeMidTop, canPatrol(slimeMidTop));
-
-let slimeBottom = new Enemy(slimeDetails, 285, 275);
-Object.assign(slimeBottom, canPatrol(slimeBottom));
-
-let slimeRight = new Enemy(slimeDetails, 525, 155);
-Object.assign(slimeRight, canPatrol(slimeRight));
-
-let slimeLeft = new Enemy(slimeDetails, 75, 55);
-Object.assign(slimeLeft, canPatrol(slimeLeft));
-
-let slimeSuper = new Enemy(slimeSuperDetails, 542, 93);
 
 export default class RidgeArea implements Location {
+  private slimeMidTop: Enemy;
+  private slimeMidBottom: Enemy;
+  private slimeBottom: Enemy;
+  private slimeRight: Enemy;
+  private slimeLeft: Enemy;
+  private slimeSuper: Enemy;
+
+  constructor() {
+    console.log("new ridge area");
+    this.slimeMidBottom = new Enemy(slimeDetails, 300, 215);
+    Object.assign(this.slimeMidBottom, canPatrol(this.slimeMidBottom));
+
+    this.slimeMidTop = new Enemy(slimeDetails, 325, 155);
+    Object.assign(this.slimeMidTop, canPatrol(this.slimeMidTop));
+
+    this.slimeBottom = new Enemy(slimeDetails, 285, 275);
+    Object.assign(this.slimeBottom, canPatrol(this.slimeBottom));
+
+    this.slimeRight = new Enemy(slimeDetails, 525, 155);
+    Object.assign(this.slimeRight, canPatrol(this.slimeRight));
+
+    this.slimeLeft = new Enemy(slimeDetails, 75, 55);
+    Object.assign(this.slimeLeft, canPatrol(this.slimeLeft));
+
+    this.slimeSuper = new Enemy(slimeSuperDetails, 542, 93);  
+  }
 
   draw(influenceObject: Player) {
       let tileCollisionMin = 2;
@@ -54,12 +64,12 @@ export default class RidgeArea implements Location {
         ]);
       }
 
-      slimeMidBottom.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });
-      slimeMidTop.process(influenceObject, this, { patrol: { patToX: 250, patToY: undefined } });
-      slimeBottom.process(influenceObject, this, { patrol: { patToX: undefined, patToY: 380 } });
-      slimeRight.process(influenceObject, this, { patrol: { patToX: 450, patToY: undefined } });
-      slimeLeft.process(influenceObject, this, { patrol: { patToX: 300, patToY: undefined } });
-      slimeSuper.process(influenceObject, this);
+      this.slimeMidBottom.process(influenceObject, this, { patrol: { patToX: 200, patToY: undefined } });
+      this.slimeMidTop.process(influenceObject, this, { patrol: { patToX: 250, patToY: undefined } });
+      this.slimeBottom.process(influenceObject, this, { patrol: { patToX: undefined, patToY: 380 } });
+      this.slimeRight.process(influenceObject, this, { patrol: { patToX: 450, patToY: undefined } });
+      this.slimeLeft.process(influenceObject, this, { patrol: { patToX: 300, patToY: undefined } });
+      this.slimeSuper.process(influenceObject, this);
   
       for (let i = 0; i < sceneDictionary.ridgeArea.transitionLocations.length; i++) {
         const transfer = sceneDictionary.ridgeArea.transitionLocations[i];

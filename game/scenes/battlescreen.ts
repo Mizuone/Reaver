@@ -4,6 +4,7 @@ import Context from '../engine/context/context';
 import Enemy from '../engine/enemy/enemy';
 import Limiter from '../engine/fpslimiter';
 import Player from '../engine/character/player';
+import { RestartScenes } from './location-creation';
 import { RunGame } from '../rungame';
 import Scene from '../engine/scene';
 import { addGameOverEventListeners } from '../engine/eventlisteners/gameover-event-listeners';
@@ -76,14 +77,17 @@ export default class BattleScreen {
       if (player.dead) {
         displayFallenText(Context.context);
 
-        setTimeout(() => {
-          player.resetToDefaultState(enemy);
-          player.keyboard.removeKeyboardEvents();
-          removeBattleEventListeners(player, enemy);
-          addGameOverEventListeners();
-          cancelAnimationFrame(animationID.animationid.id);
-          displayGameOver(Context.context);
-        }, 2000);
+        if (!this.deathScreen) {
+          this.deathScreen = true;
+        
+          setTimeout(() => {
+            player.keyboard.removeKeyboardEvents();
+            removeBattleEventListeners(player, enemy);
+            addGameOverEventListeners();
+            cancelAnimationFrame(animationID.animationid.id);
+            displayGameOver(Context.context);
+          }, 2000);
+        }
       }
 
       animation.resetanimationcounter();
