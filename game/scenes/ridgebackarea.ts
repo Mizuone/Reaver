@@ -1,9 +1,9 @@
 import Enemy from '../engine/enemy/enemy';
-import { Location } from '../engine/interfaces/location';
+import { Location } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame';
-import Scene from '../engine/scene';
-import { TransferOptions } from '../engine/dtos/transfer-options';
+import Scene from './scene';
+import { TransferOptions } from '../engine/interfaces/transfer-scene';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/composition/entitypatrol';
@@ -11,9 +11,9 @@ import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import { sceneDictionary } from './scenedictionary';
-import shadewalker from '../engine/enemyentities/shadewalker';
-import slimeDetails from '../engine/enemyentities/slime';
-import slimeSuperDetails from '../engine/enemyentities/slimesuper';
+import shadewalker from '../engine/enemy/enemies/shadewalker';
+import slimeDetails from '../engine/enemy/enemies/slime';
+import slimeSuperDetails from '../engine/enemy/enemies/slimesuper';
 import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {

@@ -1,4 +1,4 @@
-import Sprite from '../../engine/sprite';
+import Sprite from '../sprite';
 
 export const cliffgrass_back = new Sprite("sprites/cliffgrass_back.png");
 export const cliffgrass_front = new Sprite("sprites/cliffgrass_front.png");

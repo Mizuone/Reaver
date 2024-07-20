@@ -1,18 +1,18 @@
 import { cave_ceiling, cave_opening, cave_wall } from '../entity/cave_entities/sprites';
 
 import Enemy from '../engine/enemy/enemy';
-import { Location } from '../engine/interfaces/location';
+import { Location } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame';
-import Scene from '../engine/scene';
-import { TransferOptions } from '../engine/dtos/transfer-options';
+import Scene from './scene';
+import { TransferOptions } from '../engine/interfaces/transfer-scene';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
 import canPatrol from '../engine/composition/entitypatrol';
 import ridgeAreaMap from './maps/maps';
 import { sceneDictionary } from './scenedictionary';
-import shadeWalkerDetails from '../engine/enemyentities/shadewalker';
+import shadeWalkerDetails from '../engine/enemy/enemies/shadewalker';
 import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {

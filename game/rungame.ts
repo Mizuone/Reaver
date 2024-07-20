@@ -1,5 +1,5 @@
 import Limiter from './engine/fpslimiter';
-import { RunGameOptions } from './engine/dtos/run-game-options';
+import { RunGameOptions } from './engine/interfaces/run-game-options';
 import animationID from './engine/animation/animationframeid/animationid';
 
 const limiter = new Limiter(60);

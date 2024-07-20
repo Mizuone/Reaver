@@ -1,8 +1,9 @@
-import Context from '../context/context';
+import { BLOCK_SIZE } from '../blocksize/blocksize';
+import Context from '../canvas/game-canvas';
 import Enemy from '../enemy/enemy';
-import Keyboard from '../keyboard';
+import Keyboard from './keyboard';
 import { PlayerPauseMenu } from '../../ui/playerPauseMenu';
-import Sprite from '../sprite';
+import Sprite from '../../entity/sprite';
 import playerEntities from '../../entity/character_entities/sprites';
 import { playerLevelDictionary } from './playerleveldictionary';
 
@@ -22,8 +23,8 @@ export default class Player {
   critchance: number;
   direction: number[];
   playerhit: boolean;
-  xCoordinates: number;
-  yCoordinates: number;
+  x: number;
+  y: number;
   moving: boolean;
   gold: number;
   experience: number;
@@ -35,9 +36,12 @@ export default class Player {
   victory: boolean;
   dead: boolean;
   keyboard: Keyboard;
+  size: number;
+  
 
   constructor(playerSpriteImage: string) {
     this.playerSprite = new Sprite(playerSpriteImage);
+    this.size = BLOCK_SIZE;
     this.strength = 5;
     this.stamina = 10;
     this.agility = 6;
@@ -49,8 +53,8 @@ export default class Player {
     this.level = 1;
     this.critchance = Math.ceil(12 + (this.agility / 10));
     this.direction = [0,0,0];
-    this.xCoordinates = 30;
-    this.yCoordinates = 90;
+    this.x = 30;
+    this.y = 90;
     this.damage = this.strength * 2;
     this.moving = false;
     this.gold = 0;
@@ -68,7 +72,7 @@ export default class Player {
   render() {
     this.playerSprite.image.width = 32;
     this.playerSprite.image.height = 32;
-    this.playerSprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
+    this.playerSprite.draw(this.x, this.y, this.direction);
   }
 
   rewardFromBattle(enemyObject: Enemy) {
@@ -129,8 +133,8 @@ export default class Player {
   }
 
   setPlayerCoordinates(xCoordinates: number, yCoordinates: number) {
-    this.xCoordinates = xCoordinates;
-    this.yCoordinates = yCoordinates;
+    this.x = xCoordinates;
+    this.y = yCoordinates;
   }
   
   displayPlayerMenu() {
@@ -141,15 +145,15 @@ export default class Player {
     if (player.battleTurn) {
       if (!player.battleMoveBackward &&
         player.battleMoveForward &&
-        player.xCoordinates >= 280) {
+        player.x >= 280) {
 
-        player.xCoordinates -= 2;
+        player.x -= 2;
 
-        if (player.xCoordinates < 288) {
-          playerEntities.playerbasicattack_sprite.draw(enemy.xCoordinates, enemy.yCoordinates, [0, 0, 0]);
+        if (player.x < 288) {
+          playerEntities.playerbasicattack_sprite.draw(enemy.x, enemy.y, [0, 0, 0]);
         }
 
-        if (player.xCoordinates === 280) {
+        if (player.x === 280) {
           setTimeout(() => {
             player.battleMoveForward = false;
             player.battleMoveBackward = true;
@@ -172,10 +176,10 @@ export default class Player {
 
       if (!player.battleMoveForward &&
         player.battleMoveBackward &&
-        player.xCoordinates <= 348) {
-        player.xCoordinates += 2;
+        player.x <= 348) {
+        player.x += 2;
 
-        if (player.xCoordinates === 350) {
+        if (player.x === 350) {
           player.battleTurn = false;
           player.battleMoveBackward = false;
           enemy.battleTurn = true;
@@ -189,8 +193,8 @@ export default class Player {
   resetToDefaultState(enemyObject: Enemy) {
     this.victory = false;
     this.disableAttack = false;
-    this.xCoordinates = enemyObject.aggroX;
-    this.yCoordinates = enemyObject.aggroY;
+    this.x = enemyObject.aggroX;
+    this.y = enemyObject.aggroY;
     this.fighting = false;
     this.direction = [0, 0, 0];
     this.battleMoveBackward = false;

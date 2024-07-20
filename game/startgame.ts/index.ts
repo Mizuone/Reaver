@@ -35,15 +35,14 @@ import Player from '../engine/character/player';
 import { RunGame } from '../rungame'
 import animationCounter from '../engine/animation/animationcounter';
 import { debugCursorCoordinates } from '../engine/eventlisteners/debug-event-listeners';
-import { sceneDictionary } from '../scenes/scenedictionary';
+import { ridgeArea } from '../scenes/scenes';
 
 export const startGame = () => {
     const player = new Player('sprites/character_spritesheet.png');
-    const startArea = sceneDictionary.ridgeArea.location;
 
     player.keyboard.intializeKeyBoardEvents();
 
-    RunGame({ player: player, locationClass: startArea });
+    RunGame({ player: player, gameScene: ridgeArea });
 }
 
 animationCounter.initializeanimationcounters();

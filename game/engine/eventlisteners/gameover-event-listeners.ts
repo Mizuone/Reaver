@@ -1,13 +1,13 @@
 import { GameOverClickLocations } from "../cursor/GameOverClickLocations";
 
 export const addGameOverEventListeners = () => {
-    const myCanvas = document.getElementById('myCanvas');
+    const gameCanvas = document.getElementById('gameCanvas');
 
-    myCanvas.addEventListener('mousedown', (event) => GameOverClickLocations(myCanvas, event));
+    gameCanvas.addEventListener('mousedown', (event) => GameOverClickLocations(gameCanvas, event));
 };
 
 export const removeGameOverEventListeners = () => {
-    const myCanvas = document.getElementById('myCanvas');
+    const gameCanvas = document.getElementById('gameCanvas');
 
-    myCanvas.removeEventListener('mousedown', (event) => GameOverClickLocations(myCanvas, event));
+    gameCanvas.removeEventListener('mousedown', (event) => GameOverClickLocations(gameCanvas, event));
 };

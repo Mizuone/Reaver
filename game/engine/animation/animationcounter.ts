@@ -1,6 +1,7 @@
+import { BLOCK_H, BLOCK_W } from '../blocksize/blocksize';
+
 import Animate from './animate';
-import blockSize from '../blocksize/blocksize';
-import Context from '../context/context';
+import Context from '../canvas/game-canvas';
 import utility from '../../utility';
 
 let animationCounterIndex = 0;
@@ -12,7 +13,7 @@ function drawAnimation(animationImageObj: { various: any; sprite: any; x: any; y
   const delayAmount = -2;
 
   if (various === undefined) {
-      Context.context.drawImage(animationImageObj.sprite, animationImageObj.x, animationImageObj.y, blockSize.blockw, blockSize.blockh);
+      Context.context.drawImage(animationImageObj.sprite, animationImageObj.x, animationImageObj.y, BLOCK_W, BLOCK_H);
       return;
   }
       // if various is a single numeric frame id
@@ -45,6 +46,7 @@ function drawAnimation(animationImageObj: { various: any; sprite: any; x: any; y
 function initializeAnimationCounters() {
   for (var i = 0; i < 32000; i++) {
     animationArr[i] = new Animate(0,0,0);
+    console.log(i);
   }
 };
 

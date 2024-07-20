@@ -1,9 +1,9 @@
 import { DebugClickCursorCoordinates } from "../cursor/CursorClickHelpers";
 
 export const debugCursorCoordinates = () => {
-    const myCanvas = document.getElementById('myCanvas');
+    const gameCanvas = document.getElementById('gameCanvas');
 
-    myCanvas.addEventListener('mousedown', (event) => {
-        DebugClickCursorCoordinates(myCanvas, event);
+    gameCanvas.addEventListener('mousedown', (event) => {
+        DebugClickCursorCoordinates(gameCanvas, event);
     });
 };

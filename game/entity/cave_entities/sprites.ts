@@ -1,4 +1,4 @@
-import Sprite from '../../engine/sprite';
+import Sprite from '../sprite';
 
 export const cave_wall = new Sprite("sprites/cave_wall.png");
 export const cave_ceiling = new Sprite("sprites/cave_ceiling.png");

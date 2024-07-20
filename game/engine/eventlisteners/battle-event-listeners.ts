@@ -3,17 +3,17 @@ import Enemy from "../enemy/enemy";
 import Player from "../character/player";
 
 export const addBattleEventListeners = (player: Player, enemy: Enemy) => {
-    const myCanvas = document.getElementById('myCanvas');
+    const gameCanvas = document.getElementById('gameCanvas');
 
-    myCanvas.addEventListener('mousedown', (event) => {
-        BattleClickLocations(player, enemy, myCanvas, event);
+    gameCanvas.addEventListener('mousedown', (event) => {
+        BattleClickLocations(player, enemy, gameCanvas, event);
     });
 };
 
 export const removeBattleEventListeners = (player: Player, enemy: Enemy) => {
-    const myCanvas = document.getElementById('myCanvas');
+    const gameCanvas = document.getElementById('gameCanvas');
 
-    myCanvas.removeEventListener('mousedown', (event) => {
-        BattleClickLocations(player, enemy, myCanvas, event);
+    gameCanvas.removeEventListener('mousedown', (event) => {
+        BattleClickLocations(player, enemy, gameCanvas, event);
     });
 };

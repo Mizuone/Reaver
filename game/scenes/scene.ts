@@ -1,18 +1,18 @@
-import Player from "./character/player";
-import Sprite from "./sprite";
-import { TileDetails } from "./dtos/tile-details";
+import Player from "../engine/character/player";
+import Sprite from "../entity/sprite";
+import { TileDetails } from "../engine/interfaces/tile-details";
 
 export default class Scene {
   mapArr: any;
   tileObj: any;
-  influenceObject: Player;
+  player: Player;
   BLOCK_W: number;
   BLOCK_H: number;
 
-  constructor(mapArr: Array<any>, tileObj: any, influenceObject: Player) {
+  constructor(mapArr: Array<any>, tileObj: any, player: Player) {
     this.mapArr = mapArr;
     this.tileObj = tileObj;
-    this.influenceObject = influenceObject;
+    this.player = player;
     this.BLOCK_W = 32;
     this.BLOCK_H = 32;
   }
@@ -27,23 +27,23 @@ export default class Scene {
 
     if (tileDetails.tileIndex >= tileDetails.tileCollisionMin) {
 
-      if (tileDetails.tileY + 20 < this.influenceObject.yCoordinates) {
-        this.influenceObject.yCoordinates += 2;
+      if (tileDetails.tileY + 20 < this.player.y) {
+        this.player.y += 2;
         return;
       }
 
-      if (tileDetails.tileY - 10 > this.influenceObject.yCoordinates) {
-        this.influenceObject.yCoordinates -= 2;
+      if (tileDetails.tileY - 10 > this.player.y) {
+        this.player.y -= 2;
         return;
       }
 
-      if (tileDetails.tileX - 10 > this.influenceObject.xCoordinates) {
-        this.influenceObject.xCoordinates -= 2;
+      if (tileDetails.tileX - 10 > this.player.x) {
+        this.player.x -= 2;
         return;
       }
 
-      if (tileDetails.tileX + 20 < this.influenceObject.xCoordinates) {
-        this.influenceObject.xCoordinates += 2;
+      if (tileDetails.tileX + 20 < this.player.x) {
+        this.player.x += 2;
         return;
       }
 
@@ -70,11 +70,11 @@ export default class Scene {
               }
 
 
-              if (this.influenceObject.moving &&
-                this.influenceObject.xCoordinates + 20 > tileX &&
-                this.influenceObject.xCoordinates - 30 < tileX &&
-                this.influenceObject.yCoordinates + 30 > tileY &&
-                this.influenceObject.yCoordinates - 25 < tileY) {
+              if (this.player.moving &&
+                this.player.x + 20 > tileX &&
+                this.player.x - 30 < tileX &&
+                this.player.y + 30 > tileY &&
+                this.player.y - 25 < tileY) {
 
                   this.tileCollision(tileDetails);
               }

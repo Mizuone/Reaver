@@ -1,4 +1,4 @@
-import Player from "./character/player";
+import Player from "./player";
 
 export default class Keyboard {
   player: Player;
@@ -125,19 +125,19 @@ export default class Keyboard {
     }
 
     if (this.w) {
-      this.player.yCoordinates -= 2;
+      this.player.y -= 2;
       this.player.direction = [9,10,11];
     }
     if (this.a) {
-      this.player.xCoordinates -= 2;
+      this.player.x -= 2;
       this.player.direction = [3,4,5];
     }
     if (this.s) {
-      this.player.yCoordinates += 2;
+      this.player.y += 2;
       this.player.direction = [0,1,2];
     }
     if (this.d) {
-      this.player.xCoordinates += 2;
+      this.player.x += 2;
       this.player.direction = [6,7,8];
     }
 

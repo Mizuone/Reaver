@@ -1,12 +1,12 @@
 import { displayEnemyHealth, displayFallenText, displayLevelUp, displayPlayerHealth, displayRewardMenu, playerAttackMenu } from '../ui/playerBattleInterface';
 
-import Context from '../engine/context/context';
+import Context from '../engine/canvas/game-canvas';
 import Enemy from '../engine/enemy/enemy';
 import Limiter from '../engine/fpslimiter';
 import Player from '../engine/character/player';
-import { RestartScenes } from './location-creation';
+import { RestartScenes } from './scenes';
 import { RunGame } from '../rungame';
-import Scene from '../engine/scene';
+import Scene from './scene';
 import { addGameOverEventListeners } from '../engine/eventlisteners/gameover-event-listeners';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';

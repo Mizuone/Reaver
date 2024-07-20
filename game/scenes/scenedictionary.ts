@@ -1,4 +1,4 @@
-import * as location from './location-creation';
+import * as location from './scenes';
 
 export const sceneDictionary = {
     ridgeBackArea: {

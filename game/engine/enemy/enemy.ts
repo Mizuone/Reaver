@@ -1,10 +1,10 @@
 import BattleScreen from '../../scenes/battlescreen';
 import { NPCComposition } from '../interfaces/npc-composition';
 import Player from '../character/player';
-import Sprite from '../sprite';
+import Sprite from '../../entity/sprite';
 import { addBattleEventListeners } from '../eventlisteners/battle-event-listeners';
 import animationID from '../animation/animationframeid/animationid';
-import computeDistance from '../computeDistanceBetweenObject';
+import computeDistance from '../helpers/computeDistanceBetweenEntities';
 import playerEntities from '../../entity/character_entities/sprites';
 
 export interface CompositionParameters {
@@ -27,8 +27,8 @@ export default class Enemy implements NPCComposition {
   aggroX: number;
   aggroY: number;
   patrolled: boolean;
-  xCoordinates: number;
-  yCoordinates: number;
+  x: number;
+  y: number;
   goldReward: number;
   experienceReward: number;
   
@@ -41,7 +41,7 @@ export default class Enemy implements NPCComposition {
   battleMoveBackward: boolean;
   dead: boolean;
 
-  constructor(obj: any, x: any, y: any) {
+  constructor(obj: any, _x: number, _y: number) {
     this.enemySprite = new Sprite(obj.sprite);
     this.health = obj.health;
     this.name = obj.name;
@@ -51,11 +51,11 @@ export default class Enemy implements NPCComposition {
     this.goldReward = obj.goldReward;
     this.experienceReward = obj.experienceReward
     this.direction = [1, 1, 2];
-    this.startX = x;
-    this.startY = y;
+    this.startX = _x;
+    this.startY = _y;
     this.patrolled = false;
-    this.xCoordinates = x;
-    this.yCoordinates = y;
+    this.x = _x;
+    this.y = _y;
     this.fighting = false;
     this.battleMoveForward = false;
     this.battleMoveBackward = false;
@@ -76,24 +76,24 @@ export default class Enemy implements NPCComposition {
   render() {
     this.enemySprite.image.width = 32;
     this.enemySprite.image.height = 32;
-    this.enemySprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
+    this.enemySprite.draw(this.x, this.y, this.direction);
   }
 
   fightPlayer(playerObject: Player, battleEventOrigin: any) {
 
-    if (computeDistance(this.xCoordinates, this.yCoordinates, playerObject.xCoordinates, playerObject.yCoordinates) <= 32) {
+    if (computeDistance(this.x, this.y, playerObject.x, playerObject.y) <= 32) {
       const battleScreen = new BattleScreen(playerObject.level);
       cancelAnimationFrame(animationID.animationid.id);
 
       playerObject.fighting = true;
       playerObject.direction = [3,4,5];
-      playerObject.xCoordinates = 350;
-      playerObject.yCoordinates = 225;
+      playerObject.x = 350;
+      playerObject.y = 225;
 
-      this.aggroX = this.xCoordinates;
-      this.aggroY = this.yCoordinates;
-      this.xCoordinates = 250;
-      this.yCoordinates = 225;
+      this.aggroX = this.x;
+      this.aggroY = this.y;
+      this.x = 250;
+      this.y = 225;
       this.direction = [6,7,8];
 
       addBattleEventListeners(playerObject, this);
@@ -108,15 +108,15 @@ export default class Enemy implements NPCComposition {
     if (enemy.battleTurn && !player.dead) {
       if (!enemy.battleMoveBackward &&
         enemy.battleMoveForward &&
-        enemy.xCoordinates <= 320) {
+        enemy.x <= 320) {
 
-        enemy.xCoordinates += 2;
+        enemy.x += 2;
 
-        if (enemy.xCoordinates > 312) {
-          playerEntities.playerbasicattack_sprite.draw(player.xCoordinates, player.yCoordinates, [0, 0, 0]);
+        if (enemy.x > 312) {
+          playerEntities.playerbasicattack_sprite.draw(player.x, player.y, [0, 0, 0]);
         }
 
-        if (enemy.xCoordinates === 320) {
+        if (enemy.x === 320) {
           player.health -= Math.max(enemy.damage * 2, 0);
 
           setTimeout(() => {
@@ -134,10 +134,10 @@ export default class Enemy implements NPCComposition {
 
       if (!enemy.battleMoveForward &&
         enemy.battleMoveBackward &&
-        enemy.xCoordinates >= 252) {
-        enemy.xCoordinates -= 2;
+        enemy.x >= 252) {
+        enemy.x -= 2;
 
-        if (enemy.xCoordinates === 250) {
+        if (enemy.x === 250) {
           enemy.battleTurn = false;
           enemy.battleMoveBackward = false;
           player.disableAttack = false;

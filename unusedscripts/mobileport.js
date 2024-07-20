@@ -9,7 +9,7 @@ function mobileControls() {
             }
             if (!battleScreen) {
                 eventsOn();
-                $(document).on('touchstart', '#myCanvas', function(e) {
+                $(document).on('touchstart', '#gameCanvas', function(e) {
                     var xPos = e.originalEvent.touches[0].pageX,
                         yPos = e.originalEvent.touches[0].pageY;
                     //console.log(xPos);
@@ -19,9 +19,9 @@ function mobileControls() {
                 });
             }
             function eventsOn() {
-                var mycanvas = document.getElementById("myCanvas"),
-                hammertime = new Hammer(mycanvas, {}),
-                hammerManager = new Hammer.Manager(mycanvas, {});
+                var gameCanvas = document.getElementById("gameCanvas"),
+                hammertime = new Hammer(gameCanvas, {}),
+                hammerManager = new Hammer.Manager(gameCanvas, {});
                 
                 hammerManager.add(new Hammer.Tap({ event: 'doubletap', taps: 2}) );
                 hammerManager.on("doubletap", function() {
