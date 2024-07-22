@@ -15,7 +15,7 @@ export const RunGame = (runGameOptions: RunGameOptions) => {
             runGameOptions.player.keyboard.checkToDisplayUserMenu(runGameOptions.player);
         } else {
             runGameOptions.player.keyboard.keyboardPlayerMovement();
-            runGameOptions.locationClass.draw(runGameOptions.player);
+            runGameOptions.gameScene.draw(runGameOptions.player);
             runGameOptions.player.render();
         }
     }

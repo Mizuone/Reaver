@@ -1,7 +1,7 @@
-import { GameScene } from "./game-scene";
+import { BuiltGameScene } from "./built-game-scene";
 
 export interface TransferScene {
-    gameScene: GameScene,
+    gameScene: BuiltGameScene,
     transferX: number;
     transferY: number;
     arriveX: number;

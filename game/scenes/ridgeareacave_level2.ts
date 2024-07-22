@@ -1,18 +1,18 @@
 import { cave_ceiling, cave_wall } from '../entity/cave_entities/sprites';
 
 import Enemy from '../engine/enemy/enemy';
-import { Location } from '../engine/interfaces/GameScene';
+import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
-import { RunGame } from '../rungame';
 import Scene from './scene';
-import { TransferOptions } from '../engine/interfaces/transfer-scene';
+import { ShadeKeeper } from '../engine/enemy/enemies/enemy-database';
+import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
-import ridgeAreaMap from './maps/maps';
-import { sceneDictionary } from './scenedictionary';
-import shadeKeeperDetails from '../engine/enemy/enemies/shadekeeper';
+import maps from './maps/maps';
+import { ridgeAreaCaveLevelOne } from './scenes';
 import terrain from '../entity/terrain_entities/sprites';
+import { transferNewLocationOnCollision } from '../engine/helpers/helpers';
 
 const spriteObj = {
     cave_wall: cave_wall,
@@ -20,44 +20,35 @@ const spriteObj = {
     cave_ceiling: cave_ceiling,
     blackblock: blackblock,
 };
-let shadeKeeper = new Enemy(shadeKeeperDetails, 275, 200);
-shadeKeeper.direction = [6, 6, 7];
 
-export default class RidgeAreaCaveLevelTwo implements Location {
-    draw(influenceObject: Player) {
+export default class RidgeAreaCaveLevelTwo implements GameScene {
+    private shadeKeeper: Enemy;
+    private transferScenes: TransferScene[];
+    private tileCollisionMin = 1;
 
-        let tileCollisionMin = 1;
-        let ridgeScene = new Scene(ridgeAreaMap.mapRidgeAreaCaveLevelTwo, spriteObj, influenceObject);
-        ridgeScene.renderMap(tileCollisionMin);
-
-        shadeKeeper.process(influenceObject, this);
-
-        for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations.length; i++) {
-            const transfer = sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations[i];
-
-
-            this.transferNewLocation(transfer.location,
-                {
-                    player: influenceObject,
-                    transferXCoordinate: transfer.transferXCoordinate,
-                    transferYCoordinate: transfer.transferYCoordinate,
-                    playerNewX: transfer.playerNewX,
-                    playerNewY: transfer.playerNewY
-                });
-        }
+    constructor() {
+        this.shadeKeeper = new Enemy(ShadeKeeper, 275, 200);
+        this.shadeKeeper.direction = [6, 6, 7];
         
-        animation.resetanimationcounter();
+        this.transferScenes = [
+            {
+                gameScene: ridgeAreaCaveLevelOne,
+                transferX: 460,
+                transferY: 475,
+                arriveX: 484,
+                arriveY: 75
+            },
+        ];
     }
 
-    transferNewLocation(location: any, transferOptions: TransferOptions) {
-        if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
-            transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+    draw(player: Player) {
+        let ridgeScene = new Scene(maps.mapRidgeAreaCaveLevelTwo, spriteObj, player);
+        ridgeScene.renderMap(this.tileCollisionMin);
 
-            cancelAnimationFrame(animationID.animationid.id);
-            transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-            RunGame({ player: transferOptions.player, locationClass: location });
-        }
+        this.shadeKeeper.process(player, this);
+
+        transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
+        
+        animation.resetanimationcounter();
     }
 }

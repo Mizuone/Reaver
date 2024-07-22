@@ -4,7 +4,7 @@ import Player from '../character/player';
 import Sprite from '../../entity/sprite';
 import { addBattleEventListeners } from '../eventlisteners/battle-event-listeners';
 import animationID from '../animation/animationframeid/animationid';
-import computeDistance from '../helpers/computeDistanceBetweenEntities';
+import { computeDistanceBetweenEntities } from '../helpers/helpers';
 import playerEntities from '../../entity/character_entities/sprites';
 
 export interface CompositionParameters {
@@ -81,7 +81,7 @@ export default class Enemy implements NPCComposition {
 
   fightPlayer(playerObject: Player, battleEventOrigin: any) {
 
-    if (computeDistance(this.x, this.y, playerObject.x, playerObject.y) <= 32) {
+    if (computeDistanceBetweenEntities(this.x, this.y, playerObject.x, playerObject.y) <= 32) {
       const battleScreen = new BattleScreen(playerObject.level);
       cancelAnimationFrame(animationID.animationid.id);
 

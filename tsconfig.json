@@ -19,7 +19,7 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "game/**/*.ts",
+        "game/**/*.ts", "game/startgame",
     ],
     "exclude": [
         "node_modules",

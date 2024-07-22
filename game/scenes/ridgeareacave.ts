@@ -1,19 +1,19 @@
+import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { cliff_front, cliffentrance_open, cliffgrass_back, cliffgrass_bottomleft, cliffgrass_bottomright, cliffgrass_front, cliffgrass_left, cliffgrass_right, cliffgrass_topleft, cliffgrass_topright } from '../entity/ridgearea_entities/sprites';
+import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
+import { ridgeArea, ridgeAreaCaveLevelOne } from './scenes';
 
 import Enemy from '../engine/enemy/enemy';
-import { Location } from '../engine/interfaces/GameScene';
+import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
-import { RunGame } from '../rungame';
 import Scene from './scene';
-import { TransferOptions } from '../engine/interfaces/transfer-scene';
+import { StaticEntity } from '../engine/interfaces/static-entity';
+import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
-import canPatrol from '../engine/composition/entitypatrol';
+import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-import { sceneDictionary } from './scenedictionary';
-import slimeDetails from '../engine/enemy/enemies/slime';
-import slimeSuperDetails from '../engine/enemy/enemies/slimesuper';
 import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
@@ -31,61 +31,60 @@ const spriteObj = {
     cliff_front: cliff_front
 };
 
-let slimeSuper = new Enemy(slimeSuperDetails, 429, 315);
+export default class RidgeAreaCave implements GameScene {
+    private slimeSuper: Enemy;
+    private slimeTop: Enemy;
+    private slimeMiddle: Enemy;
+    private tileCollisionMin: number = 3;
+    private transferScenes: TransferScene[];
+    private miscEntities: StaticEntity[] = [
+        { x: 450, y: 400 },
+        { x: 495, y: 185 },
+        { x: 575, y: 75 },
+        { x: 50, y: 175 },
+        { x: 125, y: 350 }
+    ];
 
-let slimeTop = new Enemy(slimeDetails, 175, 115);
-Object.assign(slimeTop, canPatrol(slimeTop));
 
-let slimeMiddle = new Enemy(slimeDetails, 255, 270);
-Object.assign(slimeMiddle, canPatrol(slimeMiddle));
+    constructor() {
+        this.slimeSuper = new Enemy(SlimeSuper, 429, 315);
 
-export default class RidgeAreaCave implements Location {
+        this.slimeTop = new Enemy(GreenSlime, 175, 115);
+        Object.assign(this.slimeTop, canPatrol(this.slimeTop));
 
-    draw(influenceObject: Player) {
-
-        let tileCollisionMin = 3;
-        let ridgeScene = new Scene(maps.mapRidgeAreaCave, spriteObj, influenceObject);
-        ridgeScene.renderMap(tileCollisionMin);
-
-        for (let i = 0; i < 6; i++) {
-            ridgeScene.renderMiscellaneousSprites(miscellaneousEntities.bush, [
-                { x: 450, y: 400 },
-                { x: 495, y: 185 },
-                { x: 575, y: 75 },
-                { x: 50, y: 175 },
-                { x: 125, y: 350 }
-            ]);
-        }
-
-        slimeSuper.process(influenceObject, this);
-        slimeTop.process(influenceObject, this, { patrol: { patToX: 350, patToY: undefined} });
-        slimeMiddle.process(influenceObject, this, { patrol: { patToX: 350, patToY: undefined } });
-
-        for (let i = 0; i < sceneDictionary.ridgeAreaCave.transitionLocations.length; i++) {
-            const transfer = sceneDictionary.ridgeAreaCave.transitionLocations[i];
-
-            this.transferNewLocation(transfer.location,
-                {
-                    player: influenceObject,
-                    transferXCoordinate: transfer.transferXCoordinate,
-                    transferYCoordinate: transfer.transferYCoordinate,
-                    playerNewX: transfer.playerNewX,
-                    playerNewY: transfer.playerNewY
-                });
-        }
-        
-        animation.resetanimationcounter();
+        this.slimeMiddle = new Enemy(GreenSlime, 255, 270);
+        Object.assign(this.slimeMiddle, canPatrol(this.slimeMiddle));        
+    
+        this.transferScenes = [
+            {
+                gameScene: ridgeArea,
+                transferX: 9,
+                transferY: 100,
+                arriveX: 590,
+                arriveY: 95
+            },
+            {
+                gameScene: ridgeAreaCaveLevelOne,
+                transferX: 495,
+                transferY: 310,
+                arriveX: 320,
+                arriveY: 427
+            }
+        ];
     }
 
-    transferNewLocation(location: any, transferOptions: TransferOptions) {
-        if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
-            transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+    draw(player: Player) {
+        let ridgeScene = new Scene(maps.mapRidgeAreaCave, spriteObj, player);
+        ridgeScene.renderMap(this.tileCollisionMin);
 
-              cancelAnimationFrame(animationID.animationid.id);
-              transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-              RunGame({ player: transferOptions.player, locationClass:location });
-        }
+        renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);
+
+        this.slimeSuper.process(player, this);
+        this.slimeTop.process(player, this, { patrol: { patToX: 350, patToY: undefined} });
+        this.slimeMiddle.process(player, this, { patrol: { patToX: 350, patToY: undefined } });
+
+        transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
+        
+        animation.resetanimationcounter();
     }
 }

@@ -1,10 +1,10 @@
 import { displayEnemyHealth, displayFallenText, displayLevelUp, displayPlayerHealth, displayRewardMenu, playerAttackMenu } from '../ui/playerBattleInterface';
 
+import { BuiltGameScene } from '../engine/interfaces/built-game-scene';
 import Context from '../engine/canvas/game-canvas';
 import Enemy from '../engine/enemy/enemy';
 import Limiter from '../engine/fpslimiter';
 import Player from '../engine/character/player';
-import { RestartScenes } from './scenes';
 import { RunGame } from '../rungame';
 import Scene from './scene';
 import { addGameOverEventListeners } from '../engine/eventlisteners/gameover-event-listeners';
@@ -31,11 +31,11 @@ export default class BattleScreen {
     this.currentPlayerLevel = _currentPlayerLevel;
   }
 
-  public draw(player: Player, enemy: Enemy, battleEventOrigin: any) {
+  public draw(player: Player, enemy: Enemy, gameSceneOrigin: BuiltGameScene) {
     const classThis = this;
 
     animationID.animationid.id = requestAnimationFrame(() => {
-        classThis.draw(player, enemy, battleEventOrigin);
+        classThis.draw(player, enemy, gameSceneOrigin);
     });
 
     if (this.limiter.fpsLimiter()) {
@@ -67,9 +67,8 @@ export default class BattleScreen {
 
           setTimeout(() => {
             player.resetToDefaultState(enemy);
-            removeBattleEventListeners(player, enemy);
-            cancelAnimationFrame(animationID.animationid.id);
-            RunGame({ player: player, locationClass: battleEventOrigin });
+            this.stopBattleEvent(player, enemy);
+            RunGame({ player: player, gameScene: gameSceneOrigin });
           }, 2000);
         }
       }
@@ -82,9 +81,8 @@ export default class BattleScreen {
         
           setTimeout(() => {
             player.keyboard.removeKeyboardEvents();
-            removeBattleEventListeners(player, enemy);
+            this.stopBattleEvent(player, enemy);
             addGameOverEventListeners();
-            cancelAnimationFrame(animationID.animationid.id);
             displayGameOver(Context.context);
           }, 2000);
         }
@@ -92,6 +90,11 @@ export default class BattleScreen {
 
       animation.resetanimationcounter();
     }
+  }
+
+  private stopBattleEvent(player: Player, enemy: Enemy) {
+    removeBattleEventListeners(player, enemy);
+    cancelAnimationFrame(animationID.animationid.id);
   }
 
 }

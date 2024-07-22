@@ -10,7 +10,7 @@ const DESTINATION = path.resolve(__dirname, 'dist');
 
 const config: Configuration = {
   context: ROOT,
-  entry: './game/htmlcanvas/index.ts',
+  entry: './game/startgame/startgame.ts',
   output: {
     filename: '[name].[contenthash].bundle.js',
     path: DESTINATION,

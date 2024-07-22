@@ -1,19 +1,19 @@
 import RidgeArea from "./ridgearea";
-import RidgeAreaBack from "./ridgebackarea";
+import RidgeAreaBack from "./ridgeareaback";
 import RidgeAreaCave from "./ridgeareacave";
 import RidgeAreaCaveLevelOne from "./ridgeareacave_level1";
 import RidgeAreaCaveLevelTwo from './ridgeareacave_level2';
 
-export let ridgeBackArea = new RidgeAreaBack();
-export let ridgeArea = new RidgeArea();
-export let ridgeAreaCave = new RidgeAreaCave();
-export let ridgeAreaCaveLevelOne = new RidgeAreaCaveLevelOne();
-export let ridgeAreaCaveLevelTwo = new RidgeAreaCaveLevelTwo();
+export let ridgeAreaBack: RidgeAreaBack;
+export let ridgeArea: RidgeArea;
+export let ridgeAreaCave: RidgeAreaCave;
+export let ridgeAreaCaveLevelOne: RidgeAreaCaveLevelOne;
+export let ridgeAreaCaveLevelTwo: RidgeAreaCaveLevelTwo;
 
-export const RestartScenes = () => {
-    ridgeBackArea = new RidgeAreaBack();
+export const InitializeGameScenes = () => {
+    ridgeAreaBack = new RidgeAreaBack();
     ridgeArea = new RidgeArea();
     ridgeAreaCave = new RidgeAreaCave();
     ridgeAreaCaveLevelOne = new RidgeAreaCaveLevelOne();
     ridgeAreaCaveLevelTwo = new RidgeAreaCaveLevelTwo();
-};
+}

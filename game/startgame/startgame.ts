@@ -31,16 +31,26 @@ import '../sprites/cliffgrass_uprightbottom.png';
 import '../sprites/cliffgrass_upleftbottom.png';
 import '../sitesheet.css';
 
+import { InitializeGameScenes, ridgeArea, ridgeAreaBack, ridgeAreaCave, ridgeAreaCaveLevelOne, ridgeAreaCaveLevelTwo } from '../scenes/scenes';
+
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame'
 import animationCounter from '../engine/animation/animationcounter';
 import { debugCursorCoordinates } from '../engine/eventlisteners/debug-event-listeners';
-import { ridgeArea } from '../scenes/scenes';
 
 export const startGame = () => {
+    InitializeGameScenes();
     const player = new Player('sprites/character_spritesheet.png');
 
+    console.log(ridgeArea);
+    console.log(ridgeAreaBack);
+    console.log(ridgeAreaCave);
+    console.log(ridgeAreaCaveLevelOne);
+    console.log(ridgeAreaCaveLevelTwo);
+
     player.keyboard.intializeKeyBoardEvents();
+
+    console.log(ridgeArea);
 
     RunGame({ player: player, gameScene: ridgeArea });
 }

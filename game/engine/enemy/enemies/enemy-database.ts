@@ -35,9 +35,9 @@ export const SlimeSuper: EnemyDetails = {
 export const GreenSlime: EnemyDetails = {
     sprite: slimeSprite,
     name: 'Green Slime',
-    health: 80,
+    health: 35,
     defense: 0,
-    damage: 7,
-    goldReward: 15,
-    experienceReward: 85,
+    damage: 3,
+    goldReward: 5,
+    experienceReward: 25,
 }

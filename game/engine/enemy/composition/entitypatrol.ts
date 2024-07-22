@@ -6,10 +6,10 @@ export default (influenceObject: any) => ({
 
       patrolCoordinates({
         entity: influenceObject,
-        entityCoordinate: influenceObject.xCoordinates,
+        entityCoordinate: influenceObject.x,
         entityStartCoordinate: influenceObject.startX,
         patrolToCoordinate: patToX,
-        entityCoordinateProp: 'xCoordinates'
+        entityCoordinateProp: 'x'
       });
     }
 
@@ -17,10 +17,10 @@ export default (influenceObject: any) => ({
 
       patrolCoordinates({
         entity: influenceObject,
-        entityCoordinate: influenceObject.yCoordinates,
+        entityCoordinate: influenceObject.y,
         entityStartCoordinate: influenceObject.startY,
         patrolToCoordinate: patToY,
-        entityCoordinateProp: 'yCoordinates'
+        entityCoordinateProp: 'y'
       });
 
     }
