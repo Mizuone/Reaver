@@ -117,7 +117,7 @@ export default class Enemy implements NPCComposition {
         }
 
         if (enemy.x === 320) {
-          player.health -= Math.max(enemy.damage * 2, 0);
+          player.health = Math.max(player.health - (enemy.damage * 2), 0);
 
           setTimeout(() => {
             enemy.battleMoveForward = false;

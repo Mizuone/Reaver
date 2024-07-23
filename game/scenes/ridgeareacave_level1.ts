@@ -34,23 +34,6 @@ export default class RidgeAreaCaveLevelOne implements GameScene {
         Object.assign(this.shadeWalkerLeft, canPatrol(this.shadeWalkerLeft));
 
         this.shadeWalkerRight = new Enemy(ShadeWalker, 480, 65);
-        
-        this.transferScenes = [
-            {
-                gameScene: ridgeAreaCave,
-                transferX: 330,
-                transferY: 480,
-                arriveX: 485,
-                arriveY: 325
-            },
-            {
-                gameScene: ridgeAreaCaveLevelTwo,
-                transferX: 496,
-                transferY: 52,
-                arriveX: 450,
-                arriveY: 436,
-            }
-        ];
     }
 
     draw(player: Player) {
@@ -63,5 +46,9 @@ export default class RidgeAreaCaveLevelOne implements GameScene {
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
         animation.resetanimationcounter();
+    }
+
+    setTransferScenes(_transferScenes: TransferScene[]) {
+        this.transferScenes = _transferScenes;
     }
 }

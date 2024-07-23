@@ -29,16 +29,6 @@ export default class RidgeAreaCaveLevelTwo implements GameScene {
     constructor() {
         this.shadeKeeper = new Enemy(ShadeKeeper, 275, 200);
         this.shadeKeeper.direction = [6, 6, 7];
-        
-        this.transferScenes = [
-            {
-                gameScene: ridgeAreaCaveLevelOne,
-                transferX: 460,
-                transferY: 475,
-                arriveX: 484,
-                arriveY: 75
-            },
-        ];
     }
 
     draw(player: Player) {
@@ -50,5 +40,9 @@ export default class RidgeAreaCaveLevelTwo implements GameScene {
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
         animation.resetanimationcounter();
+    }
+
+    setTransferScenes(_transferScenes: TransferScene[]) {
+        this.transferScenes = _transferScenes;
     }
 }

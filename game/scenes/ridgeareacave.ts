@@ -54,23 +54,6 @@ export default class RidgeAreaCave implements GameScene {
 
         this.slimeMiddle = new Enemy(GreenSlime, 255, 270);
         Object.assign(this.slimeMiddle, canPatrol(this.slimeMiddle));        
-    
-        this.transferScenes = [
-            {
-                gameScene: ridgeArea,
-                transferX: 9,
-                transferY: 100,
-                arriveX: 590,
-                arriveY: 95
-            },
-            {
-                gameScene: ridgeAreaCaveLevelOne,
-                transferX: 495,
-                transferY: 310,
-                arriveX: 320,
-                arriveY: 427
-            }
-        ];
     }
 
     draw(player: Player) {
@@ -86,5 +69,9 @@ export default class RidgeAreaCave implements GameScene {
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
         animation.resetanimationcounter();
+    }
+
+    setTransferScenes(_transferScenes: TransferScene[]) {
+        this.transferScenes = _transferScenes;
     }
 }

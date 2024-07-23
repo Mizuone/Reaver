@@ -12,7 +12,6 @@ import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
-import { ridgeArea } from './scenes';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import terrain from '../entity/terrain_entities/sprites';
 
@@ -51,16 +50,6 @@ export default class RidgeAreaBack implements GameScene {
 		Object.assign(this.slimeCenterBottom, canPatrol(this.slimeCenterBottom));
 
 		this.slimeSuper = new Enemy(SlimeSuper, 317, 345);
-
-		this.transferScenes = [
-			{
-				gameScene: ridgeArea,
-				transferX: 630,
-				transferY: 355,
-				arriveX: 30,
-				arriveY: 346
-			},
-		];
 	}
 
 	draw(player: Player) {
@@ -77,5 +66,9 @@ export default class RidgeAreaBack implements GameScene {
 		this.shadeWalker.process(player, this);
 
 		animation.resetanimationcounter();
+	}
+
+	setTransferScenes(_transferScenes: TransferScene[]) {
+		this.transferScenes = _transferScenes;
 	}
 }

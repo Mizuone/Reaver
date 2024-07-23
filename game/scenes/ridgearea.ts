@@ -1,6 +1,5 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
-import { ridgeAreaBack, ridgeAreaCave } from './scenes';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -56,23 +55,6 @@ export default class RidgeArea implements GameScene {
     Object.assign(this.slimeLeft, canPatrol(this.slimeLeft));
 
     this.slimeSuper = new Enemy(SlimeSuper, 542, 93);
-
-    this.transferScenes = [
-      {
-        gameScene: ridgeAreaBack,
-        transferX: 0,
-        transferY: 356,
-        arriveX: 585,
-        arriveY: 352
-      },
-      {
-        gameScene: ridgeAreaCave,
-        transferX: 635,
-        transferY: 120,
-        arriveX: 40,
-        arriveY: 95
-      },
-    ];
   }
 
   draw(player: Player) {
@@ -90,5 +72,9 @@ export default class RidgeArea implements GameScene {
       this.slimeSuper.process(player, this);
     
       animation.resetanimationcounter();
+  }
+
+  setTransferScenes(_transferScenes: TransferScene[]) {
+    this.transferScenes = _transferScenes;
   }
 }

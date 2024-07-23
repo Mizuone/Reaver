@@ -86,14 +86,4 @@ export default class Scene {
 
   };
 
-  renderMiscellaneousSprites(obj: Sprite, coordArr: any) {
-
-    for (var i = 0; i < coordArr.length; i++) {
-      obj.draw(coordArr[i].x, coordArr[i].y);
-    }
-
-  }
-
-
-
 }

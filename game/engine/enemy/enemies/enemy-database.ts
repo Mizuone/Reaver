@@ -7,7 +7,7 @@ export const ShadeKeeper: EnemyDetails = {
     name: 'Shade Keeper',
     health: 125,
     defense: 0,
-    damage: 7,
+    damage: 13,
     goldReward: 50,
     experienceReward: 300,
 };
@@ -15,11 +15,11 @@ export const ShadeKeeper: EnemyDetails = {
 export const ShadeWalker: EnemyDetails = {
     sprite: shadeWalkerSprite,
     name: 'Shade Walker',
-    health: 50,
+    health: 90,
     defense: 0,
-    damage: 5,
+    damage: 9,
     goldReward: 25,
-    experienceReward: 50,
+    experienceReward: 100,
 }
 
 export const SlimeSuper: EnemyDetails = {
@@ -39,5 +39,5 @@ export const GreenSlime: EnemyDetails = {
     defense: 0,
     damage: 3,
     goldReward: 5,
-    experienceReward: 25,
+    experienceReward: 35,
 }
