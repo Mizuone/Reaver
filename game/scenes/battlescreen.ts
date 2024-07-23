@@ -8,12 +8,12 @@ import Player from '../engine/character/player';
 import { RunGame } from '../rungame';
 import Scene from './scene';
 import { addGameOverEventListeners } from '../engine/eventlisteners/gameover-event-listeners';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import battleMap from './maps/maps';
 import { displayGameOver } from '../ui/gameOverInterface';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
 import { removeBattleEventListeners } from '../engine/eventlisteners/battle-event-listeners';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import terrianEntities from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
@@ -88,7 +88,7 @@ export default class BattleScreen {
         }
       }
 
-      animation.resetanimationcounter();
+      resetAnimationCounter();
     }
   }
 

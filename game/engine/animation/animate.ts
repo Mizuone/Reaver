@@ -1,13 +1,13 @@
 
 export default class Animate {
-  animationDelay: number;
-  animationIndexCounter: number;
-  animationCurrentFrame: number;
+  delay: number;
+  indexCounter: number;
+  currentFrame: number;
 
-  constructor(animationDelay: number, animationIndexCounter: number, animationCurrentFrame: number) {
-    this.animationDelay = animationDelay;
-    this.animationIndexCounter = animationIndexCounter;
-    this.animationCurrentFrame = animationCurrentFrame;
+  constructor(_delay: number, _indexCounter: number, _currentFrame: number) {
+    this.delay = _delay;
+    this.indexCounter = _indexCounter;
+    this.currentFrame = _currentFrame;
   }
 
 }

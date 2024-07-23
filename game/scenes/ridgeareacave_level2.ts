@@ -6,11 +6,10 @@ import Player from '../engine/character/player';
 import Scene from './scene';
 import { ShadeKeeper } from '../engine/enemy/enemies/enemy-database';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
 import maps from './maps/maps';
-import { ridgeAreaCaveLevelOne } from './scenes';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import terrain from '../entity/terrain_entities/sprites';
 import { transferNewLocationOnCollision } from '../engine/helpers/helpers';
 
@@ -39,7 +38,7 @@ export default class RidgeAreaCaveLevelTwo implements GameScene {
 
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
-        animation.resetanimationcounter();
+        resetAnimationCounter();
     }
 
     setTransferScenes(_transferScenes: TransferScene[]) {

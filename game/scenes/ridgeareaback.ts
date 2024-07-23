@@ -7,11 +7,11 @@ import Player from '../engine/character/player';
 import Scene from './scene';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import terrain from '../entity/terrain_entities/sprites';
 
@@ -65,7 +65,7 @@ export default class RidgeAreaBack implements GameScene {
 		this.slimeSuper.process(player, this);
 		this.shadeWalker.process(player, this);
 
-		animation.resetanimationcounter();
+		resetAnimationCounter();
 	}
 
 	setTransferScenes(_transferScenes: TransferScene[]) {

@@ -7,11 +7,11 @@ import Player from '../engine/character/player';
 import Scene from './scene';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import ridgeEntities from '../entity/ridgearea_entities/sprites';
 import terrain from '../entity/terrain_entities/sprites';
 
@@ -58,20 +58,20 @@ export default class RidgeArea implements GameScene {
   }
 
   draw(player: Player) {
-      let ridgeScene = new Scene(maps.mapridge, spriteObj, player);
-      ridgeScene.renderMap(this.tileCollisionMin);
-  
-      renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);
-      transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
+    let ridgeScene = new Scene(maps.mapridge, spriteObj, player);
+    ridgeScene.renderMap(this.tileCollisionMin);
 
-      this.slimeMidBottom.process(player, this, { patrol: { patToX: 200, patToY: undefined } });
-      this.slimeMidTop.process(player, this, { patrol: { patToX: 250, patToY: undefined } });
-      this.slimeBottom.process(player, this, { patrol: { patToX: undefined, patToY: 380 } });
-      this.slimeRight.process(player, this, { patrol: { patToX: 450, patToY: undefined } });
-      this.slimeLeft.process(player, this, { patrol: { patToX: 300, patToY: undefined } });
-      this.slimeSuper.process(player, this);
-    
-      animation.resetanimationcounter();
+    renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);
+    transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
+
+    this.slimeMidBottom.process(player, this, { patrol: { patToX: 200, patToY: undefined } });
+    this.slimeMidTop.process(player, this, { patrol: { patToX: 250, patToY: undefined } });
+    this.slimeBottom.process(player, this, { patrol: { patToX: undefined, patToY: 380 } });
+    this.slimeRight.process(player, this, { patrol: { patToX: 450, patToY: undefined } });
+    this.slimeLeft.process(player, this, { patrol: { patToX: 300, patToY: undefined } });
+    this.slimeSuper.process(player, this);
+  
+    resetAnimationCounter();
   }
 
   setTransferScenes(_transferScenes: TransferScene[]) {

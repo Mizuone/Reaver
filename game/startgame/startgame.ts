@@ -35,8 +35,8 @@ import { InitializeGameScenes, ridgeArea, ridgeAreaBack, ridgeAreaCave, ridgeAre
 
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame'
-import animationCounter from '../engine/animation/animationcounter';
 import { debugCursorCoordinates } from '../engine/eventlisteners/debug-event-listeners';
+import { initializeAnimationCounters } from '../engine/animation/animationcounter';
 
 export const startGame = () => {
     InitializeGameScenes();
@@ -55,7 +55,7 @@ export const startGame = () => {
     RunGame({ player: player, gameScene: ridgeArea });
 }
 
-animationCounter.initializeanimationcounters();
+initializeAnimationCounters();
 startGame();
 
 debugCursorCoordinates();

@@ -1,5 +1,4 @@
 import { cave_ceiling, cave_opening, cave_wall } from '../entity/cave_entities/sprites';
-import { ridgeAreaCave, ridgeAreaCaveLevelTwo } from './scenes';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -7,11 +6,11 @@ import Player from '../engine/character/player';
 import Scene from './scene';
 import { ShadeWalker } from '../engine/enemy/enemies/enemy-database';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import { blackblock } from '../entity/miscellaneous_entities/sprites';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import terrain from '../entity/terrain_entities/sprites';
 import { transferNewLocationOnCollision } from '../engine/helpers/helpers';
 
@@ -45,7 +44,7 @@ export default class RidgeAreaCaveLevelOne implements GameScene {
 
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
-        animation.resetanimationcounter();
+        resetAnimationCounter();
     }
 
     setTransferScenes(_transferScenes: TransferScene[]) {

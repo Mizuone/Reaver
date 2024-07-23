@@ -1,4 +1,4 @@
-import { BLOCK_SIZE } from '../blocksize/blocksize';
+import { BLOCK_SIZE } from '../settings/blocksize';
 import Context from '../canvas/game-canvas';
 import Enemy from '../enemy/enemy';
 import Keyboard from './keyboard';

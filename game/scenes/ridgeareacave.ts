@@ -1,7 +1,6 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { cliff_front, cliffentrance_open, cliffgrass_back, cliffgrass_bottomleft, cliffgrass_bottomright, cliffgrass_front, cliffgrass_left, cliffgrass_right, cliffgrass_topleft, cliffgrass_topright } from '../entity/ridgearea_entities/sprites';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
-import { ridgeArea, ridgeAreaCaveLevelOne } from './scenes';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -9,11 +8,11 @@ import Player from '../engine/character/player';
 import Scene from './scene';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
-import animation from '../engine/animation/animationcounter';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
 import maps from './maps/maps';
 import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
 import terrain from '../entity/terrain_entities/sprites';
 
 const spriteObj = {
@@ -68,7 +67,7 @@ export default class RidgeAreaCave implements GameScene {
 
         transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
         
-        animation.resetanimationcounter();
+        resetAnimationCounter();
     }
 
     setTransferScenes(_transferScenes: TransferScene[]) {
