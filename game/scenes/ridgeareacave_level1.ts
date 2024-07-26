@@ -1,28 +1,22 @@
-import { cave_ceiling, cave_opening, cave_wall } from '../entity/cave_entities/sprites';
+import { cave_battle_map_sprites, cave_map_sprites } from './scene_sprites/cave_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import Scene from './scene';
 import { ShadeWalker } from '../engine/enemy/enemies/enemy-database';
+import { SpriteCollection } from '../engine/interfaces/map-sprites';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animationID from '../engine/animation/animationframeid/animationid';
-import { blackblock } from '../entity/miscellaneous_entities/sprites';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
-import maps from './maps/maps';
+import { mapRidgeAreaCaveLevelOne } from './maps/cave_maps';
 import { resetAnimationCounter } from '../engine/animation/animationcounter';
-import terrain from '../entity/terrain_entities/sprites';
 import { transferNewLocationOnCollision } from '../engine/helpers/helpers';
 
-const spriteObj = {
-    cave_wall: cave_wall,
-    cave_opening: cave_opening,
-    cave_terrain: terrain.cave_terrain,
-    cave_ceiling: cave_ceiling,
-    blackblock: blackblock,
-};
-
 export default class RidgeAreaCaveLevelOne implements GameScene {
+    sceneMapSprites: SpriteCollection = cave_map_sprites;
+    battleMapSprites: SpriteCollection = cave_battle_map_sprites;
+
     private shadeWalkerLeft: Enemy;
     private shadeWalkerRight: Enemy;
     private transferScenes: TransferScene[];
@@ -36,7 +30,7 @@ export default class RidgeAreaCaveLevelOne implements GameScene {
     }
 
     draw(player: Player) {
-        let ridgeScene = new Scene(maps.mapRidgeAreaCaveLevelOne, spriteObj, player);
+        let ridgeScene = new Scene(mapRidgeAreaCaveLevelOne, this.sceneMapSprites, player);
         ridgeScene.renderMap(this.tileCollisionMin);
 
         this.shadeWalkerLeft.process(player, this, { patrol: { patToX: 200, patToY: undefined } });

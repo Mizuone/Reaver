@@ -1,27 +1,26 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
+import { ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import Scene from './scene';
+import { SpriteCollection } from '../engine/interfaces/map-sprites';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
-import maps from './maps/maps';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { mapRidge } from './maps/ridge_maps';
+import miscellaneousEntities from '../entity/miscellaneous_entities/misc_sprites';
 import { resetAnimationCounter } from '../engine/animation/animationcounter';
-import ridgeEntities from '../entity/ridgearea_entities/sprites';
-import terrain from '../entity/terrain_entities/sprites';
-
-const spriteObj = {
-  grass_terrain: terrain.grass_terrain,
-  dirt_terrain: terrain.dirt_terrain,
-  ...ridgeEntities
-};
+import ridgeEntities from '../entity/ridgearea_entities/ridge_sprites';
+import terrain from '../entity/terrain_entities/terrain_sprites';
 
 export default class RidgeArea implements GameScene {
+  sceneMapSprites: SpriteCollection = ridge_map_sprites;
+  battleMapSprites: SpriteCollection = ridge_battle_map_sprites; 
+
   private slimeMidTop: Enemy;
   private slimeMidBottom: Enemy;
   private slimeBottom: Enemy;
@@ -36,7 +35,7 @@ export default class RidgeArea implements GameScene {
     { x: 120, y: 100 },
     { x: 125, y: 350 }
   ]
-  private tileCollisionMin = 2;
+  private tileCollisionMin = 3;
 
   constructor() {
     this.slimeMidBottom = new Enemy(GreenSlime, 300, 215);
@@ -58,7 +57,7 @@ export default class RidgeArea implements GameScene {
   }
 
   draw(player: Player) {
-    let ridgeScene = new Scene(maps.mapridge, spriteObj, player);
+    let ridgeScene = new Scene(mapRidge, this.sceneMapSprites, player);
     ridgeScene.renderMap(this.tileCollisionMin);
 
     renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);

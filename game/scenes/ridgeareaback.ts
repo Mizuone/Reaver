@@ -1,33 +1,29 @@
-import { GreenSlime, ShadeWalker, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
+import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
+import { ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import Scene from './scene';
+import { SpriteCollection } from '../engine/interfaces/map-sprites';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
-import maps from './maps/maps';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { mapRidgeAreaBack } from './maps/ridge_maps';
+import miscellaneousEntities from '../entity/miscellaneous_entities/misc_sprites';
 import { resetAnimationCounter } from '../engine/animation/animationcounter';
-import ridgeEntities from '../entity/ridgearea_entities/sprites';
-import terrain from '../entity/terrain_entities/sprites';
-
-const spriteObj = {
-	grass_terrain: terrain.grass_terrain,
-	dirt_terrain: terrain.dirt_terrain,
-	...ridgeEntities
-};
 
 export default class RidgeAreaBack implements GameScene {
-	private shadeWalker: Enemy;
+	sceneMapSprites: SpriteCollection = ridge_map_sprites;
+	battleMapSprites: SpriteCollection = ridge_battle_map_sprites;
+
 	private slimeMidBottom: Enemy;
 	private slimeCenterTop: Enemy;
 	private slimeCenterBottom: Enemy;
 	private slimeSuper: Enemy;
-	private tileCollisionMin: number = 2;
+	private tileCollisionMin: number = 3;
 	private transferScenes: TransferScene[];
 	private miscEntities: StaticEntity[] = [
 		{ x: 47, y: 200 },
@@ -38,8 +34,6 @@ export default class RidgeAreaBack implements GameScene {
 	];
 
 	constructor() {
-		this.shadeWalker = new Enemy(ShadeWalker, 259, 164)
-
 		this.slimeMidBottom = new Enemy(GreenSlime, 355, 345);
 		Object.assign(this.slimeMidBottom, canPatrol(this.slimeMidBottom));
 
@@ -49,11 +43,11 @@ export default class RidgeAreaBack implements GameScene {
 		this.slimeCenterBottom = new Enemy(GreenSlime, 199, 250);
 		Object.assign(this.slimeCenterBottom, canPatrol(this.slimeCenterBottom));
 
-		this.slimeSuper = new Enemy(SlimeSuper, 317, 345);
+		this.slimeSuper = new Enemy(SlimeSuper, 259, 164);
 	}
 
 	draw(player: Player) {
-		let ridgeScene = new Scene(maps.mapRidgeAreaBack, spriteObj, player);
+		let ridgeScene = new Scene(mapRidgeAreaBack, this.sceneMapSprites, player);
 		ridgeScene.renderMap(this.tileCollisionMin);
 	
 		renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);
@@ -63,7 +57,6 @@ export default class RidgeAreaBack implements GameScene {
 		this.slimeCenterBottom.process(player, this, { patrol: { patToX: 401, patToY: undefined } });
 		this.slimeMidBottom.process(player, this, { patrol: { patToX: 520, patToY: undefined } });
 		this.slimeSuper.process(player, this);
-		this.shadeWalker.process(player, this);
 
 		resetAnimationCounter();
 	}

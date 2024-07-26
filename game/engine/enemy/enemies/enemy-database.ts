@@ -1,11 +1,11 @@
-import { shadeKeeperSprite, shadeWalkerSprite, slimeSprite, slimeSuperSprite } from "../../../entity/enemy_entities/sprites";
+import { shadeKeeperSprite, shadeWalkerSprite, slimeSprite, slimeSuperSprite } from "../../../entity/enemy_entities/enemy_sprites";
 
 import { EnemyDetails } from "../../interfaces/enemy-details";
 
 export const ShadeKeeper: EnemyDetails = {
     sprite: shadeKeeperSprite,
     name: 'Shade Keeper',
-    health: 125,
+    health: 155,
     defense: 0,
     damage: 13,
     goldReward: 50,

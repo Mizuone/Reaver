@@ -9,17 +9,11 @@ import { RunGame } from '../rungame';
 import Scene from './scene';
 import { addGameOverEventListeners } from '../engine/eventlisteners/gameover-event-listeners';
 import animationID from '../engine/animation/animationframeid/animationid';
-import battleMap from './maps/maps';
+import { displayBeatGame } from '../ui/beatGameInterface';
 import { displayGameOver } from '../ui/gameOverInterface';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { mapBattle } from './maps/misc_maps';
 import { removeBattleEventListeners } from '../engine/eventlisteners/battle-event-listeners';
 import { resetAnimationCounter } from '../engine/animation/animationcounter';
-import terrianEntities from '../entity/terrain_entities/sprites';
-
-const spriteObj = {
-  blackblock: miscellaneousEntities.blackblock,
-  grass_terrain: terrianEntities.grass_terrain
-}
 
 export default class BattleScreen {
   private readonly limiter = new Limiter(60);
@@ -41,7 +35,7 @@ export default class BattleScreen {
     if (this.limiter.fpsLimiter()) {
       this.limiter.updateCurrentTime();
 
-      let battleScene = new Scene(battleMap.mapbattle, spriteObj, player);
+      let battleScene = new Scene(mapBattle, gameSceneOrigin.battleMapSprites, player);
       battleScene.renderMap(-1);
   
       playerAttackMenu(Context.context, player);
@@ -66,9 +60,17 @@ export default class BattleScreen {
           player.rewardFromBattle(enemy);
 
           setTimeout(() => {
-            player.resetToDefaultState(enemy);
             this.stopBattleEvent(player, enemy);
-            RunGame({ player: player, gameScene: gameSceneOrigin });
+
+            if (enemy.endGame) {
+              player.keyboard.removeKeyboardEvents();
+              addGameOverEventListeners();
+              displayBeatGame(Context.context);
+            } else {
+              player.resetToDefaultState(enemy);
+              RunGame({ player: player, gameScene: gameSceneOrigin });
+            }
+
           }, 2000);
         }
       }

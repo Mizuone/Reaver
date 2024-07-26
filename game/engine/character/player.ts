@@ -4,8 +4,8 @@ import Enemy from '../enemy/enemy';
 import Keyboard from './keyboard';
 import { PlayerPauseMenu } from '../../ui/playerPauseMenu';
 import Sprite from '../../entity/sprite';
-import playerEntities from '../../entity/character_entities/sprites';
 import { playerLevelDictionary } from './playerleveldictionary';
+import playerSprites from '../../entity/character_entities/character_sprites';
 
 export default class Player {
   playerSprite: Sprite;
@@ -51,11 +51,11 @@ export default class Player {
     this.maxHealth = 100;
     this.defense = 0;
     this.level = 1;
-    this.critchance = Math.ceil(12 + (this.agility / 10));
+    this.critchance = this.calculateCritChance();
     this.direction = [0,0,0];
     this.x = 30;
     this.y = 90;
-    this.damage = this.strength * 2;
+    this.damage = this.calculateDamage();
     this.moving = false;
     this.gold = 0;
     this.experience = 0;
@@ -118,15 +118,23 @@ export default class Player {
     this.health = this.maxHealth;
   }
 
+  calculateDamage(): number {
+    return Math.ceil(this.strength * 2.3);
+  }
+
+  calculateCritChance(): number {
+    return Math.ceil(12 + (this.agility / 5));
+  }
+
   levelUpStats() {
     this.strength += Math.ceil(Math.random() * 2);;
-    this.damage = this.strength * 2;
+    this.damage = this.calculateDamage();
 
     this.stamina += Math.ceil(Math.random() * 2);
     this.maxHealth += 25 + Math.ceil(this.stamina * 0.3);
     
-    this.agility += Math.ceil(Math.random() * 2);
-    this.critchance = Math.ceil(12 + (this.agility / 10));
+    this.agility += Math.ceil(Math.random() * 4);
+    this.critchance = this.calculateCritChance();
     
     this.intelligence += Math.ceil(Math.random() * 2);
     this.luck += Math.ceil(Math.random() * 2);
@@ -150,7 +158,7 @@ export default class Player {
         player.x -= 2;
 
         if (player.x < 288) {
-          playerEntities.playerbasicattack_sprite.draw(enemy.x, enemy.y, [0, 0, 0]);
+          playerSprites.basicAttackSprite.draw(enemy.x, enemy.y, [0, 0, 0]);
         }
 
         if (player.x === 280) {

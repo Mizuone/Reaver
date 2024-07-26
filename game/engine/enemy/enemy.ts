@@ -1,11 +1,12 @@
 import BattleScreen from '../../scenes/battlescreen';
+import { BuiltGameScene } from '../interfaces/built-game-scene';
 import { NPCComposition } from '../interfaces/npc-composition';
 import Player from '../character/player';
 import Sprite from '../../entity/sprite';
 import { addBattleEventListeners } from '../eventlisteners/battle-event-listeners';
 import animationID from '../animation/animationframeid/animationid';
 import { computeDistanceBetweenEntities } from '../helpers/helpers';
-import playerEntities from '../../entity/character_entities/sprites';
+import playerSprites from '../../entity/character_entities/character_sprites';
 
 export interface CompositionParameters {
   patrol: {
@@ -35,6 +36,8 @@ export default class Enemy implements NPCComposition {
   // Composition Optional Properties
   patrol?: (patToX?: any, patToY?: any) => void;
 
+  endGame?: boolean;
+
   fighting: boolean;
   battleTurn: boolean;
   battleMoveForward: boolean;
@@ -63,14 +66,14 @@ export default class Enemy implements NPCComposition {
     this.dead = false;
   }
 
-  process(influenceObject: Player, scene: any, composition?: CompositionParameters) {
+  process(player: Player, scene: any, composition?: CompositionParameters) {
     if (this.dead) return;
     
     this.render();
 
     if (this.patrol) this.patrol(composition.patrol.patToX, composition.patrol.patToY);
     
-    this.fightPlayer(influenceObject, scene);
+    this.fightPlayer(player, scene);
   }
 
   render() {
@@ -79,16 +82,16 @@ export default class Enemy implements NPCComposition {
     this.enemySprite.draw(this.x, this.y, this.direction);
   }
 
-  fightPlayer(playerObject: Player, battleEventOrigin: any) {
+  fightPlayer(player: Player, battleEventOrigin: BuiltGameScene) {
 
-    if (computeDistanceBetweenEntities(this.x, this.y, playerObject.x, playerObject.y) <= 32) {
-      const battleScreen = new BattleScreen(playerObject.level);
+    if (computeDistanceBetweenEntities(this.x, this.y, player.x, player.y) <= 32) {
+      const battleScreen = new BattleScreen(player.level);
       cancelAnimationFrame(animationID.animationid.id);
 
-      playerObject.fighting = true;
-      playerObject.direction = [3,4,5];
-      playerObject.x = 350;
-      playerObject.y = 225;
+      player.fighting = true;
+      player.direction = [3,4,5];
+      player.x = 350;
+      player.y = 225;
 
       this.aggroX = this.x;
       this.aggroY = this.y;
@@ -96,9 +99,9 @@ export default class Enemy implements NPCComposition {
       this.y = 225;
       this.direction = [6,7,8];
 
-      addBattleEventListeners(playerObject, this);
+      addBattleEventListeners(player, this);
 
-      battleScreen.draw(playerObject, this, battleEventOrigin);
+      battleScreen.draw(player, this, battleEventOrigin);
 
     }
 
@@ -113,7 +116,7 @@ export default class Enemy implements NPCComposition {
         enemy.x += 2;
 
         if (enemy.x > 312) {
-          playerEntities.playerbasicattack_sprite.draw(player.x, player.y, [0, 0, 0]);
+          playerSprites.basicAttackSprite.draw(player.x, player.y, [0, 0, 0]);
         }
 
         if (enemy.x === 320) {

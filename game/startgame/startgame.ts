@@ -42,17 +42,9 @@ export const startGame = () => {
     InitializeGameScenes();
     const player = new Player('sprites/character_spritesheet.png');
 
-    console.log(ridgeArea);
-    console.log(ridgeAreaBack);
-    console.log(ridgeAreaCave);
-    console.log(ridgeAreaCaveLevelOne);
-    console.log(ridgeAreaCaveLevelTwo);
-
     player.keyboard.intializeKeyBoardEvents();
 
-    console.log(ridgeArea);
-
-    RunGame({ player: player, gameScene: ridgeArea });
+    RunGame({ player: player, gameScene: ridgeAreaCave });
 }
 
 initializeAnimationCounters();

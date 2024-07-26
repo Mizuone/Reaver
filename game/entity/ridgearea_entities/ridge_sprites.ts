@@ -16,18 +16,18 @@ export const cliffentrance_open = new Sprite("sprites/caveentrance_open.png");
 export const cliffgrass_topleftbottom = new Sprite("sprites/cliffgrass_upleftbottom.png");
 
 export default {
-    cliffgrass_back,
+    cliffentrance_open,
+    cliff_front,
     cliffgrass_front,
+    cliffgrass_back,
     cliffgrass_left,
     cliffgrass_right,
-    cliff_front,
     cliffgrass_topright,
-    cliffgrass_all,
     cliffgrass_bottomright,
     cliffgrass_bottomleft,
     cliffgrass_topleft,
     cliffgrass_toprightbottom,
     cliffgrass_topbottom,
-    cliffentrance_open,
-    cliffgrass_topleftbottom
+    cliffgrass_topleftbottom,
+    cliffgrass_all,
 }

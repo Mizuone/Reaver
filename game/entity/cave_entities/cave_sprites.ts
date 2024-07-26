@@ -5,7 +5,7 @@ export const cave_ceiling = new Sprite("sprites/cave_ceiling.png");
 export const cave_opening = new Sprite("sprites/cave_openingdoor.png");
 
 export default {
-  cavewall: cave_wall,
-  caveceiling: cave_ceiling,
-  caveopening: cave_opening
+  cave_wall,
+  cave_ceiling,
+  cave_opening
 }

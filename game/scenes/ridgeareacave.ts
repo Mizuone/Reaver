@@ -1,36 +1,24 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
-import { cliff_front, cliffentrance_open, cliffgrass_back, cliffgrass_bottomleft, cliffgrass_bottomright, cliffgrass_front, cliffgrass_left, cliffgrass_right, cliffgrass_topleft, cliffgrass_topright } from '../entity/ridgearea_entities/sprites';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
+import { ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
 import Scene from './scene';
+import { SpriteCollection } from '../engine/interfaces/map-sprites';
 import { StaticEntity } from '../engine/interfaces/static-entity';
 import { TransferScene } from '../engine/interfaces/transfer-scene';
 import animationID from '../engine/animation/animationframeid/animationid';
 import canPatrol from '../engine/enemy/composition/entitypatrol';
-import maps from './maps/maps';
-import miscellaneousEntities from '../entity/miscellaneous_entities/sprites';
+import { mapRidgeAreaCave } from './maps/ridge_maps';
+import miscellaneousEntities from '../entity/miscellaneous_entities/misc_sprites';
 import { resetAnimationCounter } from '../engine/animation/animationcounter';
-import terrain from '../entity/terrain_entities/sprites';
-
-const spriteObj = {
-    grass_terrain: terrain.grass_terrain,
-    dirt_terrain: terrain.dirt_terrain,
-    cliffentrance_open: cliffentrance_open,
-    cliffgrass_topleft: cliffgrass_topleft,
-    cliffgrass_topright: cliffgrass_topright,
-    cliffgrass_front: cliffgrass_front,
-    cliffgrass_back: cliffgrass_back,
-    cliffgrass_right: cliffgrass_right,
-    cliffgrass_left: cliffgrass_left,
-    cliffgrass_bottomright: cliffgrass_bottomright,
-    cliffgrass_bottomleft: cliffgrass_bottomleft,
-    cliff_front: cliff_front
-};
 
 export default class RidgeAreaCave implements GameScene {
+    sceneMapSprites: SpriteCollection = ridge_map_sprites;
+    battleMapSprites: SpriteCollection = ridge_battle_map_sprites;
+
     private slimeSuper: Enemy;
     private slimeTop: Enemy;
     private slimeMiddle: Enemy;
@@ -56,7 +44,7 @@ export default class RidgeAreaCave implements GameScene {
     }
 
     draw(player: Player) {
-        let ridgeScene = new Scene(maps.mapRidgeAreaCave, spriteObj, player);
+        let ridgeScene = new Scene(mapRidgeAreaCave, this.sceneMapSprites, player);
         ridgeScene.renderMap(this.tileCollisionMin);
 
         renderMiscSprites(miscellaneousEntities.bush, this.miscEntities);

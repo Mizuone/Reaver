@@ -19,7 +19,7 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "game/**/*.ts", "game/startgame",
+        "game/**/*.ts", "game/startgame", "game/scenes/scene_sprites",
     ],
     "exclude": [
         "node_modules",
