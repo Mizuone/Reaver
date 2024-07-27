@@ -1,9 +1,9 @@
+import { BattleEventManager } from '../eventlisteners/battleEventManager';
 import BattleScreen from '../../scenes/battlescreen';
 import { BuiltGameScene } from '../interfaces/built-game-scene';
 import { NPCComposition } from '../interfaces/npc-composition';
 import Player from '../character/player';
 import Sprite from '../../entity/sprite';
-import { addBattleEventListeners } from '../eventlisteners/battle-event-listeners';
 import animationID from '../animation/animationframeid/animationid';
 import { computeDistanceBetweenEntities } from '../helpers/helpers';
 import playerSprites from '../../entity/character_entities/character_sprites';
@@ -85,7 +85,9 @@ export default class Enemy implements NPCComposition {
   fightPlayer(player: Player, battleEventOrigin: BuiltGameScene) {
 
     if (computeDistanceBetweenEntities(this.x, this.y, player.x, player.y) <= 32) {
-      const battleScreen = new BattleScreen(player.level);
+      const battleEventManager = new BattleEventManager(player, this);
+      const battleScreen = new BattleScreen(player.level, battleEventManager);
+
       cancelAnimationFrame(animationID.animationid.id);
 
       player.fighting = true;
@@ -98,8 +100,6 @@ export default class Enemy implements NPCComposition {
       this.x = 250;
       this.y = 225;
       this.direction = [6,7,8];
-
-      addBattleEventListeners(player, this);
 
       battleScreen.draw(player, this, battleEventOrigin);
 

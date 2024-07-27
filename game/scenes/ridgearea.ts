@@ -1,6 +1,6 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
-import { ridgeMapTileCollision, ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
+import { ridgeMapTileCollisionMin, ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -33,7 +33,7 @@ export default class RidgeArea implements GameScene {
     { x: 120, y: 100 },
     { x: 125, y: 350 }
   ]
-  private tileCollisionMin = ridgeMapTileCollision;
+  private tileCollisionMin = ridgeMapTileCollisionMin;
 
   constructor() {
     this.slimeMidBottom = new Enemy(GreenSlime, 300, 215);

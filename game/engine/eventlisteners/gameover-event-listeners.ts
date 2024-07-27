@@ -5,10 +5,5 @@ const GameOverClickHandler = (event: MouseEvent) => {
     GameOverClickLocations(GameCanvas.canvas, event);
 };
 
-export const addGameOverEventListeners = () => {
-    GameCanvas.canvas.addEventListener('mousedown', GameOverClickHandler);
-};
-
-export const removeGameOverEventListeners = () => {
-    GameCanvas.canvas.removeEventListener('mousedown', GameOverClickHandler);
-};
+export const addGameOverEventListeners = () => GameCanvas.canvas.addEventListener('mousedown', GameOverClickHandler);
+export const removeGameOverEventListeners = () => GameCanvas.canvas.removeEventListener('mousedown', GameOverClickHandler);

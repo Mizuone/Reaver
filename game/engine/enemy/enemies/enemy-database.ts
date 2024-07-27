@@ -37,7 +37,7 @@ export const GreenSlime: EnemyDetails = {
     name: 'Green Slime',
     health: 35,
     defense: 0,
-    damage: 300,
+    damage: 3,
     goldReward: 5,
     experienceReward: 35,
 }
