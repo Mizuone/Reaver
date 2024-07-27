@@ -1,10 +1,10 @@
 import Enemy from "../engine/enemy/enemy";
 import Player from "../engine/character/player";
 
-export const attackEnemy = (playerObject: Player, enemyObject: Enemy) => {
-    if (!enemyObject.battleTurn && !playerObject.disableAttack) {
-        playerObject.battleTurn = true;
-        playerObject.disableAttack = true;
-        playerObject.battleMoveForward = true;
+export const attackEnemy = (player: Player, enemy: Enemy) => {
+    if (!enemy.battleTurn && !player.disableAttack) {
+        player.battleTurn = true;
+        player.disableAttack = true;
+        player.battleMoveForward = true;
     }
 }

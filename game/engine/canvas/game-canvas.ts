@@ -1,4 +1,4 @@
-import HTML from './HTMLCanvas';
+import HTMLCanvas from './HTMLCanvas';
 
 const generateHTMLCanvas = () => {
     const element = document.createElement('canvas');
@@ -11,7 +11,7 @@ const generateHTMLCanvas = () => {
 
 document.body.appendChild(generateHTMLCanvas());
 
-const GameCanvas = new HTML('gameCanvas', 640, 480);
+const GameCanvas = new HTMLCanvas('gameCanvas', 640, 480);
 export default GameCanvas;
 
 

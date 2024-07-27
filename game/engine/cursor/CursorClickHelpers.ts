@@ -3,13 +3,13 @@ export interface CanvasClickCoordinates {
     y: number;
 }
 
-export const DebugClickCursorCoordinates = (canvas: Element, event: MouseEvent) => {    
+export const DebugClickCursorCoordinates = (canvas: HTMLCanvasElement, event: MouseEvent) => {    
     const {x, y} = GetXYClickLocation(canvas, event);
 
     console.log({x: x, y: y});
 }
 
-export const GetXYClickLocation = (canvas: Element, event: MouseEvent): CanvasClickCoordinates => {
+export const GetXYClickLocation = (canvas: HTMLCanvasElement, event: MouseEvent): CanvasClickCoordinates => {
     const rect: DOMRect = canvas.getBoundingClientRect();
     const x: number = Math.ceil(event.x - rect.left);
     const y: number = Math.ceil(event.y - rect.top);

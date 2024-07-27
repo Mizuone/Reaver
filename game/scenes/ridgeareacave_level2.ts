@@ -1,4 +1,4 @@
-import { cave_battle_map_sprites, cave_map_sprites } from './scene_sprites/cave_map_sprites';
+import { caveMapTileCollisionMin, cave_battle_map_sprites, cave_map_sprites } from './scene_sprites/cave_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -18,7 +18,7 @@ export default class RidgeAreaCaveLevelTwo implements GameScene {
 
     private shadeKeeper: Enemy;
     private transferScenes: TransferScene[];
-    private tileCollisionMin = 2;
+    private tileCollisionMin = caveMapTileCollisionMin;
 
     constructor() {
         this.shadeKeeper = new Enemy(ShadeKeeper, 275, 200);

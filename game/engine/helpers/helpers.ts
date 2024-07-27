@@ -27,8 +27,6 @@ export const transferNewLocationOnCollision = (player: Player, transferScenes: T
 
         if (isColliding(player, transferX, transferY, player.size)) {
 
-            console.log(gameScene);
-            console.log(currentAnimationID);
             cancelAnimationFrame(currentAnimationID);
             player.setPlayerCoordinates(transferScene.arriveX, transferScene.arriveY);
             RunGame({ player, gameScene });

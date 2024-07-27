@@ -1,5 +1,4 @@
 import Player from "../engine/character/player";
-import Sprite from "../entity/sprite";
 import { TileDetails } from "../engine/interfaces/tile-details";
 
 export default class Scene {

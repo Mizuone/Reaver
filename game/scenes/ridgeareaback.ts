@@ -1,6 +1,6 @@
 import { GreenSlime, SlimeSuper } from '../engine/enemy/enemies/enemy-database';
 import { renderMiscSprites, transferNewLocationOnCollision } from '../engine/helpers/helpers';
-import { ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
+import { ridgeMapTileCollision, ridge_battle_map_sprites, ridge_map_sprites } from './scene_sprites/ridge_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
 import { GameScene } from '../engine/interfaces/GameScene';
@@ -23,7 +23,7 @@ export default class RidgeAreaBack implements GameScene {
 	private slimeCenterTop: Enemy;
 	private slimeCenterBottom: Enemy;
 	private slimeSuper: Enemy;
-	private tileCollisionMin: number = 3;
+	private tileCollisionMin: number = ridgeMapTileCollision;
 	private transferScenes: TransferScene[];
 	private miscEntities: StaticEntity[] = [
 		{ x: 47, y: 200 },

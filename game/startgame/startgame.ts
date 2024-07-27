@@ -31,7 +31,7 @@ import '../sprites/cliffgrass_uprightbottom.png';
 import '../sprites/cliffgrass_upleftbottom.png';
 import '../sitesheet.css';
 
-import { InitializeGameScenes, ridgeArea, ridgeAreaBack, ridgeAreaCave, ridgeAreaCaveLevelOne, ridgeAreaCaveLevelTwo } from '../scenes/scenes';
+import { InitializeGameScenes, ridgeArea } from '../scenes/scenes';
 
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame'
@@ -44,7 +44,9 @@ export const startGame = () => {
 
     player.keyboard.intializeKeyBoardEvents();
 
-    RunGame({ player: player, gameScene: ridgeAreaCave });
+    console.log("started game");
+
+    RunGame({ player: player, gameScene: ridgeArea });
 }
 
 initializeAnimationCounters();

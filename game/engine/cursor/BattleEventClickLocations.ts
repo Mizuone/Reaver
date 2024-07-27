@@ -3,11 +3,11 @@ import { GetXYClickLocation } from "./CursorClickHelpers";
 import Player from "../character/player";
 import { attackEnemy } from "../../ui/playerBattleEvents";
 
-export const BattleClickLocations = (playerObject: Player, enemyObject: Enemy, canvas: Element, event: MouseEvent) => {
+export const BattleClickLocations = (player: Player, enemy: Enemy, canvas: HTMLCanvasElement, event: MouseEvent) => {
     const { x, y } = GetXYClickLocation(canvas, event);
 
-    if (playerObject.fighting && x > 507 && y > 184 && x < 565 && y < 200) {
-        attackEnemy(playerObject, enemyObject);
+    if (player.fighting && x > 507 && y > 184 && x < 565 && y < 200) {
+        attackEnemy(player, enemy);
     }
 
     return { x: x, y: y };
