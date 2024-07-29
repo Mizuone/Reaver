@@ -9,7 +9,7 @@ const generateHTMLCanvas = () => {
     return element;
 };
 
-document.body.appendChild(generateHTMLCanvas());
+document.getElementById("game-container").appendChild(generateHTMLCanvas());
 
 const GameCanvas = new HTMLCanvas('gameCanvas', 640, 480);
 export default GameCanvas;
