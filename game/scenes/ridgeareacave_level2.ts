@@ -1,76 +1,43 @@
-import ridgeAreaMap from './maps/maps';
-import ridgeEntities, { cliffgrass_front, cliffgrass_topleft, cliffgrass_topright, cliffentrance_open, cliffgrass_back, cliffgrass_right, cliffgrass_left, cliffgrass_bottomleft, cliffgrass_bottomright, cliff_front } from '../entity/ridgearea_entities/sprites';
-import caveEntities, { cave_wall, cave_ceiling, cave_opening } from '../entity/cave_entities/sprites';
-import terrain from '../entity/terrain_entities/sprites';
-import miscellaneousEntities, { blackblock } from '../entity/miscellaneous_entities/sprites';
-import animation from '../engine/animation/animationcounter';
-import animationID from '../engine/animation/animationframeid/animationid';
-
-import Scene from '../engine/scene';
+import { caveMapTileCollisionMin, cave_battle_map_sprites, cave_map_sprites } from './scene_sprites/cave_map_sprites';
 
 import Enemy from '../engine/enemy/enemy';
-import shadeKeeperDetails from '../engine/enemyentities/shadekeeper';
-
-import canPatrol from '../engine/composition/entitypatrol';
+import { GameScene } from '../engine/interfaces/GameScene';
 import Player from '../engine/character/player';
-import { Location } from '../engine/interfaces/location';
-import { TransferOptions } from '../engine/dtos/transfer-options';
-import { runGame } from '../rungame';
-import RidgeAreaCave from './ridgeareacave';
-import { sceneDictionary } from './scenedictionary';
+import Scene from './scene';
+import { ShadeKeeper } from '../engine/enemy/enemies/enemy-database';
+import { SpriteCollection } from '../engine/interfaces/map-sprites';
+import { TransferScene } from '../engine/interfaces/transfer-scene';
+import animationID from '../engine/animation/animationframeid/animationid';
+import { mapRidgeAreaCaveLevelTwo } from './maps/cave_maps';
+import { resetAnimationCounter } from '../engine/animation/animationcounter';
+import { transferNewLocationOnCollision } from '../engine/helpers/helpers';
 
-const spriteObj = {
-    cave_wall: cave_wall,
-    cave_terrain: terrain.cave_terrain,
-    cave_ceiling: cave_ceiling,
-    blackblock: blackblock,
-};
-let shadeKeeper = new Enemy(shadeKeeperDetails, 275, 200);
-Object.assign(shadeKeeper, canPatrol(shadeKeeper));
+export default class RidgeAreaCaveLevelTwo implements GameScene {
+    sceneMapSprites: SpriteCollection = cave_map_sprites;
+    battleMapSprites: SpriteCollection = cave_battle_map_sprites;
 
+    private shadeKeeper: Enemy;
+    private transferScenes: TransferScene[];
+    private tileCollisionMin = caveMapTileCollisionMin;
 
-/** Class representing a ridge area that will be drawn on the canvas */
-export default class RidgeAreaCaveLevelTwo implements Location {
-    /**
-      * Draws the ridge area to the canvas
-    */
-    draw(influenceObject: Player) {
-
-        let tileCollisionMin = 1;
-        let ridgeScene = new Scene(ridgeAreaMap.mapridgeareacaveleveltwo, spriteObj, influenceObject);
-        ridgeScene.renderMap(tileCollisionMin);
-
-        if (shadeKeeper.health > 0) {
-            shadeKeeper.renderEnemy();
-            shadeKeeper.direction = [6, 6, 7];
-            shadeKeeper.fightPlayer(influenceObject, this);
-        }
-        for (let i = 0; i < sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations.length; i++) {
-            const transfer = sceneDictionary.ridgeAreaCaveLevelTwo.transitionLocations[i];
-
-
-            this.transferNewLocation(transfer.location,
-                {
-                    player: influenceObject,
-                    transferXCoordinate: transfer.transferXCoordinate,
-                    transferYCoordinate: transfer.transferYCoordinate,
-                    playerNewX: transfer.playerNewX,
-                    playerNewY: transfer.playerNewY
-                });
-        }
-        
-        animation.resetanimationcounter();
+    constructor() {
+        this.shadeKeeper = new Enemy(ShadeKeeper, 275, 200);
+        this.shadeKeeper.direction = [6, 6, 7];
+        this.shadeKeeper.endGame = true;
     }
 
-    transferNewLocation(location: any, transferOptions: TransferOptions) {
-        if (transferOptions.transferXCoordinate - 32 < transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate - 32 < transferOptions.player.yCoordinates &&
-            transferOptions.transferXCoordinate > transferOptions.player.xCoordinates &&
-            transferOptions.transferYCoordinate > transferOptions.player.yCoordinates) {
+    draw(player: Player) {
+        let ridgeScene = new Scene(mapRidgeAreaCaveLevelTwo, this.sceneMapSprites, player);
+        ridgeScene.renderMap(this.tileCollisionMin);
 
-            cancelAnimationFrame(animationID.animationid.id);
-            transferOptions.player.setPlayerCoordinates(transferOptions.playerNewX, transferOptions.playerNewY);
-            runGame({ playerObject: transferOptions.player, locationClass: location });
-        }
+        this.shadeKeeper.process(player, this);
+
+        transferNewLocationOnCollision(player, this.transferScenes, animationID.animationid.id);
+        
+        resetAnimationCounter();
+    }
+
+    setTransferScenes(_transferScenes: TransferScene[]) {
+        this.transferScenes = _transferScenes;
     }
 }

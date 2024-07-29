@@ -1,11 +1,11 @@
-import Sprite from '../sprite';
+import { BLOCK_SIZE } from '../settings/blocksize';
+import Context from '../canvas/game-canvas';
 import Enemy from '../enemy/enemy';
-import playerEntities from '../../entity/character_entities/sprites';
-import Keyboard from '../keyboard';
-import { PlayerMenu } from '../../ui/playerMenu';
-import Context from '../context/context';
-import { playerLevelArray } from './playerlevelarray';
-
+import Keyboard from './keyboard';
+import { PlayerPauseMenu } from '../../ui/playerPauseMenu';
+import Sprite from '../../entity/sprite';
+import { playerLevelDictionary } from './playerleveldictionary';
+import playerSprites from '../../entity/character_entities/character_sprites';
 
 export default class Player {
   playerSprite: Sprite;
@@ -23,24 +23,25 @@ export default class Player {
   critchance: number;
   direction: number[];
   playerhit: boolean;
-  xCoordinates: number;
-  yCoordinates: number;
-  playerMoving: boolean;
+  x: number;
+  y: number;
+  moving: boolean;
   gold: number;
   experience: number;
-  // Player Battle Screen Properties
   fighting: boolean;
   disableAttack: boolean;
   battleTurn: boolean;
   battleMoveForward: boolean;
   battleMoveBackward: boolean;
   victory: boolean;
-
-  // Player Keyboard Properties
+  dead: boolean;
   keyboard: Keyboard;
+  size: number;
+  
 
   constructor(playerSpriteImage: string) {
     this.playerSprite = new Sprite(playerSpriteImage);
+    this.size = BLOCK_SIZE;
     this.strength = 5;
     this.stamina = 10;
     this.agility = 6;
@@ -50,100 +51,129 @@ export default class Player {
     this.maxHealth = 100;
     this.defense = 0;
     this.level = 1;
-    this.hitchance = 76;
-    this.critchance = 5.0;
+    this.critchance = this.calculateCritChance();
     this.direction = [0,0,0];
-    this.playerhit = Math.floor(Math.random() * Math.floor(100)) <= this.hitchance ? true : false;
-    this.xCoordinates = 30;
-    this.yCoordinates = 90;
-    this.damage = this.strength * 4;
-    this.playerMoving = false;
+    this.x = 30;
+    this.y = 90;
+    this.damage = this.calculateDamage();
+    this.moving = false;
     this.gold = 0;
     this.experience = 0;
-    // Player Battle Screen Properties
     this.fighting = false;
     this.battleTurn = false;
     this.battleMoveForward = false;
     this.battleMoveBackward = false;
     this.disableAttack = false;
     this.victory = false;
-    // Player Keyboard Properties
     this.keyboard = new Keyboard(this);
+    this.dead = false;
   }
-  playerVictoryRewardSequence(enemyObject: Enemy) {
+
+  render() {
+    this.playerSprite.image.width = 32;
+    this.playerSprite.image.height = 32;
+    this.playerSprite.draw(this.x, this.y, this.direction);
+  }
+
+  rewardFromBattle(enemyObject: Enemy) {
     this.gold += enemyObject.goldReward;
-    this.experience += enemyObject.experienceReward;
-
-    this.levelPlayer();
+    this.processNewExperience(enemyObject.experienceReward);
   }
+
+  processNewExperience(xp: number) {
+    this.experience += xp;
+
+    if (this.canPlayerLevel()) {
+      this.levelPlayer();
+    }
+  }
+  
+  canPlayerLevel(): boolean {
+    if (Object.keys(playerLevelDictionary).length === this.level) return false;
+
+    var nextLevelExperience: number = playerLevelDictionary[this.level + 1].xp;
+
+    if (this.experience >= nextLevelExperience) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  getNextPlayerLevelExperience(): string {
+    if (Object.keys(playerLevelDictionary).length === this.level) return 'Reached Max Level';
+
+    return (playerLevelDictionary[this.level + 1].xp - this.experience).toString();
+  }
+
   levelPlayer() {
-    let playerNewLevel: number = 1;
+    this.level++;
 
-    for (let i = 0; i < playerLevelArray.length; i++) {
-      if (this.experience >= playerLevelArray[i]) {
-        playerNewLevel++;
-      } else {
-        break;
-      }
-    }
-
-    if (playerNewLevel > this.level) {
-      this.level = playerNewLevel;
-      this.levelUpPlayerStats();
-      this.levelUpHealPlayer();
-    }
+    this.processNewLevel();
   }
-  levelUpHealPlayer() {
+
+  processNewLevel() {
+    this.levelUpStats();
+    
     this.health = this.maxHealth;
   }
-  levelUpPlayerStats() {
-    this.maxHealth += 50 + Math.ceil(this.stamina * 0.3);
-    this.strength += Math.ceil(Math.random() * (4 * 1));
-    this.stamina += Math.ceil(Math.random() * (4 * 1));
-    this.agility += Math.ceil(Math.random() * (4 * 1));
-    this.intelligence += Math.ceil(Math.random() * (4 * 1));
-    this.luck += Math.ceil(Math.random() * (2 * 1));
-    this.damage += Math.ceil(Math.random() * (4 * 1));
+
+  calculateDamage(): number {
+    return Math.ceil(this.strength * 2.3);
+  }
+
+  calculateCritChance(): number {
+    return Math.ceil(12 + (this.agility / 5));
+  }
+
+  levelUpStats() {
+    this.strength += Math.ceil(Math.random() * 2);;
+    this.damage = this.calculateDamage();
+
+    this.stamina += Math.ceil(Math.random() * 2);
+    this.maxHealth += 25 + Math.ceil(this.stamina * 0.3);
+    
+    this.agility += Math.ceil(Math.random() * 4);
+    this.critchance = this.calculateCritChance();
+    
+    this.intelligence += Math.ceil(Math.random() * 2);
+    this.luck += Math.ceil(Math.random() * 2);
   }
 
   setPlayerCoordinates(xCoordinates: number, yCoordinates: number) {
-    this.xCoordinates = xCoordinates;
-    this.yCoordinates = yCoordinates;
+    this.x = xCoordinates;
+    this.y = yCoordinates;
   }
-
-  renderPlayer() {
-    this.playerSprite.image.width = 32;
-    this.playerSprite.image.height = 32;
-    this.playerSprite.draw(this.xCoordinates, this.yCoordinates, this.direction);
-  }
+  
   displayPlayerMenu() {
-    PlayerMenu(Context.context, this);
+    PlayerPauseMenu(Context.context, this);
   } 
 
   basicAttackSequence(player: Player, enemy: Enemy) {
     if (player.battleTurn) {
-      // Move Player forward on x axis
-      // Once Player reaches certain point do damage to enemy
       if (!player.battleMoveBackward &&
         player.battleMoveForward &&
-        player.xCoordinates >= 280) {
+        player.x >= 280) {
 
-        player.xCoordinates -= 2;
+        player.x -= 2;
 
-        if (player.xCoordinates < 288) {
-          playerEntities.playerbasicattack_sprite.draw(enemy.xCoordinates, enemy.yCoordinates, [0, 0, 0]);
+        if (player.x < 288) {
+          playerSprites.basicAttackSprite.draw(enemy.x, enemy.y, [0, 0, 0]);
         }
 
-        if (player.xCoordinates === 280) {
+        if (player.x === 280) {
           setTimeout(() => {
             player.battleMoveForward = false;
             player.battleMoveBackward = true;
           }, 150);
 
-          enemy.health -= player.damage < enemy.health ? player.damage : enemy.health;
+          let playerDamage = Math.random() * 100 < player.critchance ? this.damage * 2 : this.damage;
+
+          enemy.health -= playerDamage < enemy.health ? playerDamage : enemy.health;
 
           if (enemy.health <= 0) {
             enemy.direction = [0,0,0];
+            enemy.dead = true;
             player.battleTurn = false;
             player.battleMoveForward = false;
             player.victory = true;
@@ -152,14 +182,12 @@ export default class Player {
         }
       }
 
-      // Move Player backward on x axis
-      // Once Player reaches original point, give turn to enemy
       if (!player.battleMoveForward &&
         player.battleMoveBackward &&
-        player.xCoordinates <= 348) {
-        player.xCoordinates += 2;
+        player.x <= 348) {
+        player.x += 2;
 
-        if (player.xCoordinates === 350) {
+        if (player.x === 350) {
           player.battleTurn = false;
           player.battleMoveBackward = false;
           enemy.battleTurn = true;
@@ -170,33 +198,14 @@ export default class Player {
     }
   }
 
-  resetPlayerBattleStatusToDefault(enemyObject: Enemy) {
+  resetToDefaultState(enemyObject: Enemy) {
     this.victory = false;
     this.disableAttack = false;
-    this.xCoordinates = enemyObject.startX;
-    this.yCoordinates = enemyObject.startY;
+    this.x = enemyObject.aggroX;
+    this.y = enemyObject.aggroY;
     this.fighting = false;
     this.direction = [0, 0, 0];
     this.battleMoveBackward = false;
   }
 
 }
-
-/*Reaver.Player = function() {
-
-
-//Player x_y coordinates for positioning
-this.player_startX = null;
-this.player_startY = null;
-this.playerAttack_x = null;
-this.playerAttack_y = null;
-
-//Player Boolean Values for movement checks, and if player is in combat
-this.is_playermove = false;
-this.playerHit = false;
-this.player_moveRight = false;
-this.player_moveLeft = false;
-this.attackShow = true;
-
-
-};*/
