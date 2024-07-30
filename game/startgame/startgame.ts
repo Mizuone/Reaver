@@ -35,7 +35,6 @@ import { InitializeGameScenes, ridgeArea } from '../scenes/scenes';
 
 import Player from '../engine/character/player';
 import { RunGame } from '../rungame'
-import { debugCursorCoordinates } from '../engine/eventlisteners/debug-event-listeners';
 import { initializeAnimationCounters } from '../engine/animation/animationcounter';
 
 export const startGame = () => {
@@ -44,12 +43,8 @@ export const startGame = () => {
 
     player.keyboard.intializeKeyBoardEvents();
 
-    console.log("started game");
-
     RunGame({ player: player, gameScene: ridgeArea });
 }
 
 initializeAnimationCounters();
 startGame();
-
-debugCursorCoordinates();

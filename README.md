@@ -9,3 +9,4 @@ Originally it was built using vanilla JavaScript and has been modernized using T
 - pnpm start
 
 ## **Deployed Version**
+- https://kyleorlinski.com/src/pages/build/canvasrpggame.html
