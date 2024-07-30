@@ -32,7 +32,6 @@ export default class RidgeAreaCave implements GameScene {
         { x: 125, y: 350 }
     ];
 
-
     constructor() {
         this.slimeSuper = new Enemy(SlimeSuper, 429, 315);
 

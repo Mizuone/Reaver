@@ -9,20 +9,20 @@ export function displayGameOver(context: CanvasRenderingContext2D) {
     context.shadowColor = "black";
     context.shadowBlur = 1;
     context.lineWidth = 1;
-    context.font = "bold 3rem Arial";
+    context.font = "bold 3em Arial";
     context.strokeText("You have died!", 145, 90);
 
-    context.font = "bold 2rem Arial";
+    context.font = "bold 2em Arial";
     context.strokeText('Play Again?', 220, 140);
     context.shadowBlur = 0;
 
 
-    context.font = "bold 3rem Arial";
+    context.font = "bold 3em Arial";
     context.fillStyle = "Crimson";
     context.fillText("You have died!", 145, 90);
 
     context.fillStyle = "white";
-    context.font = "bold 2rem Arial";
+    context.font = "bold 2em Arial";
     context.fillText('Play Again?', 220, 140);
     context.fill();
 }
